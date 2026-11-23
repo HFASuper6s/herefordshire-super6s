@@ -1,0 +1,6 @@
+<!--page {"title":"{{site.siteName}}","id":"league-redirect"}-->
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>{{page.title}}</title>
+<script>/* Old league page links: send them to the new Tables, Fixtures or Results page */
+(function(){ const q=new URLSearchParams(location.search), h=location.hash.slice(1), p={results:"results",fixtures:"fixtures"}[h]||"tables";
+  location.replace(`/${p}.html?${q.toString()}`); })();</script></head><body></body></html>

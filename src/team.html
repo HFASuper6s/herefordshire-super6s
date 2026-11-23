@@ -1,0 +1,84 @@
+<!--page {"title":"Team | {{site.siteName}}","desc":"Team form, results, fixtures and charts in the {{site.siteName}}.","id":"team"}-->
+<!doctype html>
+<html lang="en-GB">
+<head>
+{{> head}}
+</head>
+<body>
+<script>document.body.dataset.page=new URLSearchParams(location.search).get("l")||"";</script>
+{{> header}}
+<main id="main"><div id="app"><div class="wrap empty">Loading team…</div></div></main>
+{{> footer}}
+<script>
+(async function(){
+  const {S,esc,league,param,loadFixtures,table,divGames,formHTML,fmtDay,ymd,initials,photoURL,shirt,bibSVG,clash}=S6;
+  const L=league(param("l"))||S.leagues[0], T=param("t")||"", today=ymd(new Date()), app=document.getElementById("app");
+  const fx=await loadFixtures(L)||[], mine=fx.filter(f=>f.home===T||f.away===T);
+  if(!mine.length){ app.innerHTML=`<div class="wrap" style="padding:60px 0"><h1 class="page-title">Team not found</h1><p class="muted">See the <a href="/tables.html?l=${L.id}">${esc(L.name)} teams</a>.</p></div>`; return; }
+  document.title=`${T} | ${S.siteName}`;
+  const div=mine[0].division, games=divGames(fx,div), tbl=table(games), me=tbl.find(r=>r.team===T);
+  const played=mine.filter(g=>g.played), next=mine.filter(g=>!g.played&&g.ymd>=today), pending=mine.filter(g=>!g.played&&g.ymd<today);
+  const opp=g=>g.home===T?g.away:g.home, gf=g=>g.home===T?g.hs:g.as, ga=g=>g.home===T?g.as:g.hs;
+  const res=g=>gf(g)>ga(g)?"W":gf(g)<ga(g)?"L":"D";
+  const sfx=n=>n+(["th","st","nd","rd"][(n%100-20)%10]||["th","st","nd","rd"][n%100]||"th");
+  const nights=[...new Set(games.filter(g=>g.played).map(g=>g.ymd))].sort();
+  const posTrend=nights.filter(d=>played.some(g=>g.ymd<=d)).map(d=>({d,pos:table(games,d).find(r=>r.team===T).pos}));
+  const nTeams=tbl.length;
+  // Charts (plain SVG)
+  const W=innerWidth<600?360:640,H=innerWidth<600?220:240,P={l:34,r:24,t:14,b:38};
+  function goalsChart(){
+    if(!played.length) return `<div class="empty">The chart appears after the first result.</div>`;
+    const max=Math.max(4,...played.map(g=>Math.max(gf(g),ga(g))));
+    const iw=W-P.l-P.r, ih=H-P.t-P.b, bw=iw/played.length, b=Math.min(26,bw*.34);
+    const y=v=>P.t+ih-(v/max)*ih;
+    let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Goals scored and conceded in each game">`;
+    for(let v=0;v<=max;v+=Math.ceil(max/4)) s+=`<line x1="${P.l}" x2="${W-P.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${P.l-8}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="var(--muted)">${v}</text>`;
+    played.forEach((g,i)=>{ const cx=P.l+bw*i+bw/2;
+      s+=`<rect x="${cx-b-2}" y="${y(gf(g))}" width="${b}" height="${P.t+ih-y(gf(g))}" rx="3" fill="var(--brand)"><title>${esc(fmtDay(g.ymd))} v ${esc(opp(g))}: scored ${gf(g)}</title></rect>`;
+      s+=`<rect x="${cx+2}" y="${y(ga(g))}" width="${b}" height="${P.t+ih-y(ga(g))}" rx="3" fill="var(--accent)"><title>${esc(fmtDay(g.ymd))} v ${esc(opp(g))}: conceded ${ga(g)}</title></rect>`;
+      s+=`<text x="${cx}" y="${H-P.b+16}" text-anchor="middle" font-size="11" fill="var(--muted)">${esc(initials(opp(g)))}</text><text x="${cx}" y="${H-P.b+30}" text-anchor="middle" font-size="10" fill="var(--muted)">${new Date(g.ymd+"T12:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</text>`; });
+    return s+`</svg><div class="legend"><span><i style="background:var(--brand)"></i>Scored ${me.f}</span><span><i style="background:var(--accent)"></i>Conceded ${me.a}</span></div>`;
+  }
+  function posChart(){
+    if(posTrend.length<2) return `<div class="empty">The position chart appears after two league nights.</div>`;
+    const iw=W-P.l-P.r, ih=H-P.t-P.b, x=i=>P.l+(posTrend.length===1?iw/2:i*iw/(posTrend.length-1)), y=p=>P.t+((p-1)/Math.max(1,nTeams-1))*ih;
+    let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="League position after each league night">`;
+    for(let p=1;p<=nTeams;p++) s+=`<line x1="${P.l}" x2="${W-P.r}" y1="${y(p)}" y2="${y(p)}" stroke="var(--line)"/><text x="${P.l-8}" y="${y(p)+4}" text-anchor="end" font-size="11" fill="var(--muted)">${sfx(p)}</text>`;
+    s+=`<polyline fill="none" stroke="var(--accent)" stroke-width="3" stroke-linejoin="round" points="${posTrend.map((q,i)=>`${x(i)},${y(q.pos)}`).join(" ")}"/>`;
+    posTrend.forEach((q,i)=>{ s+=`<circle cx="${x(i)}" cy="${y(q.pos)}" r="5" fill="var(--card)" stroke="var(--accent)" stroke-width="3"><title>${esc(fmtDay(q.d))}: ${sfx(q.pos)}</title></circle><text x="${x(i)}" y="${H-P.b+18}" text-anchor="middle" font-size="10" fill="var(--muted)">${new Date(q.d+"T12:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</text>`; });
+    return s+`</svg>`;
+  }
+  const side=(t,win,cls,bib)=>`<span class="${cls}${win?" win":""}">${cls==="a"?(bib?bibSVG(22,`${t} in bibs`):shirt(L.id,t,22)):""}${t===T?`<span>${esc(t)}</span>`:`<a href="/team.html?l=${L.id}&t=${encodeURIComponent(t)}">${esc(t)}</a>`}${cls==="h"?shirt(L.id,t,22):""}</span>`;
+  const line=(g,i)=>{ const c=!g.played&&clash(L.id,g.home,g.away), isNext=!g.played&&i===0;
+    return `<div class="match${isNext?" next":""}">${isNext?`<span class="tag-next">Next</span>`:""}${side(g.home,g.played&&g.hs>g.as,"h")}
+    <span class="sc${g.played?"":" ko"}">${g.played?`${g.hs} – ${g.as}`:g.ymd<today?"–":esc(g.time||"TBC")}</span>${side(g.away,g.played&&g.as>g.hs,"a",c)}
+    <small>${esc(fmtDay(g.ymd))}${g.played?` · ${{W:"Won",D:"Drew",L:"Lost"}[res(g)]}`:g.ymd<today?" · Result to come":g.pitch?` · ${esc(g.pitch)}`:""}</small>${c?`<span class="clash">Shirt clash: ${esc(g.away)} wear bibs</span>`:""}</div>`; };
+  const upd=fx.updated?`Updated ${new Date(fx.updated).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}`:"";
+  app.innerHTML=`<section class="thero"><div class="wrap">
+      <div class="pic" id="pic"><div class="pic-empty">${shirt(L.id,T,150)}<span>Team photo coming soon</span></div></div>
+      <div><p class="crumb"><a href="/tables.html?l=${L.id}&d=${encodeURIComponent(div)}">${esc(L.name)} · ${esc(div)}</a>${upd?` · ${esc(upd)}`:""}</p>
+        <h1><span id="kit"></span>${esc(T)}</h1>
+        <div class="hero-meta">${me.p?`<span class="posbadge">${sfx(me.pos)}<small>of ${nTeams}</small></span>`:""}<button class="follow" id="follow" aria-pressed="false">☆ Follow</button></div>
+      </div></div></section>
+    <div class="wrap">
+      <p class="season-line">${played.length} played · ${next.length} to play${pending.length?` · ${pending.length} awaiting result`:""}</p>
+      <div class="tiles">${[["Played",me.p],["Form",formHTML(played.map(res),5)],["Goal diff",(me.gd>0?"+":"")+me.gd],["Points",me.pts]].map(([k,v])=>`<div class="card tile"><b>${v}</b><span>${k==="Form"?"Last 5 games":k}</span></div>`).join("")}</div>
+      <div class="grid g2 gap-lg">
+        <article class="card panel chart"><h2>Goals each game</h2>${goalsChart()}</article>
+        <article class="card panel chart"><h2>League position</h2>${posChart()}</article>
+        <section><h2 class="sec sm">To play <span class="count">${next.length}</span></h2><div class="card">${next.length?next.map(line).join(""):`<div class="empty">No games left this season.</div>`}</div></section>
+        <section><h2 class="sec sm">Played <span class="count">${played.length+pending.length}</span></h2><div class="card">${(played.length+pending.length)?[...played,...pending].sort((a,b)=>b.ymd.localeCompare(a.ymd)).map(line).join(""):`<div class="empty">No games played yet.</div>`}</div></section>
+      </div>
+    </div>`;
+  // Follow this team: the home page then shows its next game
+  const fb=document.getElementById("follow"); const isF=()=>{ try{ const f=JSON.parse(localStorage.getItem("s6-follow")||"null"); return !!f&&f.l===L.id&&f.t===T; }catch(e){ return false; } };
+  const paint=()=>{ const on=isF(); fb.setAttribute("aria-pressed",on); fb.textContent=on?"★ Following":"☆ Follow"; }; paint();
+  fb.onclick=()=>{ try{ isF()?localStorage.removeItem("s6-follow"):localStorage.setItem("s6-follow",JSON.stringify({l:L.id,t:T})); }catch(e){} paint(); };
+  // Team photo replaces the shirt panel; the shirt then sits beside the name instead (shown once either way)
+  const img=new Image(); img.alt=`${T} team photo`;
+  img.onload=()=>{ const p=document.getElementById("pic"); p.innerHTML=""; p.appendChild(img); document.getElementById("kit").innerHTML=shirt(L.id,T,48); };
+  img.src=photoURL(L.id,T);
+})();
+</script>
+</body>
+</html>

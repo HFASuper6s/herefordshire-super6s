@@ -1,0 +1,10 @@
+<footer class="site"><div class="wrap foot-grid">
+  {{{sponsorBlock}}}
+  <div class="foot-text"><p><b>{{site.siteName}}</b> is run by {{site.countyFA}}.</p>
+  <p class="foot-links"><span data-if="contactEmail"><a data-mail></a></span></p></div>
+</div></footer>
+<nav class="tabbar" aria-label="Sections">{{{tabLinks}}}{{{newsTab}}}{{{otherTab}}}</nav>
+<script>(function(){ const S=window.SITE, here=document.body.dataset.page||"";
+  document.querySelectorAll('[data-nav="'+here+'"]').forEach(a=>a.setAttribute("aria-current","page"));
+  document.querySelectorAll("[data-mail]").forEach(a=>{ a.href="mailto:"+S.contactEmail; a.textContent=S.contactEmail; });
+  if(!S.contactEmail) document.querySelectorAll('[data-if="contactEmail"]').forEach(e=>e.remove()); })();</script>

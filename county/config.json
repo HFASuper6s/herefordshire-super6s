@@ -1,0 +1,309 @@
+{
+  "siteName": "Herefordshire FA Super 6s",
+  "shortName": "Super 6s",
+  "countyFA": "Herefordshire FA",
+  "countyFAUrl": "https://www.herefordshirefa.com",
+  "partner": {
+    "name": "SSAFA, the Armed Forces charity",
+    "shortName": "SSAFA Herefordshire",
+    "url": "https://ssafa.org.uk/herefordshire",
+    "logo": "partner-logo.png",
+    "label": "League sponsor",
+    "blurb": "supporting serving personnel, veterans and their families across the county"
+  },
+  "headline": "Six-a-side under the lights",
+  "intro": "Two weeknight leagues, short games, experienced FA-qualified referees, live tables and every team's form.",
+  "contactEmail": "Super6s@HerefordshireFA.com",
+  "registrationForm": "https://app.smartsheet.com/b/form/c2f97733b14a4c63acacd08e1eee5bc7",
+  "colors": {
+    "brand": "#011A6C",
+    "brandDark": "#00124D",
+    "brandLight": "#0B2A8A",
+    "accent": "#D6110E",
+    "accentDark": "#B00D0B",
+    "logoBg": "#F5E6C1"
+  },
+  "leagues": [
+    {
+      "id": "monday",
+      "name": "Monday League",
+      "night": "Monday",
+      "kickOffs": "20:30 and 21:15",
+      "gameLength": "16 minutes each way",
+      "venue": "The Hereford Academy",
+      "address": null,
+      "price": "\u00a330 per team per week",
+      "fixturesFile": "data/monday-fixtures.csv",
+      "pack": {
+        "fee": 30,
+        "friendlyFee": 20,
+        "staffStart": null,
+        "staffEnd": null
+      },
+      "divisions": [
+        {
+          "name": "Premiership",
+          "ds": "11006368",
+          "table": "958262801",
+          "results": "404536045",
+          "fixtures": "673514542"
+        },
+        {
+          "name": "Championship",
+          "ds": "677705507",
+          "table": "573203207",
+          "results": "207738449",
+          "fixtures": "976136963"
+        },
+        {
+          "name": "Division 1",
+          "ds": "504158079",
+          "table": "509477972",
+          "results": "886207738",
+          "fixtures": "324033802"
+        },
+        {
+          "name": "Division 2",
+          "ds": "752506379",
+          "table": "955669431",
+          "results": "427412393",
+          "fixtures": "324047675"
+        },
+        {
+          "name": "Division 3",
+          "ds": "364739517",
+          "table": "696052067",
+          "results": "109909137",
+          "fixtures": "67353932"
+        }
+      ],
+      "town": "Hereford",
+      "players": 6,
+      "manager": {
+        "name": "Martin Oliver",
+        "phone": "07940 241587"
+      }
+    },
+    {
+      "id": "thursday",
+      "name": "Thursday League",
+      "night": "Thursday",
+      "kickOffs": "19:00, 19:40, 20:20 and 21:00",
+      "gameLength": "18 minutes each way",
+      "venue": "The Hereford Academy",
+      "address": null,
+      "price": "\u00a330 per team per week",
+      "fixturesFile": "data/thursday-fixtures.csv",
+      "pack": {
+        "fee": 30,
+        "friendlyFee": 20,
+        "staffStart": "7.00pm",
+        "staffEnd": "10.00pm"
+      },
+      "divisions": [
+        {
+          "name": "Premiership",
+          "ds": "93160393",
+          "table": "232218180",
+          "results": "707972868",
+          "fixtures": "455962514"
+        },
+        {
+          "name": "Championship",
+          "ds": "746634009",
+          "table": "936446291",
+          "results": "827921803",
+          "fixtures": "54060763"
+        },
+        {
+          "name": "Division 1",
+          "ds": "509708651",
+          "table": "248878022",
+          "results": "337995802",
+          "fixtures": "418684299"
+        },
+        {
+          "name": "Division 2",
+          "ds": "96516255",
+          "table": "249509141",
+          "results": "126786395",
+          "fixtures": "68413601"
+        }
+      ],
+      "town": "Hereford",
+      "players": 6,
+      "manager": {
+        "name": "Martin Oliver",
+        "phone": "07940 241587"
+      }
+    }
+  ],
+  "shirts": {
+    "thursday": {
+      "The Has Been's": "Green",
+      "Ledders FC": "Black",
+      "Sex, Drugs & Carlton Cole": "Purple",
+      "Swill FC": "Blue/White",
+      "Grimes To Glory": "Black",
+      "Sheffield Thursday": "Blue",
+      "Stone Cold Ten Hag": "Green",
+      "Jose's Mourini-hoes": "Black",
+      "Potato FC": "Pink",
+      "Marcle FC": "Red",
+      "Klopps Kids": "Red",
+      "Picolo FC": "Blue",
+      "Net Six And Chill": "Pink",
+      "Pique Blinders": "Black",
+      "Swallows FC": "Blue",
+      "Sweet Surprise": "White",
+      "No Kane No Gain": "Blue",
+      "The Super 6": "Red",
+      "Ford FC": "Black",
+      "Penjamin Sesko": "White",
+      "The Cream Team": "White",
+      "Inter Urnan": "Black",
+      "To Be Determined": "Red"
+    },
+    "monday": {}
+  },
+  "rulesUrl": "/img/league-rules.pdf",
+  "prize": "Team trophy for divisional champions",
+  "heroPhotos": [
+    {
+      "src": "hero.jpg",
+      "caption": "Match night"
+    },
+    {
+      "src": "tile-match.jpg",
+      "caption": "Under the lights"
+    },
+    {
+      "src": "tile-trophies.jpg",
+      "caption": "Divisional champions"
+    }
+  ],
+  "getInvolved": [
+    {
+      "tag": "Play",
+      "name": "Drop In & Play",
+      "note": "New time, same place",
+      "summary": "Turn up and play. No team needed.",
+      "when": "Sundays, 7pm \u2013 8pm",
+      "where": "The Herefordshire FA (3G pitch)",
+      "price": "\u00a34"
+    },
+    {
+      "tag": "Play",
+      "name": "Daytime Walking Football",
+      "summary": "Football without the running. A friendly way for over-50s to stay active.",
+      "when": "Thursdays, 11am \u2013 12pm, then refreshments until 1pm",
+      "where": "Herefordshire FA, Widemarsh Common, Hereford, HR4 9NA",
+      "price": "\u00a35",
+      "who": "Over-50s",
+      "contact": {
+        "name": "Scott Russell",
+        "email": "Scott.Russell@herefordshirefa.com"
+      }
+    },
+    {
+      "tag": "Play",
+      "name": "Adult Futsal",
+      "summary": "Fast-paced indoor drop-in football, all year round and never cancelled for weather.",
+      "when": "Wednesdays, 6.30pm \u2013 7.30pm",
+      "where": "St Mary's High School, HR1 4DR",
+      "who": "Adults",
+      "contact": {
+        "name": "Kyle Williams",
+        "email": "Kyle.Williams@herefordshirefa.com"
+      }
+    },
+    {
+      "tag": "Referee",
+      "name": "FA Referee Course",
+      "summary": "Qualify as an FA referee.",
+      "dates": [
+        "Thursday 14 January 2027, 6.30pm \u2013 9.30pm",
+        "Sunday 17 January 2027, 10am \u2013 6pm",
+        "Thursday 25 March 2027, 7pm \u2013 9pm"
+      ],
+      "where": "SSAFA County Ground, Herefordshire FA, Widemarsh Common, Hereford, HR4 9NA",
+      "price": "\u00a3145 per person",
+      "who": "Open to anyone aged 14+",
+      "contact": {
+        "name": "Jack",
+        "email": "referees@herefordshirefa.com"
+      },
+      "image": "referee-cards.jpg"
+    }
+  ],
+  "news": [
+    {
+      "id": "christmas-haf-camp-2026",
+      "date": "2026-11-22",
+      "title": "Christmas HAF Camp",
+      "body": "Football, arts and crafts and fun activities for 5 to 10 year olds, run by our FA-qualified coaches, in partnership with Herefordshire Council.\n\nMonday 21 and Tuesday 22 December 2026, 10am \u2013 3pm, at the SSAFA County Ground, Widemarsh Common, Hereford, HR4 9NA.\n\nHealthy meals provided, with all dietary requirements catered for. Free for children who receive benefit-related free school meals.",
+      "link": "https://www.facebook.com/share/r/1Dj3YT44gS/",
+      "linkLabel": "Watch on Facebook"
+    }
+  ],
+  "referees": "Experienced FA-qualified referees",
+  "wellbeing": {
+    "intro": "Football is good for your head as well as your legs. If things are getting on top of you, it's okay to talk. These services are free and confidential.",
+    "emergency": "If you or someone else is in danger right now, call 999 or go to A&E.",
+    "services": [
+      {
+        "name": "Samaritans",
+        "what": "Talk about anything that's troubling you.",
+        "call": "116 123",
+        "hours": "Any time, day or night",
+        "url": "https://www.samaritans.org",
+        "logo": "logo-samaritans.png",
+        "logoShowsName": true
+      },
+      {
+        "name": "Shout",
+        "what": "Text support if you'd rather not talk.",
+        "text": "SHOUT to 85258",
+        "hours": "Any time",
+        "url": "https://giveusashout.org",
+        "logo": "logo-shout.png",
+        "logoShowsName": true
+      },
+      {
+        "name": "CALM",
+        "what": "For anyone who's down or has hit a wall.",
+        "call": "0800 58 58 58",
+        "hours": "5pm \u2013 midnight, every day",
+        "url": "https://www.thecalmzone.net",
+        "logo": "logo-calm.png",
+        "logoShowsName": true
+      },
+      {
+        "name": "Mind",
+        "what": "Mental health support line.",
+        "call": "0300 102 1234",
+        "hours": "9am \u2013 6pm, Monday to Friday",
+        "url": "https://www.mind.org.uk",
+        "logo": "logo-mind.png",
+        "logoShowsName": true
+      },
+      {
+        "name": "NHS 111",
+        "what": "Urgent help that isn't an emergency.",
+        "call": "111",
+        "hours": "Any time",
+        "url": "https://111.nhs.uk"
+      }
+    ],
+    "groups": [
+      {
+        "name": "Andy's Man Club",
+        "what": "Free peer-to-peer support groups for men aged 18 and over. No referral, just turn up for a brew and a chat. #ItsOkayToTalk",
+        "hours": "Mondays, 7pm (except bank holidays)",
+        "place": "Hereford group: find the venue on the Andy's Man Club website",
+        "url": "https://andysmanclub.co.uk/groups/",
+        "logo": "logo-andysmanclub.png"
+      }
+    ]
+  }
+}

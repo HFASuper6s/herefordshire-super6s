@@ -1,0 +1,279 @@
+<!--page {"title":"Event manager | {{site.siteName}}","id":"admin"}-->
+<!doctype html>
+<html lang="en-GB">
+<head>
+{{> head}}
+<meta name="robots" content="noindex, nofollow">
+<style>
+.form{display:grid;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.em-grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+.card h3{font:800 1.7rem/1 var(--display);margin:0 0 4px}
+.card .meta{color:var(--muted);margin:0 0 16px}
+.card .btn{width:100%}
+.night .pk-up{border-top:1px solid var(--line);margin-top:18px;padding-top:16px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.msg{margin:10px 0 0;font-size:.95rem;color:var(--muted)}
+.err{color:#B3261E;font-weight:600}
+@media (prefers-color-scheme:dark){.err{color:#FFB4AB}}
+.form.wide{max-width:none}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.form.wide>*,.row2>*{min-width:0}
+.form input{min-width:0}
+@media (max-width:480px){.form.wide{padding:20px 16px}.row2{grid-template-columns:minmax(0,1fr)}}
+.check{display:flex!important;align-items:center;gap:10px;font-weight:600}
+.check input{width:auto!important}
+.susp{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.susp li{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.susp b{display:block}
+.susp small{color:var(--muted)}
+.susp .acts{display:flex;gap:6px}
+.susp button{font:600 .9rem var(--body);background:none;border:1.5px solid var(--line);color:var(--ink);border-radius:8px;padding:7px 12px;cursor:pointer}
+.tag{display:inline-block;font:700 .75rem var(--body);text-transform:uppercase;letter-spacing:.04em;border-radius:6px;padding:2px 7px;margin-left:6px;vertical-align:2px;background:var(--tint);color:var(--muted)}
+.tag.live{background:var(--flood);color:var(--turf)}
+h2.sub{font:800 1.6rem/1 var(--display);margin:28px 0 12px}
+.out{display:flex;gap:10px;align-items:center}
+.out button{font:600 .95rem var(--body);background:none;border:1.5px solid rgba(255,255,255,.5);color:#fff;border-radius:8px;padding:7px 12px;cursor:pointer}
+</style>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="/admin/admin.js"></script>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/img/logo.png" alt=""><span><b>{{site.shortName}}</b><small>Event manager</small></span></a>
+    <div class="out" id="who" hidden><button type="button" id="logout">Log out</button></div>
+  </div>
+</header>
+<main id="main">
+  <div class="phead"><div class="wrap" style="padding-bottom:36px"><h1>Event manager</h1><p id="hello">Paperwork, results, team photos and suspensions.</p></div></div>
+
+  <div class="wrap view" style="padding-top:28px" id="v-login" hidden>
+    <div class="card" style="max-width:520px">
+      <h3>Log in</h3>
+      <p class="meta" id="login-msg">This area is for the league's event manager only.</p>
+      <button class="btn btn-accent" type="button" id="login">Log in</button>
+    </div>
+  </div>
+
+  <div class="wrap view" style="padding-top:28px" id="v-app" hidden>
+    <h2 class="sub" style="margin-top:0">League nights</h2>
+    <p class="hint" style="margin:-4px 0 14px">After each league night, export the fixtures and results from FA Full-Time and upload them here. That updates the tables, form, charts and the pitches on the paperwork.</p>
+    <div class="em-grid" id="packs"></div>
+
+
+    <h2 class="sub">Team photos</h2>
+    <div class="form wide" id="photoform">
+      <div class="row2">
+        <label>League <select id="ph-league"></select></label>
+        <label>Team <select id="ph-team"></select></label>
+      </div>
+      <label class="btn btn-accent" style="cursor:pointer;display:flex">Take or choose a photo<input type="file" accept="image/*" capture="environment" id="ph-file" hidden></label>
+      <div id="ph-preview" hidden style="display:grid;gap:12px">
+        <img id="ph-img" alt="Photo preview" style="width:100%;max-height:360px;object-fit:cover;border-radius:12px">
+        <div class="row2"><button class="btn btn-accent" type="button" id="ph-save">Save team photo</button><button class="btn btn-outline" type="button" id="ph-cancel">Cancel</button></div>
+      </div>
+      <p class="msg" id="ph-msg" role="status"></p>
+      <div id="ph-current"></div>
+    </div>
+
+    <h2 class="sub">News</h2>
+    <form class="form wide" id="nform" novalidate>
+      <input type="hidden" name="id">
+      <div class="row2"><label>Title <input name="title" maxlength="120"></label><label>Date <input type="date" name="date"></label></div>
+      <label>Text <textarea name="body" rows="6" maxlength="4000" style="font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)"></textarea><span class="hint">Leave a blank line between paragraphs. For league winners, say the league, division and team.</span></label>
+      <div class="row2"><label>Link (optional) <input name="link" placeholder="https://"></label><label>Button text <input name="linkLabel" maxlength="40" placeholder="Find out more"></label></div>
+      <label class="btn btn-outline" style="cursor:pointer;display:flex">Add a picture (optional)<input type="file" accept="image/*" id="n-file" hidden></label>
+      <img id="n-img" alt="Picture preview" hidden style="width:100%;max-height:260px;object-fit:cover;border-radius:12px">
+      <div class="row2"><button class="btn btn-accent" type="submit" id="n-save">Publish news</button><button class="btn btn-outline" type="button" id="n-cancel" hidden>Cancel edit</button></div>
+      <p class="msg" id="n-msg" role="status"></p>
+    </form>
+    <ul class="susp" id="n-list" style="margin-top:12px"></ul>
+
+    <h2 class="sub">Suspensions</h2>
+    <form class="form wide" id="sform" novalidate>
+      <input type="hidden" name="id">
+      <label class="check"><input type="checkbox" name="allPlayers"> Whole team suspended</label>
+      <label id="namebox">Player name <input name="name" maxlength="80" autocomplete="off"></label>
+      <label>Team <input name="team" maxlength="80" list="teamlist" autocomplete="off"><span class="hint">Pick from the list or type a team from another league.</span></label>
+      <datalist id="teamlist"></datalist>
+      <div class="row2">
+        <label>Start date <input type="date" name="start"></label>
+        <label>End date <input type="date" name="end"></label>
+      </div>
+      <p class="hint" style="margin:-6px 0 0">Shown on the referee sheets for every league night from the start date to the end date, both included.</p>
+      <div class="row2">
+        <button class="btn btn-accent" type="submit" id="save">Add suspension</button>
+        <button class="btn btn-outline" type="button" id="cancel" hidden>Cancel edit</button>
+      </div>
+      <p class="msg" id="fmsg" role="status"></p>
+    </form>
+    <div id="lists"></div>
+  </div>
+</main>
+
+<script>
+(function(){
+const {S,esc}=S6;
+const $=id=>document.getElementById(id);
+const F=$("sform");
+let items=[], started=false;
+
+EM.onAuth(user=>{
+  const ok=EM.isAdmin(user);
+  $("v-login").hidden=ok; $("v-app").hidden=!ok; $("who").hidden=!user;
+  if(user&&!ok) $("login-msg").innerHTML='<span class="err">This login has not been given event manager access.</span> Ask the site owner to add the <b>admin</b> role.';
+  if(ok){ $("hello").textContent=`Logged in as ${user.email}.`; if(!started){started=true; start();} }
+});
+$("login").onclick=()=>netlifyIdentity.open("login");
+$("logout").onclick=()=>netlifyIdentity.logout();
+
+async function start(){
+  // One card per league night: next night + paperwork, then the weekly results upload
+  const t=EM.today(), teams=new Set();
+  $("packs").innerHTML=S.leagues.map(l=>`<article class="card night" id="pk-${l.id}"><h3>${esc(l.night)}</h3>
+    <div class="pk-body"><p class="meta">Loading…</p></div>
+    <div class="pk-up"><p class="meta" id="up-meta-${l.id}"></p>
+      <label class="btn btn-outline" style="cursor:pointer;display:flex">Upload Full-Time results<input type="file" accept=".xls,.xlsx,.csv" data-l="${l.id}" hidden></label>
+      <p class="msg" id="up-msg-${l.id}" role="status"></p></div></article>`).join("");
+  extras();
+  for(const l of S.leagues){
+    const body=$("pk-"+l.id).querySelector(".pk-body"), fx=await EM.fixtures(l);
+    $("up-meta-"+l.id).innerHTML=fx?`${fx.length} fixtures, ${fx.filter(f=>f.played).length} with results${fx.updated?` · uploaded ${new Date(fx.updated).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}`:""}`:"No fixtures uploaded yet.";
+    if(!fx){ body.innerHTML=`<p class="meta">Upload the ${esc(l.name)} Full-Time export to switch on the paperwork.</p>`; continue; }
+    fx.forEach(f=>{teams.add(f.home);teams.add(f.away)});
+    const night=[...new Set(fx.map(f=>f.ymd).filter(Boolean))].sort().find(d=>d>=t);
+    if(!night){ body.innerHTML=`<p class="meta">No more league nights in the fixture list.</p>`; continue; }
+    const open=EM.packOpen(night,t), games=fx.filter(f=>f.ymd===night).length;
+    body.innerHTML=`<p class="meta">Next: <b>${EM.longDate(night)}</b> · ${games} games</p>
+      ${open?`<a class="btn btn-accent" href="pack.html?l=${l.id}&d=${night}">Download paperwork</a>`
+            :`<button class="btn btn-accent" disabled>Download paperwork</button><p class="msg">Available from ${EM.shortDate(EM.addDays(night,-1))}.</p>`}`;
+  }
+  $("teamlist").innerHTML=[...teams].sort().map(x=>`<option value="${esc(x)}">`).join("");
+  await load();
+}
+
+async function load(){
+  try{ items=(await EM.api("GET")).items; render(); }
+  catch(e){ $("lists").innerHTML=`<p class="msg err">${esc(e.message)}</p>`; }
+}
+function render(){
+  const t=EM.today(), by=(a,b)=>a.start.localeCompare(b.start)||a.team.localeCompare(b.team);
+  const groups=[["Current",items.filter(s=>EM.activeOn(s,t))],["Upcoming",items.filter(s=>s.start>t)],["Ended",items.filter(s=>s.end<t)]];
+  $("lists").innerHTML=groups.map(([h,g])=>`<h2 class="sub">${h} <small style="font:500 1rem var(--body);color:var(--muted)">(${g.length})</small></h2>`+
+    (g.length?`<ul class="susp">${g.sort(by).map(s=>`<li><div><b>${esc(s.name)} <span style="font-weight:400">· ${esc(s.team)}</span>${h==="Current"?'<span class="tag live">On sheets</span>':""}</b>
+      <small>${EM.shortDate(s.start)} to ${EM.shortDate(s.end)}</small></div>
+      <div class="acts"><button type="button" data-edit="${esc(s.id)}">Edit</button><button type="button" data-del="${esc(s.id)}">Delete</button></div></li>`).join("")}</ul>`
+      :`<p class="msg">None.</p>`)).join("");
+}
+$("lists").addEventListener("click",async e=>{
+  const ed=e.target.dataset.edit, del=e.target.dataset.del;
+  if(ed){ const s=items.find(x=>x.id===ed); F.id.value=s.id; F.allPlayers.checked=!!s.allPlayers; F.name.value=s.allPlayers?"":s.name;
+    F.team.value=s.team; F.start.value=s.start; F.end.value=s.end; $("save").textContent="Save changes"; $("cancel").hidden=false; sync(); F.scrollIntoView({behavior:"smooth"}); }
+  if(del){ const s=items.find(x=>x.id===del);
+    if(!confirm(`Delete the suspension for ${s.name} (${s.team})?`)) return;
+    try{ await EM.api("DELETE",null,"?id="+encodeURIComponent(del)); items=items.filter(x=>x.id!==del); render(); }catch(err){ alert(err.message); } }
+});
+function sync(){ $("namebox").hidden=F.allPlayers.checked; }
+F.allPlayers.onchange=sync;
+function reset(){ F.reset(); F.id.value=""; $("save").textContent="Add suspension"; $("cancel").hidden=true; sync(); }
+$("cancel").onclick=()=>{reset(); $("fmsg").textContent="";};
+F.onsubmit=async e=>{
+  e.preventDefault(); const m=$("fmsg"); m.className="msg"; m.textContent="Saving…"; $("save").disabled=true;
+  try{
+    const r=await EM.api("POST",{id:F.id.value,name:F.name.value,allPlayers:F.allPlayers.checked,team:F.team.value,start:F.start.value,end:F.end.value});
+    items=items.filter(x=>x.id!==r.item.id).concat(r.item); render(); m.textContent=`Saved: ${r.item.name}, ${r.item.team}.`; reset();
+  }catch(err){ m.className="msg err"; m.textContent=err.message; }
+  $("save").disabled=false;
+};
+function extras(){
+// ----- News -----
+const N=$("nform"); let nImg="", nPosts=[];
+async function nLoad(){ try{ nPosts=(await (await fetch("/.netlify/functions/news",{cache:"no-store"})).json()).posts; }catch(e){ nPosts=[]; } nRender(); }
+function nRender(){ $("n-list").innerHTML=nPosts.length?nPosts.map(p=>`<li><div><b>${esc(p.title)}</b><small>${EM.shortDate(p.date)}${p.hasImage?" · picture":""}</small></div><div class="acts"><button type="button" data-nedit="${esc(p.id)}">Edit</button><button type="button" data-ndel="${esc(p.id)}">Delete</button></div></li>`).join(""):'<p class="msg">No posts added here yet.</p>'; }
+function nReset(){ N.reset(); N.id.value=""; nImg=""; $("n-img").hidden=true; $("n-save").textContent="Publish news"; $("n-cancel").hidden=true; N.date.value=EM.today(); }
+$("n-cancel").onclick=()=>{ nReset(); $("n-msg").textContent=""; };
+$("n-file").onchange=async e=>{ const f=e.target.files[0]; if(!f) return;
+  try{ const bmp=await createImageBitmap(f,{imageOrientation:"from-image"}), sc=Math.min(1,1600/Math.max(bmp.width,bmp.height)), c=document.createElement("canvas");
+    c.width=Math.round(bmp.width*sc); c.height=Math.round(bmp.height*sc); c.getContext("2d").drawImage(bmp,0,0,c.width,c.height);
+    let q=.82; nImg=c.toDataURL("image/jpeg",q); while(nImg.length>540000&&q>.5){ q-=.08; nImg=c.toDataURL("image/jpeg",q); }
+    $("n-img").src=nImg; $("n-img").hidden=false; }catch(err){ $("n-msg").className="msg err"; $("n-msg").textContent="That picture could not be opened."; } e.target.value=""; };
+$("n-list").addEventListener("click",async e=>{ const ed=e.target.dataset.nedit, del=e.target.dataset.ndel;
+  if(ed){ const p=nPosts.find(x=>x.id===ed); N.id.value=p.id; N.title.value=p.title; N.date.value=p.date; N.body.value=p.body||""; N.link.value=p.link||""; N.linkLabel.value=p.linkLabel||"";
+    $("n-save").textContent="Save changes"; $("n-cancel").hidden=false; N.scrollIntoView({behavior:"smooth"}); }
+  if(del){ const p=nPosts.find(x=>x.id===del); if(!confirm(`Delete the news post "${p.title}"?`)) return;
+    try{ await EM.post("news",null,"DELETE","?id="+encodeURIComponent(del)); nPosts=nPosts.filter(x=>x.id!==del); nRender(); }catch(err){ alert(err.message); } } });
+N.onsubmit=async e=>{ e.preventDefault(); const m=$("n-msg"); m.className="msg"; m.textContent="Publishing…"; $("n-save").disabled=true;
+  try{ const old=nPosts.find(x=>x.id===N.id.value);
+    const r=await EM.post("news",{id:N.id.value,title:N.title.value,date:N.date.value,body:N.body.value,link:N.link.value.trim(),linkLabel:N.linkLabel.value,image:nImg||undefined,keepImage:!!(old&&old.hasImage&&!nImg)});
+    nPosts=nPosts.filter(x=>x.id!==r.post.id).concat(r.post).sort((a,b)=>b.date.localeCompare(a.date)); nRender(); m.textContent=`Published: ${r.post.title}.`; nReset();
+  }catch(err){ m.className="msg err"; m.textContent=err.message; } $("n-save").disabled=false; };
+nReset(); nLoad();
+
+// ----- Weekly results upload (Full-Time export: .xls, .xlsx or .csv) -----
+function readRows(file){
+  return new Promise((res,rej)=>{ const r=new FileReader();
+    r.onload=()=>{ try{
+      if(/\.csv$/i.test(file.name)) return res(S6.parseCSV(new TextDecoder().decode(r.result)));
+      const wb=XLSX.read(r.result,{type:"array",cellDates:true}); const ws=wb.Sheets[wb.SheetNames[0]];
+      res(XLSX.utils.sheet_to_json(ws,{header:1,raw:false,dateNF:"yyyy-mm-dd",defval:""}));
+    }catch(e){ rej(new Error("That file could not be read. Export it from Full-Time again and retry.")); } };
+    r.onerror=()=>rej(new Error("That file could not be read.")); r.readAsArrayBuffer(file); });
+}
+$("packs").addEventListener("change",async e=>{
+  const inp=e.target, l=inp.dataset.l, file=inp.files[0], m=$("up-msg-"+l); if(!file) return;
+  m.className="msg"; m.textContent="Reading file…";
+  try{
+    const fixtures=S6.rowsToFixtures(await readRows(file));
+    if(!fixtures.length) throw new Error("No fixtures found. Check it is the Full-Time fixtures export.");
+    const r=await EM.post("league-data",{league:l,fixtures});
+    m.textContent=`Saved: ${r.count} fixtures, ${r.played} with results.`;
+    $("up-meta-"+l).textContent=`${r.count} fixtures, ${r.played} with results · uploaded just now`;
+  }catch(err){ m.className="msg err"; m.textContent=err.message; }
+  inp.value="";
+});
+
+// ----- Team photos -----
+let phData="", phList=new Set();
+$("ph-league").innerHTML=S.leagues.map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join("");
+async function phTeams(){
+  const l=S6.league($("ph-league").value), fx=await S6.loadFixtures(l)||[];
+  const ts=S6.teams(fx); $("ph-team").innerHTML=ts.length?ts.map(t=>`<option>${esc(t.name)}</option>`).join(""):'<option value="">Upload the fixtures first</option>';
+  try{ phList=new Set((await (await fetch(`/.netlify/functions/team-photo?l=${l.id}&list=1`,{cache:"no-store"})).json()).teams); }catch(e){ phList=new Set(); }
+  phCurrent();
+}
+function phCurrent(){
+  const l=$("ph-league").value, t=$("ph-team").value, has=t&&phList.has(S6.slug(t));
+  $("ph-current").innerHTML=has?`<div style="display:flex;gap:14px;align-items:center"><img src="${S6.photoURL(l,t)}&v=${Date.now()}" alt="Current photo" style="width:120px;height:90px;object-fit:cover;border-radius:10px"><div><b>Current photo</b><br><button type="button" class="btn btn-outline" id="ph-del" style="padding:7px 12px;margin-top:6px">Remove</button></div></div>`:(t?'<p class="hint" style="margin:0">No photo for this team yet.</p>':"");
+}
+$("ph-league").onchange=phTeams; $("ph-team").onchange=phCurrent;
+$("ph-file").onchange=async e=>{
+  const f=e.target.files[0]; if(!f) return; $("ph-msg").className="msg"; $("ph-msg").textContent="Preparing photo…";
+  try{
+    const bmp=await createImageBitmap(f,{imageOrientation:"from-image"});
+    const sc=Math.min(1,1600/Math.max(bmp.width,bmp.height)), c=document.createElement("canvas");
+    c.width=Math.round(bmp.width*sc); c.height=Math.round(bmp.height*sc); c.getContext("2d").drawImage(bmp,0,0,c.width,c.height);
+    let q=.82; phData=c.toDataURL("image/jpeg",q); while(phData.length>540000&&q>.5){ q-=.08; phData=c.toDataURL("image/jpeg",q); }
+    $("ph-img").src=phData; $("ph-preview").hidden=false; $("ph-msg").textContent="Check the photo, then save it.";
+  }catch(err){ $("ph-msg").className="msg err"; $("ph-msg").textContent="That photo could not be opened. Try another."; }
+  e.target.value="";
+};
+$("ph-cancel").onclick=()=>{ phData=""; $("ph-preview").hidden=true; $("ph-msg").textContent=""; };
+$("ph-save").onclick=async()=>{
+  const l=$("ph-league").value, t=$("ph-team").value; if(!t||!phData) return;
+  $("ph-save").disabled=true; $("ph-msg").className="msg"; $("ph-msg").textContent="Uploading…";
+  try{ await EM.post("team-photo",{league:l,team:S6.slug(t),image:phData}); phList.add(S6.slug(t)); $("ph-msg").textContent=`Saved: ${t}'s team photo is now on their team page.`; $("ph-preview").hidden=true; phData=""; phCurrent(); }
+  catch(err){ $("ph-msg").className="msg err"; $("ph-msg").textContent=err.message; }
+  $("ph-save").disabled=false;
+};
+$("ph-current").addEventListener("click",async e=>{ if(e.target.id!=="ph-del") return;
+  const l=$("ph-league").value, t=$("ph-team").value; if(!confirm(`Remove ${t}'s team photo?`)) return;
+  try{ await EM.post("team-photo",null,"DELETE",`?l=${l}&t=${encodeURIComponent(S6.slug(t))}`); phList.delete(S6.slug(t)); phCurrent(); $("ph-msg").textContent="Photo removed."; }
+  catch(err){ alert(err.message); } });
+phTeams();
+}
+})();
+</script>
+</body>
+</html>

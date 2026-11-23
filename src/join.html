@@ -1,0 +1,41 @@
+<!--page {"title":"Enter a team | {{site.siteName}}","desc":"Register a team for the {{site.siteName}}.","id":"join"}-->
+<!doctype html>
+<html lang="en-GB">
+<head>
+{{> head}}
+</head>
+<body data-page="join">
+{{> header}}
+<main id="main">
+  <div class="phead"><div class="wrap pb">
+    <h1>Enter a team</h1>
+    <p>Fill in the form and the league will confirm your place and first fixture.</p>
+  </div></div>
+  <div class="wrap join-grid">
+    <div class="card embed-form">
+      <iframe id="regform" title="Team registration form" loading="lazy"></iframe>
+      <p class="hint">Form not showing? <a id="regform-link" target="_blank" rel="noopener">Open it full screen</a>.</p>
+    </div>
+    <aside class="card form-card join-aside">
+      <h2>You'll need</h2>
+      <ul class="ticks">
+        <li>A captain aged 18 or over, who accepts the <span data-rules>league rules</span> for the team</li>
+        <li>At least 6 players aged 16 or over</li>
+        <li>Each player's name, address and date of birth</li>
+      </ul>
+      <h2>League nights</h2>
+      <div class="nights" id="nights"></div>
+    </aside>
+  </div>
+</main>
+{{> footer}}
+<script>
+(function(){
+  const {S,esc}=S6, u=S.registrationForm, f=document.getElementById("regform"), a=document.getElementById("regform-link");
+  if(u){ f.src=u; a.href=u; } else { f.replaceWith(Object.assign(document.createElement("p"),{className:"empty",textContent:"Registration opens soon."})); a.parentElement.remove(); }
+  document.querySelectorAll("[data-rules]").forEach(e=>{ if(S.rulesUrl) e.outerHTML=`<a href="${esc(S.rulesUrl)}" target="_blank" rel="noopener">league rules</a>`; });
+  document.getElementById("nights").innerHTML=S.leagues.map(l=>`<a href="/#leagues-sec"><b>${esc(l.night)}s</b><span>Times, fee and venue</span></a>`).join("");
+})();
+</script>
+</body>
+</html>

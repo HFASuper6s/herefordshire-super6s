@@ -1,0 +1,41 @@
+<!--page {"title":"Wellbeing | {{site.siteName}}","desc":"Free, confidential mental health support. It's okay to talk.","id":"wellbeing"}-->
+<!doctype html>
+<html lang="en-GB">
+<head>
+{{> head}}
+</head>
+<body data-page="wellbeing">
+{{> header}}
+<main id="main">
+  <div class="phead"><div class="wrap pb">
+    <h1>It's okay to talk</h1>
+    <p id="intro"></p>
+  </div></div>
+  <div class="wrap well">
+    <p class="urgent" id="urgent"></p>
+    <h2 class="sec sm">Talk to someone</h2>
+    <div class="grid g3" id="services"></div>
+    <h2 class="sec sm" id="groups-h">Meet up</h2>
+    <div class="grid g2" id="groups"></div>
+  </div>
+</main>
+{{> footer}}
+<script>
+(function(){
+  const {S,esc}=S6, W=S.wellbeing||{}, $=id=>document.getElementById(id);
+  $("intro").textContent=W.intro||"";
+  if(W.emergency) $("urgent").innerHTML=esc(W.emergency).replace("call 999",'<a href="tel:999">call 999</a>'); else $("urgent").remove();
+  const tel=n=>n.replace(/[^0-9]/g,"");
+  const logo=x=>x.logo?`<div class="help-logo"><img src="/img/${esc(x.logo)}" alt="" loading="lazy"></div>`:"";
+  $("services").innerHTML=(W.services||[]).map(s=>`<article class="card help">${logo(s)}
+    <h3${s.logo&&s.logoShowsName?' class="vh"':""}>${esc(s.name)}</h3><p>${esc(s.what||"")}</p>
+    ${s.call?`<a class="btn btn-accent" href="tel:${tel(s.call)}">Call ${esc(s.call)}</a>`:""}
+    ${s.text?`<a class="btn btn-accent" href="sms:${tel(s.text.split(" to ").pop())}${/^[A-Z]+ to/.test(s.text)?`?&body=${encodeURIComponent(s.text.split(" to ")[0])}`:""}">Text ${esc(s.text)}</a>`:""}
+    <p class="hours">${esc(s.hours||"")}</p>${s.url?`<a class="more" href="${esc(s.url)}" target="_blank" rel="noopener">Website</a>`:""}</article>`).join("");
+  if(!(W.groups||[]).length){ $("groups-h").remove(); $("groups").remove(); }
+  else $("groups").innerHTML=W.groups.map(g=>`<article class="card help group">${logo(g)}<h3${g.logo&&g.logoShowsName?' class="vh"':""}>${esc(g.name)}</h3><p>${esc(g.what||"")}</p>
+    <p class="hours">${esc(g.hours||"")}${g.place?`<br>${esc(g.place)}`:""}</p>${g.url?`<a class="btn btn-outline" href="${esc(g.url)}" target="_blank" rel="noopener">Find a group</a>`:""}</article>`).join("");
+})();
+</script>
+</body>
+</html>

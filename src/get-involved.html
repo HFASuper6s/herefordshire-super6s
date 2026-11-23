@@ -1,0 +1,36 @@
+<!--page {"title":"Get involved | {{site.siteName}}","desc":"Drop-in football, referee courses and other ways to get involved with {{site.countyFA}}.","id":"involved"}-->
+<!doctype html>
+<html lang="en-GB">
+<head>
+{{> head}}
+</head>
+<body data-page="involved">
+{{> header}}
+<main id="main">
+  <div class="phead"><div class="wrap pb">
+    <h1>Get involved</h1>
+    <p>More ways into football: turn up and play, or train as a referee.</p>
+  </div></div>
+  <div class="wrap" style="padding-top:24px">
+    <div class="grid ways" id="ways"></div>
+    <p class="muted" style="margin:18px 0 0">Got a team together? <a href="/join.html">Enter a league</a>.</p>
+  </div>
+</main>
+{{> footer}}
+<script>
+(function(){
+  const {S,esc}=S6;
+  const map=q=>`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+  document.getElementById("ways").innerHTML=(S.getInvolved||[]).map(w=>{
+    const C=w.contact||{};
+    const rows=[["When",w.dates?`<ul class="dates">${w.dates.map(d=>`<li>${esc(d)}</li>`).join("")}</ul>`:w.when&&esc(w.when)],
+      ["Where",w.where&&`<a href="${map(w.where)}" target="_blank" rel="noopener">${esc(w.where)}</a>`],
+      ["Cost",w.price&&esc(w.price)],["Who",w.who&&esc(w.who)],
+      ["Contact",(C.name||C.email)&&`${esc(C.name||"")}${C.email?`${C.name?", ":""}<a href="mailto:${esc(C.email)}">${esc(C.email)}</a>`:""}`]].filter(r=>r[1]);
+    return `<article class="card details way">${w.image?`<img class="way-img" src="/img/${esc(w.image)}" alt="" loading="lazy">`:""}<h2>${w.tag?`<span class="way-tag">${esc(w.tag)}</span>`:""}${esc(w.name)}</h2>
+      ${w.note?`<p class="way-note">${esc(w.note)}</p>`:""}${w.summary?`<p class="way-sum">${esc(w.summary)}</p>`:""}
+      <dl>${rows.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl></article>`;}).join("");
+})();
+</script>
+</body>
+</html>

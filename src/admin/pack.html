@@ -1,0 +1,179 @@
+<!--page {"title":"Paperwork | {{site.siteName}}","id":"pack"}-->
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>{{page.title}}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/icons/icon-192.png">
+<style>
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:#E7E9E7;font:14px/1.4 Arial,Helvetica,sans-serif;color:#000}
+.tool{position:sticky;top:0;z-index:5;background:{{site.colors.brand}};color:#fff;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.tool a{color:#fff}
+.tool button{font:700 16px Arial,sans-serif;background:{{site.colors.accent}};color:#fff;border:0;border-radius:8px;padding:10px 16px;cursor:pointer}
+.tool button[disabled]{opacity:.5;cursor:wait}
+.tool .st{font-size:13px;opacity:.9}
+.pages{overflow-x:auto;padding:20px 0 40px}
+.note-box{max-width:600px;margin:40px auto;background:#fff;border-radius:12px;padding:24px;font-size:16px}
+/* A4 sheets */
+.sheet{width:210mm;height:297mm;margin:0 auto 20px;background:#fff;padding:7mm 8mm;box-shadow:0 2px 10px rgba(0,0,0,.15);overflow:hidden}
+.frame{border:1.2pt solid #000;height:100%;padding:4mm 5mm;position:relative}
+.hdr{display:flex;align-items:center;gap:7mm;margin:0 0 4mm}
+.hdr img{width:34mm;height:34mm;object-fit:contain;filter:grayscale(1)}
+.hdr-t{font:italic 900 24pt/1.02 Arial,sans-serif;letter-spacing:-.3pt}
+.hdr-e{font:italic 700 9pt Arial,sans-serif;margin-top:2mm}
+.title{font:italic 700 17pt/1 Arial,sans-serif;text-decoration:underline;margin:0}
+.toprow{display:flex;justify-content:space-between;align-items:center;gap:6mm;margin:0 0 1.5mm}
+.datebox{border:1pt solid #000;flex:0 0 99mm;text-align:center;font:700 14pt/1 Arial,sans-serif;padding:2mm 0}
+.nb{font:italic 700 6.5pt Arial,sans-serif;margin:0 0 7mm}
+table{border-collapse:collapse;width:100%;table-layout:fixed}
+th{font:700 7pt/1.15 Arial,sans-serif;text-align:left;padding:1mm 1.2mm;vertical-align:bottom}
+td{font:700 7pt/1.15 Arial,sans-serif;border:.6pt solid #000;padding:.6mm 1.5mm;height:6.1mm;overflow-wrap:anywhere}
+td.c,th.c{text-align:center}
+thead tr{border-bottom:1.4pt solid #000}
+.pay td.tick{border-right:3mm solid #fff}
+.sec{margin-top:9mm}
+.sec .title{font-size:15pt;margin-bottom:4mm}
+.fx{margin-bottom:10mm}
+.fx td{height:8.5mm;font-size:7.5pt}
+.fxhead{border-bottom:1.4pt solid #000;margin-bottom:3mm}
+.tbl h3{font:700 10.5pt Arial,sans-serif;margin:3mm 0 1mm}
+.tbl table td,.tbl table th{font:700 6.8pt/1.1 Arial,sans-serif;border:.6pt solid #000;height:auto;padding:1.2mm 1.2mm;text-align:center}
+.tbl table td:nth-child(2),.tbl table th:nth-child(2){text-align:left;width:46%}
+.tbl table thead tr,.tbl table tr:first-child{border-bottom:1.2pt solid #000}
+.tbl img{display:none}
+.tbl .fail{font:700 9pt Arial,sans-serif;color:#B3261E;border:1pt dashed #B3261E;padding:2mm}
+.pitchtop{display:flex;align-items:center;margin-bottom:3mm}
+.pitchtop .title{font-size:12pt;flex:1}
+.pitchtop .big{font:700 22pt Arial,sans-serif;flex:1.4}
+.ref td{height:5.6mm}
+.two{display:grid;grid-template-columns:1fr 66mm;gap:9mm;margin-top:10mm}
+.lbl{display:inline-block;border:.6pt solid #000;font:700 6.5pt Arial,sans-serif;padding:1.5mm 1.5mm;min-width:32mm;margin-bottom:4mm}
+.cards td{height:5.6mm;font-weight:400}
+.cards th{border:.6pt solid #000;padding:1.3mm 1.2mm}
+.cards td.b{font-weight:700}
+@media (max-width:820px){.pages{padding:12px}}
+@media print{
+  @page{size:A4 portrait;margin:0}
+  body{background:#fff}
+  .tool,.no-print{display:none!important}
+  .pages{padding:0;overflow:visible}
+  .sheet{margin:0;box-shadow:none;break-after:page;page-break-after:always}
+  .sheet:last-child{break-after:auto;page-break-after:auto}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+<script src="/js/config.js"></script>
+<script src="/js/common.js"></script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script src="/admin/admin.js"></script>
+</head>
+<body>
+<div class="tool">
+  <a href="/admin/">&larr; Event manager</a>
+  <span class="st" id="st">Preparing paperwork…</span>
+  <button type="button" id="dl" disabled>Download PDF</button>
+</div>
+<div class="pages" id="pages"></div>
+<script>
+(function(){
+const {S,esc,league,param}=S6;
+const $=id=>document.getElementById(id);
+const L=league(param("l")), D=param("d")||"";
+const SHORT={Monday:"Mon",Tuesday:"Tues",Wednesday:"Weds",Thursday:"Thurs",Friday:"Fri"};
+let started=false;
+const stop=html=>{ $("pages").innerHTML=`<div class="note-box">${html}</div>`; $("st").textContent=""; };
+
+EM.onAuth(user=>{
+  if(!EM.isAdmin(user)){ stop(`Please <a href="/admin/">log in</a> to download the paperwork.`); return; }
+  if(!started){ started=true; build().catch(e=>stop(esc(e.message))); }
+});
+
+async function build(){
+  if(!L||!/^\d{4}-\d{2}-\d{2}$/.test(D)) return stop("This paperwork link is not valid. Go back and pick the league night again.");
+  if(!EM.packOpen(D)) return stop(`The paperwork for ${esc(EM.longDate(D))} opens on ${esc(EM.longDate(EM.addDays(D,-1)))}.`);
+  const fx=await EM.fixtures(L);
+  if(!fx) return stop(`No fixture file is loaded for the ${esc(L.name)}.`);
+  const games=fx.filter(f=>f.ymd===D).sort((a,b)=>a.time.localeCompare(b.time)||(+a.pitchNo||0)-(+b.pitchNo||0));
+  if(!games.length) return stop(`There are no ${esc(L.name)} games on ${esc(EM.longDate(D))} in the fixture file.`);
+  const susp=(await EM.api("GET")).items.filter(s=>EM.activeOn(s,D)).sort((a,b)=>a.team.localeCompare(b.team,undefined,{numeric:true})||a.name.localeCompare(b.name,undefined,{numeric:true}));
+  const P=L.pack||{}, money=n=>n==null?"":"£"+Number(n).toFixed(2);
+  const pitches=[...new Set(games.map(g=>g.pitchNo))].sort((a,b)=>a-b);
+  const dt=new Date(D+"T12:00:00");
+  const dayBox=`- ${dt.toLocaleDateString("en-GB",{weekday:"long"}).toUpperCase()} ${dt.getDate()} ${dt.toLocaleDateString("en-GB",{month:"short"}).toUpperCase()} ${dt.getFullYear()} -`;
+  const ukDate=`${String(dt.getDate()).padStart(2,"0")}/${String(dt.getMonth()+1).padStart(2,"0")}/${dt.getFullYear()}`;
+  const hdr=`<div class="hdr"><img src="/img/logo.png" alt=""><div><div class="hdr-t">${esc(S.siteName.toUpperCase())}</div>${S.contactEmail?`<div class="hdr-e">${esc(S.contactEmail)}</div>`:""}</div></div>`;
+  const blank=(n,cols)=>Array.from({length:n},()=>`<tr>${"<td></td>".repeat(cols)}</tr>`).join("");
+  document.title=`Paperwork ${L.night} ${ukDate} | ${S.name}`;
+
+  // 1. Team payments
+  const payRows=games.flatMap(g=>[g.home,g.away].map(t=>`<tr><td class="tick"></td><td class="c">${esc(g.time)}</td><td class="c">${esc(g.pitchNo)}</td><td>${esc(t)}</td><td class="c">${money(P.fee)}</td><td></td><td></td><td></td><td></td></tr>`)).join("");
+  const staff=[["EM","n/a"],...pitches.map(p=>["Ref",p])].map(([d,p])=>`<tr><td>${d}</td><td class="c">${esc(p)}</td><td></td><td class="c">${esc(P.staffStart||"")}</td><td class="c">${esc(P.staffEnd||"")}</td><td></td><td class="c">BACS - ${esc(SHORT[L.night]||L.night)}</td><td></td></tr>`).join("");
+  const p1=`<section class="sheet"><div class="frame">${hdr}
+    <div class="toprow"><h1 class="title">TEAM PAYMENTS</h1><div class="datebox">${esc(dayBox)}</div></div>
+    ${P.friendlyFee!=null?`<p class="nb">[NB. FRIENDLY MATCH FEE = ${money(P.friendlyFee)}]</p>`:'<p class="nb">&nbsp;</p>'}
+    <table class="pay"><colgroup><col style="width:7mm"><col style="width:13mm"><col style="width:11mm"><col style="width:38mm"><col style="width:15mm"><col style="width:14mm"><col style="width:14mm"><col style="width:29mm"><col></colgroup>
+    <thead><tr><th>Tick</th><th class="c">Time</th><th class="c">Pitch</th><th class="c">Team Name</th><th class="c">Fee Due</th><th class="c">Fee Paid</th><th class="c">Credit / Arrears Check</th><th class="c">Captain's Signature</th><th class="c">Notes</th></tr></thead>
+    <tbody>${payRows}</tbody></table>
+    <div class="sec"><h2 class="title">EM / REFEREES</h2>
+    <table class="ref"><colgroup><col style="width:11mm"><col style="width:10mm"><col style="width:36mm"><col style="width:16mm"><col style="width:16mm"><col style="width:14mm"><col style="width:28mm"><col></colgroup>
+    <thead><tr><th>Desc</th><th class="c">Pitch</th><th class="c">Name</th><th class="c">Start</th><th class="c">Finish</th><th class="c">Hrs</th><th class="c">Pay (£)</th><th></th></tr></thead>
+    <tbody>${staff}</tbody></table></div></div></section>`;
+
+  // 2. League fixtures, grouped by kick-off
+  const times=[...new Set(games.map(g=>g.time))];
+  const fxCols='<colgroup><col style="width:27mm"><col style="width:42mm"><col style="width:42mm"><col style="width:24mm"><col style="width:24mm"><col></colgroup>';
+  const p2=`<section class="sheet"><div class="frame">${hdr}<h1 class="title" style="margin:2mm 0 6mm">LEAGUE FIXTURES</h1>
+    <table class="fxhead">${fxCols}<thead><tr><th>Division</th><th>Home Team</th><th>Away Team</th><th class="c">Date</th><th class="c">Time</th><th class="c">Pitch</th></tr></thead></table>
+    ${times.map(t=>`<table class="fx">${fxCols}<tbody>${games.filter(g=>g.time===t).map(g=>`<tr><td>${esc(g.division)}</td><td>${esc(g.home)}</td><td>${esc(g.away)}</td><td class="c">${ukDate}</td><td class="c">${esc(g.time)}</td><td class="c">Pitch ${esc(g.pitchNo)}</td></tr>`).join("")}</tbody></table>`).join("")}
+    </div></section>`;
+
+  // 3. League tables (live from FA Full-Time)
+  const p3=`<section class="sheet"><div class="frame">${hdr}<h1 class="title" style="margin:0 0 2mm">LEAGUE TABLES</h1>
+    ${L.divisions.map(d=>`<div class="tbl"><h3>${esc(d.name)}</h3><div data-code="${esc(d.table)}">Loading table…</div></div>`).join("")}</div></section>`;
+
+  // 4. One referee sheet per pitch
+  const suspRows=susp.map(s=>`<tr><td>${esc(s.name)}</td><td${s.allPlayers?' class="b"':""}>${esc(s.team)}</td></tr>`).join("")||'<tr><td>None</td><td></td></tr>';
+  const refCols='<colgroup><col style="width:21mm"><col style="width:39mm"><col style="width:12mm"><col style="width:39mm"><col style="width:12mm"><col style="width:24mm"><col style="width:13mm"><col></colgroup>';
+  const pitchPages=pitches.map(p=>`<section class="sheet"><div class="frame">
+    <div class="pitchtop"><h1 class="title">LEAGUE FIXTURES</h1><div class="big">PITCH ${esc(p)}</div></div>
+    <table class="ref">${refCols}<thead><tr><th>Division</th><th>Home Team</th><th class="c">Goals</th><th>Away Team</th><th class="c">Goals</th><th class="c">MOM</th><th class="c">Time</th><th class="c">Pitch</th></tr></thead>
+    <tbody>${games.filter(g=>g.pitchNo===p).map(g=>`<tr><td>${esc(g.division)}</td><td>${esc(g.home)}</td><td></td><td>${esc(g.away)}</td><td></td><td></td><td class="c">${esc(g.time)}</td><td class="c">Pitch ${esc(p)}</td></tr>`).join("")}</tbody></table>
+    <div class="two">
+      <div><div class="lbl">RED CARDS</div><table class="cards"><colgroup><col style="width:30%"><col style="width:30%"><col></colgroup><thead><tr><th>NAME</th><th>TEAM</th><th>DETAILS</th></tr></thead><tbody>${blank(7,3)}</tbody></table></div>
+      <div><div class="lbl">SUSPENDED PLAYERS</div><table class="cards"><thead><tr><th>NAME</th><th>TEAM</th></tr></thead><tbody>${suspRows}</tbody></table></div>
+    </div></div></section>`).join("");
+
+  $("pages").innerHTML=p1+p2+p3+pitchPages;
+  $("st").textContent=`${L.name}, ${EM.longDate(D)}: ${games.length} games, ${susp.length} suspensions. Loading tables…`;
+  const ok=await loadTables();
+  $("st").textContent=`${L.name}, ${EM.longDate(D)}: ${games.length} games, ${susp.length} suspensions.${ok?"":" Some tables did not load - check FA Full-Time, then reload."}`;
+  $("dl").disabled=false;
+}
+
+// Each Full-Time snippet loads in its own hidden frame (the FA script expects one per page),
+// then its table is copied into the sheet so it prints.
+function loadTables(){
+  const boxes=[...document.querySelectorAll("[data-code]")];
+  return Promise.all(boxes.map(box=>new Promise(res=>{
+    const code=box.dataset.code, f=document.createElement("iframe");
+    f.style.cssText="position:absolute;left:-9999px;width:800px;height:600px;border:0";
+    f.srcdoc=`<!doctype html><html><body><div id="lrep${code}">Loading</div><script>var lrcode='${code}'<\/script><script src="https://fulltime.thefa.com/client/api/cs1.js"><\/script></body></html>`;
+    let n=0; const t=setInterval(()=>{
+      let tbl=null; try{ tbl=f.contentDocument&&f.contentDocument.querySelector(`#lrep${code} table`); }catch(e){}
+      if(tbl){ clearInterval(t); const c=tbl.cloneNode(true); c.querySelectorAll("a").forEach(a=>a.replaceWith(...a.childNodes));
+        c.querySelectorAll("td,th").forEach(td=>{ td.textContent=S6.stripShirts(td.textContent); }); c.removeAttribute("style"); c.querySelectorAll("[style],[width]").forEach(x=>{x.removeAttribute("style");x.removeAttribute("width")});
+        box.replaceChildren(c); f.remove(); res(true); }
+      else if(++n>60){ clearInterval(t); box.innerHTML='<div class="fail">Table did not load from FA Full-Time.</div>'; f.remove(); res(false); }
+    },250);
+    document.body.appendChild(f);
+  })));
+}
+$("dl").onclick=()=>window.print();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{
+  "siteName": "Testshire FA Super 6s",
+  "shortName": "Super 6s",
+  "countyFA": "Testshire FA",
+  "countyFAUrl": "https://example.com",
+  "partner": null,
+  "headline": "Small-sided, big nights",
+  "intro": "One weeknight league with live tables and team form.",
+  "contactEmail": "league@example.com",
+  "registrationForm": "",
+  "colors": {
+    "brand": "#00502A",
+    "brandDark": "#003A1E",
+    "brandLight": "#0B6B3B",
+    "accent": "#A35F00",
+    "accentDark": "#7A4700",
+    "logoBg": "#F0F0E6"
+  },
+  "leagues": [
+    {
+      "id": "wednesday",
+      "name": "Wednesday League",
+      "night": "Wednesday",
+      "kickOffs": "19:30 and 20:15",
+      "gameLength": "20 minutes each way",
+      "venue": "Testshire Leisure Centre",
+      "price": "\u00a335 per team per week",
+      "fixturesFile": "data/wednesday-fixtures.csv",
+      "divisions": [
+        {
+          "name": "Premier",
+          "table": "111",
+          "results": "112",
+          "fixtures": "113"
+        }
+      ],
+      "pack": {
+        "fee": 35,
+        "friendlyFee": 20,
+        "staffStart": "7.30pm",
+        "staffEnd": "9.30pm"
+      },
+      "town": "Testshire",
+      "players": 6,
+      "manager": {
+        "name": "Alex Example",
+        "phone": "07000 000000"
+      }
+    }
+  ],
+  "shirts": {
+    "wednesday": {
+      "Alpha FC": "Yellow",
+      "Beta Utd": "Yellow/Black"
+    }
+  },
+  "rulesUrl": null
+}
