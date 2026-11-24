@@ -51,7 +51,7 @@
   if(u){ a.href=u; } else { f.replaceWith(Object.assign(document.createElement("p"),{className:"empty",textContent:"Registration opens soon."})); a.parentElement.remove(); }
   document.querySelectorAll("[data-rules]").forEach(e=>{ if(S.rulesUrl) e.outerHTML=`<a href="${esc(S.rulesUrl)}" target="_blank" rel="noopener">league rules</a>`; });
   const vRules=V=>V&&V.rules&&V.rules.length?`<ul class="vrules">${V.rules.map(r=>`<li><b>${esc(r.h)}</b> ${esc(r.t)}</li>`).join("")}</ul>`:"";
-  const V=S.venue; if(V) document.getElementById("venue").innerHTML=`<address class="venue"><b>${esc(V.name)}</b>${V.address.map(esc).join("<br>")}</address><a class="btn btn-outline" href="${esc(V.map)}" target="_blank" rel="noopener">Directions</a>${vRules(V)}`;
+  const V=S.venue; if(V) document.getElementById("venue").innerHTML=`<address class="venue"><b>${esc(V.name)}</b>${V.address.map(esc).join("<br>")}</address><a class="btn btn-outline" href="${esc(V.map)}" target="_blank" rel="noopener">Directions</a>${vRules(V)}<a class="venue-link" href="/venue.html#footwear">Footwear guidance and venue info →</a>`;
   document.getElementById("nights").innerHTML=S.leagues.map(l=>`<a href="/league.html?l=${l.id}#table"><b>${esc(l.night)}s</b><span>${esc(l.hours||"")}</span></a>`).join("");
 })();
 </script>

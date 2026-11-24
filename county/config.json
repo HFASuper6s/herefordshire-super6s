@@ -81,7 +81,8 @@
       "players": 6,
       "manager": {
         "name": "Martin Oliver",
-        "phone": "07940 241587"
+        "phone": "07940 241587",
+        "photo": "manager.jpg"
       },
       "hours": "7pm – 10pm",
       "title": "Hereford Academy – Mon",
@@ -137,7 +138,8 @@
       "players": 6,
       "manager": {
         "name": "Martin Oliver",
-        "phone": "07940 241587"
+        "phone": "07940 241587",
+        "photo": "manager.jpg"
       },
       "hours": "7pm – 9.40pm",
       "title": "Hereford Academy – Thurs",
@@ -220,28 +222,20 @@
     }
   ],
   "champions": {
-    "title": "Champions",
-    "intro": "Divisional winners, under the lights at The Hereford Academy.",
+    "title": "On the pitch",
+    "intro": "Teams and moments from Super 6s nights over the years.",
     "photos": [
       {
-        "src": "champions-1.jpg",
-        "caption": "Divisional champions",
-        "sub": ""
+        "src": "champions-1.jpg"
       },
       {
-        "src": "champions-2.jpg",
-        "caption": "Divisional champions",
-        "sub": ""
+        "src": "champions-2.jpg"
       },
       {
-        "src": "champions-3.jpg",
-        "caption": "Divisional champions",
-        "sub": ""
+        "src": "champions-3.jpg"
       },
       {
-        "src": "champions-4.jpg",
-        "caption": "Divisional champions",
-        "sub": ""
+        "src": "champions-4.jpg"
       }
     ]
   },
@@ -395,8 +389,8 @@
     {
       "k": "Venue",
       "v": "Hereford Academy 3G",
-      "s": "Marlbrook Road, HR2 7NG · Directions",
-      "href": "https://www.google.com/maps?ll=52.037472,-2.727611&z=14&t=m&hl=en&gl=GB&mapclient=embed&cid=13556200943706621325"
+      "s": "Marlbrook Road, HR2 7NG · Directions & footwear",
+      "href": "/venue.html"
     }
   ],
   "why": [
@@ -440,7 +434,37 @@
         "h": "No smoking or vaping",
         "t": "Smoking and vaping are strictly prohibited on site."
       }
-    ]
+    ],
+    "photo": "venue-pitch.jpg",
+    "footwear": {
+      "intro": "Guidance from The Hereford Academy for everyone playing on the 3G pitch. Captains: please pass this on to your players before your first fixture.",
+      "ok": [
+        {
+          "h": "Moulded studs",
+          "t": "Recommended. Round moulds are best; triangular, oblong or shaped moulds are also fine."
+        },
+        {
+          "h": "Screw-in studs",
+          "t": "Recommended and fine to play in."
+        }
+      ],
+      "lastResort": [
+        {
+          "h": "Astro trainers",
+          "t": "Allowed only as a last resort if you have no suitable boots. Not a long-term option for regular players: get moulded studs."
+        }
+      ],
+      "no": [
+        {
+          "h": "Blades",
+          "t": "Not allowed, including chevron-style angled blades (such as some Nike Mercurials), even on hybrid boots with round moulds."
+        },
+        {
+          "h": "Flat-soled trainers",
+          "t": "Not allowed on the pitch."
+        }
+      ]
+    }
   },
   "gallery": [
     {

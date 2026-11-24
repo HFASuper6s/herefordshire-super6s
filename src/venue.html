@@ -1,0 +1,42 @@
+<!--page {"title":"Venue and footwear | {{site.siteName}}","desc":"Getting to The Hereford Academy 3G, site rules and footwear guidance.","id":"venue"}-->
+<!doctype html>
+<html lang="en-GB">
+<head>
+{{> head}}
+</head>
+<body data-page="venue">
+{{> header}}
+<main id="main">
+  <div class="phead"><div class="wrap pb">
+    <h1>The venue</h1>
+    <p>Where we play, the site rules and what to wear on your feet.</p>
+  </div></div>
+  <div class="wrap venue-page">
+    <section class="card venue-top" id="vtop"></section>
+    <section id="site-rules"><h2 class="sec sm">Site rules</h2><ul class="vrules vr3" id="vrules"></ul></section>
+    <section id="footwear"><h2 class="sec sm">Footwear guidance</h2><p class="lead-sm" id="fw-intro"></p><div class="fw-grid" id="fw"></div></section>
+  </div>
+</main>
+{{> footer}}
+<script>
+(function(){
+  const {S,esc}=S6, V=S.venue||{}, F=V.footwear||{}, $=id=>document.getElementById(id);
+  $("vtop").innerHTML=`${V.photo?`<img src="/img/${esc(V.photo)}" alt="The 3G pitch at ${esc(V.name||"")}">`:""}<div><h2>${esc(V.name||"")}</h2><address class="venue">${(V.address||[]).map(esc).join("<br>")}</address>
+    <p class="muted small">Monday and Thursday evenings on the floodlit 3G pitch.</p><a class="btn btn-accent" href="${esc(V.map||"#")}" target="_blank" rel="noopener">Directions</a></div>`;
+  $("vrules").innerHTML=(V.rules||[]).map(r=>`<li><b>${esc(r.h)}</b> ${esc(r.t)}</li>`).join("");
+  $("fw-intro").textContent=F.intro||"";
+  // Simple sole drawings (our own artwork) for each footwear type
+  const sole=k=>{ const base='<path d="M20 8c18-6 40-6 58 4 10 6 12 22 8 40-4 22-8 40-12 50-6 14-24 18-36 10-12-8-20-30-22-52C14 40 10 14 20 8z" fill="#E9ECF3" stroke="#2B3352" stroke-width="2"/>';
+    const studs={round:[[34,22],[56,20],[70,30],[36,44],[64,48],[46,84],[30,70],[60,78]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="5.5" fill="#2B3352"/>`).join(""),
+      screw:[[34,24],[62,22],[38,48],[64,50],[38,82],[58,84]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="7" fill="#9AA0A6" stroke="#2B3352" stroke-width="2"/><circle cx="${x}" cy="${y}" r="2" fill="#2B3352"/>`).join(""),
+      blade:[[30,26],[56,22],[34,50],[62,48],[36,84],[58,82]].map(([x,y])=>`<path d="M${x-8} ${y+4} L${x} ${y-4} L${x+8} ${y+4}" fill="none" stroke="#2B3352" stroke-width="4.5" stroke-linecap="round"/>`).join(""),
+      flat:'<path d="M26 24h44M24 40h50M26 56h46M28 72h40M32 88h30" stroke="#9AA0A6" stroke-width="3"/>',
+      astro:Array.from({length:42},(_,i)=>`<circle cx="${26+(i%6)*9}" cy="${18+Math.floor(i/6)*12}" r="2.2" fill="#2B3352"/>`).join("")}[k];
+    return `<svg viewBox="0 0 100 120" width="64" height="77" aria-hidden="true">${base}${studs}</svg>`; };
+  const KEY={"Moulded studs":"round","Screw-in studs":"screw","Astro trainers":"astro","Blades":"blade","Flat-soled trainers":"flat"};
+  const col=(cls,title,items)=>items&&items.length?`<div class="fw-col ${cls}"><h3>${title}</h3>${items.map(i=>`<div class="fw-item">${sole(KEY[i.h]||"round")}<div><b>${esc(i.h)}</b><p>${esc(i.t)}</p></div></div>`).join("")}</div>`:"";
+  $("fw").innerHTML=col("ok","✓ Recommended",F.ok)+col("mid","! Last resort only",F.lastResort)+col("no","✕ Not allowed",F.no);
+})();
+</script>
+</body>
+</html>

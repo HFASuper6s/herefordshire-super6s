@@ -63,8 +63,9 @@ const ctx = {
   champions: (() => { const G = C.champions, ph = (G && G.photos || []).filter(p => has(p.src)); if (!ph.length) return "";
     return `<section class="block" id="champs-sec"><div class="wrap">
       <div class="sec-head"><h2 class="sec">${esc(G.title || "Champions")}</h2></div>${G.intro ? `<p class="champs-intro">${esc(G.intro)}</p>` : ""}
-      <div class="champs">${ph.map((p, i) => { const alt = [p.caption, p.sub].filter(Boolean).join(", ") || "Super 6s team photo";
-        return `<figure class="champ"><button type="button" class="champ-open" data-i="${i}" aria-label="View larger: ${esc(alt)}"><img src="/img/${esc(p.src)}" alt="${esc(alt)}" loading="lazy" decoding="async"></button><figcaption><b>${esc(p.caption || "")}</b>${p.sub ? `<span>${esc(p.sub)}</span>` : ""}</figcaption></figure>`; }).join("")}</div>
+      <div class="champs">${ph.map((p, i) => { const alt = p.alt || [p.caption, p.sub].filter(Boolean).join(", ") || "A Super 6s team under the floodlights";
+        const cap = p.caption ? `<figcaption><b>${esc(p.caption)}</b>${p.sub ? `<span>${esc(p.sub)}</span>` : ""}</figcaption>` : "";
+        return `<figure class="champ${cap ? "" : " nocap"}"><button type="button" class="champ-open" data-i="${i}" aria-label="View photo ${i + 1} larger"><img src="/img/${esc(p.src)}" alt="${esc(alt)}" loading="lazy" decoding="async"></button>${cap}</figure>`; }).join("")}</div>
     </div></section>`; })(),
 };
 const get = (o, p) => p.split(".").reduce((a, k) => a == null ? a : a[k], o);

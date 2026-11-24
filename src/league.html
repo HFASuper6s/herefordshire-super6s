@@ -90,10 +90,10 @@
   function overviewTop(L){
     const V=S.venue||{}, mins=(L.gameLength||"").match(/(\d+)\s*minutes?\s*each way/i), M=L.manager||{};
     const price=(L.price||"").match(/£\s*(\d+(?:\.\d+)?)/);
-    const rows=[["Venue",V.name&&`<a href="${esc(V.map||"#")}" target="_blank" rel="noopener">${esc(V.name)}</a>, ${esc((V.address||[]).slice(-2).join(", "))}`],
+    const rows=[["Venue",V.name&&`<a href="/venue.html">${esc(V.name)}</a>, ${esc((V.address||[]).slice(-2).join(", "))}`],
       ["Format",L.players&&`${esc(L.players)}-a-side`],["Night",`${esc(L.night)}s, ${esc(L.hours||"")}`],
       ["Match length",mins&&`${mins[1]} minutes each way`],["Match fee",price&&`£${(+price[1]).toFixed(2)} a team`],
-      ["League manager",M.name&&`${esc(M.name)}${M.phone?` · <a href="tel:${esc(M.phone.replace(/\s/g,""))}">${esc(M.phone)}</a>`:""}`],
+      ["League manager",M.name&&`<span class="mgr">${M.photo?`<img src="/img/${esc(M.photo)}" alt="${esc(M.name)}">`:""}<span>${esc(M.name)}${M.phone?`<br><a href="tel:${esc(M.phone.replace(/\s/g,""))}">${esc(M.phone)}</a>`:""}</span></span>`],
       ["Rules",`<a href="/rules.html#terms">Terms of entry</a> · <a href="/rules.html#playing">Playing rules</a>`]].filter(r=>r[1]);
     $("ldetails").innerHTML=`<h2>At a glance</h2><dl>${rows.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>`;
     const G=S.gallery||[]; if(!G.length){ $("gallery").remove(); return; }
@@ -117,7 +117,7 @@
   document.querySelector(".ltabs").onclick=e=>{ const v=e.target.dataset.v; if(v){ e.preventDefault(); st.v=v; render(); } };
   addEventListener("hashchange",()=>{ let v=location.hash.slice(1); if(v==="table") v="overview"; if(VIEWS.includes(v)&&v!==st.v){ st.v=v; render(); } });
   const vRules=V=>V&&V.rules&&V.rules.length?`<ul class="vrules">${V.rules.map(r=>`<li><b>${esc(r.h)}</b> ${esc(r.t)}</li>`).join("")}</ul>`:"";
-  if(S.venue){ const V=S.venue; $("about-venue").innerHTML=`<b>Venue:</b> ${esc(V.name)}, ${V.address.map(esc).join(", ")} · <a href="${esc(V.map)}" target="_blank" rel="noopener">Directions</a>${vRules(V)}`; }
+  if(S.venue){ const V=S.venue; $("about-venue").innerHTML=`<b>Venue:</b> ${esc(V.name)}, ${V.address.map(esc).join(", ")} · <a href="${esc(V.map)}" target="_blank" rel="noopener">Directions</a>${vRules(V)}<a class="venue-link" href="/venue.html#footwear">Footwear guidance and venue info →</a>`; }
   render();
 })();
 </script>
