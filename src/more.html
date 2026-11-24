@@ -1,27 +1,3 @@
-<!--page {"title":"More | {{site.siteName}}","desc":"Enter a team, get involved, wellbeing support and league rules.","id":"more"}-->
-<!doctype html>
-<html lang="en-GB">
-<head>
-{{> head}}
-</head>
-<body data-page="more">
-{{> header}}
-<main id="main">
-  <div class="phead"><div class="wrap pb"><h1>More</h1></div></div>
-  <div class="wrap more-list" id="more"></div>
-</main>
-{{> footer}}
-<script>
-(function(){
-  const {S,esc}=S6;
-  const items=[["/join.html","Enter a team","Register your team for a league"],
-    (S.getInvolved||[]).length&&["/get-involved.html","Get involved","Drop-in football, walking football, futsal and referee courses"],
-    S.wellbeing&&["/wellbeing.html","Wellbeing","Need to talk? Free, confidential support"],
-    ["/news.html","News","Events, camps and league winners"],
-    S.rulesUrl&&[S.rulesUrl,"League rules","Rules and terms (PDF)"],
-    S.contactEmail&&["mailto:"+S.contactEmail,"Contact us",S.contactEmail]].filter(Boolean);
-  document.getElementById("more").innerHTML=items.map(([h,t,d])=>`<a class="card more-item" href="${esc(h)}"${/^https?:|\.pdf$/.test(h)?' target="_blank" rel="noopener"':""}><b>${esc(t)}</b><span>${esc(d)}</span></a>`).join("");
-})();
-</script>
-</body>
-</html>
+<!--page {"title":"{{site.siteName}}","id":"more-redirect"}-->
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>{{site.siteName}}</title>
+<script>location.replace("/get-involved.html");</script></head><body></body></html>

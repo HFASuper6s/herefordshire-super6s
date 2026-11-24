@@ -1,4 +1,4 @@
-<!--page {"title":"Enter a team | {{site.siteName}}","desc":"Register a team for the {{site.siteName}}.","id":"join"}-->
+<!--page {"title":"Join a league | {{site.siteName}}","desc":"Register a team for the {{site.siteName}}.","id":"join"}-->
 <!doctype html>
 <html lang="en-GB">
 <head>
@@ -8,23 +8,33 @@
 {{> header}}
 <main id="main">
   <div class="phead"><div class="wrap pb">
-    <h1>Enter a team</h1>
-    <p>Fill in the form and the league will confirm your place and first fixture.</p>
+    <h1>Join a league</h1>
+    <p>Free entry, £30 a team each week, 10-week seasons. Fill in the form and we will confirm your division and first match night.</p>
   </div></div>
   <div class="wrap join-grid">
-    <div class="card embed-form">
+    <div>
+    <div class="card agree" id="agree">
+      <h2>Before you start</h2>
+      <label class="agree-box"><input type="checkbox" id="agree-tick">
+        <span>I am the team captain and I am 18 or over. On behalf of my team, I agree to the league's <a href="/rules.html#terms" target="_blank" rel="noopener">Terms of entry</a>, and I accept that as captain I am responsible for paying the team's weekly match fees and any fines or money the team owes (rule 2).</span></label>
+      <p class="hint" id="agree-hint">Tick the box to open the registration form.</p>
+    </div>
+    <div class="card embed-form" id="formcard" hidden>
       <iframe id="regform" title="Team registration form" loading="lazy"></iframe>
       <p class="hint">Form not showing? <a id="regform-link" target="_blank" rel="noopener">Open it full screen</a>.</p>
+    </div>
     </div>
     <aside class="card form-card join-aside">
       <h2>You'll need</h2>
       <ul class="ticks">
-        <li>A captain aged 18 or over, who accepts the <span data-rules>league rules</span> for the team</li>
+        <li>A captain aged 18 or over, who accepts the <a href="/rules.html#terms">league rules</a> for the team</li>
         <li>At least 6 players aged 16 or over</li>
         <li>Each player's name, address and date of birth</li>
       </ul>
       <h2>League nights</h2>
       <div class="nights" id="nights"></div>
+      <h2>Venue</h2>
+      <div id="venue"></div>
     </aside>
   </div>
 </main>
@@ -32,9 +42,17 @@
 <script>
 (function(){
   const {S,esc}=S6, u=S.registrationForm, f=document.getElementById("regform"), a=document.getElementById("regform-link");
-  if(u){ f.src=u; a.href=u; } else { f.replaceWith(Object.assign(document.createElement("p"),{className:"empty",textContent:"Registration opens soon."})); a.parentElement.remove(); }
+  // The form only opens once the captain has ticked the agreement (remembered for this visit)
+  const tick=document.getElementById("agree-tick"), card=document.getElementById("formcard");
+  let agreed=false; try{ agreed=sessionStorage.getItem("s6-agree")==="1"; }catch(e){}
+  const openForm=on=>{ card.hidden=!on; document.getElementById("agree-hint").textContent=on?"Thank you. Fill in the form below.":"Tick the box to open the registration form."; if(on&&u&&!f.src) f.src=u; };
+  tick.checked=agreed; openForm(agreed);
+  tick.onchange=()=>{ try{ sessionStorage.setItem("s6-agree",tick.checked?"1":"0"); }catch(e){} openForm(tick.checked); if(tick.checked) card.scrollIntoView({behavior:"smooth",block:"start"}); };
+  if(u){ a.href=u; } else { f.replaceWith(Object.assign(document.createElement("p"),{className:"empty",textContent:"Registration opens soon."})); a.parentElement.remove(); }
   document.querySelectorAll("[data-rules]").forEach(e=>{ if(S.rulesUrl) e.outerHTML=`<a href="${esc(S.rulesUrl)}" target="_blank" rel="noopener">league rules</a>`; });
-  document.getElementById("nights").innerHTML=S.leagues.map(l=>`<a href="/#leagues-sec"><b>${esc(l.night)}s</b><span>Times, fee and venue</span></a>`).join("");
+  const vRules=V=>V&&V.rules&&V.rules.length?`<ul class="vrules">${V.rules.map(r=>`<li><b>${esc(r.h)}</b> ${esc(r.t)}</li>`).join("")}</ul>`:"";
+  const V=S.venue; if(V) document.getElementById("venue").innerHTML=`<address class="venue"><b>${esc(V.name)}</b>${V.address.map(esc).join("<br>")}</address><a class="btn btn-outline" href="${esc(V.map)}" target="_blank" rel="noopener">Directions</a>${vRules(V)}`;
+  document.getElementById("nights").innerHTML=S.leagues.map(l=>`<a href="/league.html?l=${l.id}#table"><b>${esc(l.night)}s</b><span>${esc(l.hours||"")}</span></a>`).join("");
 })();
 </script>
 </body>

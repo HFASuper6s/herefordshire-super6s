@@ -14,7 +14,7 @@
   const {S,esc,league,param,loadFixtures,table,divGames,formHTML,fmtDay,ymd,initials,photoURL,shirt,bibSVG,clash}=S6;
   const L=league(param("l"))||S.leagues[0], T=param("t")||"", today=ymd(new Date()), app=document.getElementById("app");
   const fx=await loadFixtures(L)||[], mine=fx.filter(f=>f.home===T||f.away===T);
-  if(!mine.length){ app.innerHTML=`<div class="wrap" style="padding:60px 0"><h1 class="page-title">Team not found</h1><p class="muted">See the <a href="/tables.html?l=${L.id}">${esc(L.name)} teams</a>.</p></div>`; return; }
+  if(!mine.length){ app.innerHTML=`<div class="wrap" style="padding:60px 0"><h1 class="page-title">Team not found</h1><p class="muted">See the <a href="/league.html?l=${L.id}">${esc(L.name)} teams</a>.</p></div>`; return; }
   document.title=`${T} | ${S.siteName}`;
   const div=mine[0].division, games=divGames(fx,div), tbl=table(games), me=tbl.find(r=>r.team===T);
   const played=mine.filter(g=>g.played), next=mine.filter(g=>!g.played&&g.ymd>=today), pending=mine.filter(g=>!g.played&&g.ymd<today);
@@ -56,7 +56,7 @@
   const upd=fx.updated?`Updated ${new Date(fx.updated).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}`:"";
   app.innerHTML=`<section class="thero"><div class="wrap">
       <div class="pic" id="pic"><div class="pic-empty">${shirt(L.id,T,150)}<span>Team photo coming soon</span></div></div>
-      <div><p class="crumb"><a href="/tables.html?l=${L.id}&d=${encodeURIComponent(div)}">${esc(L.name)} · ${esc(div)}</a>${upd?` · ${esc(upd)}`:""}</p>
+      <div><p class="crumb"><a href="/league.html?l=${L.id}&d=${encodeURIComponent(div)}">${esc(L.name)} · ${esc(div)}</a>${upd?` · ${esc(upd)}`:""}</p>
         <h1><span id="kit"></span>${esc(T)}</h1>
         <div class="hero-meta">${me.p?`<span class="posbadge">${sfx(me.pos)}<small>of ${nTeams}</small></span>`:""}<button class="follow" id="follow" aria-pressed="false">☆ Follow</button></div>
       </div></div></section>

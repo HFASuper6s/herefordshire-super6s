@@ -1,9 +1,9 @@
 <footer class="site"><div class="wrap foot-grid">
   {{{sponsorBlock}}}
   <div class="foot-text"><p><b>{{site.siteName}}</b> is run by {{site.countyFA}}.</p>
-  <p class="foot-links"><span data-if="contactEmail"><a data-mail></a></span></p></div>
+  <p class="foot-links"><a href="/rules.html">League rules</a> · <a href="/wellbeing.html">Wellbeing</a><span data-if="contactEmail"> · <a data-mail></a></span></p></div>
 </div></footer>
-<nav class="tabbar" aria-label="Sections">{{{tabLinks}}}{{{newsTab}}}{{{otherTab}}}</nav>
+<nav class="tabbar" aria-label="Sections">{{{tabLinks}}}</nav>
 <script>(function(){ const S=window.SITE, here=document.body.dataset.page||"";
   document.querySelectorAll('[data-nav="'+here+'"]').forEach(a=>a.setAttribute("aria-current","page"));
   document.querySelectorAll("[data-mail]").forEach(a=>{ a.href="mailto:"+S.contactEmail; a.textContent=S.contactEmail; });

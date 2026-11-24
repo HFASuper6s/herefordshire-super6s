@@ -20,11 +20,12 @@ body{margin:0;background:#E7E9E7;font:14px/1.4 Arial,Helvetica,sans-serif;color:
 .note-box{max-width:600px;margin:40px auto;background:#fff;border-radius:12px;padding:24px;font-size:16px}
 /* A4 sheets */
 .sheet{width:210mm;height:297mm;margin:0 auto 20px;background:#fff;padding:7mm 8mm;box-shadow:0 2px 10px rgba(0,0,0,.15);overflow:hidden}
-.frame{border:1.2pt solid #000;height:100%;padding:4mm 5mm;position:relative}
+.frame{border:1.2pt solid #000;height:100%;padding:4mm 5mm;position:relative;overflow:hidden}
+.fit{transform-origin:top left}
 .hdr{display:flex;align-items:center;gap:7mm;margin:0 0 4mm}
 .hdr img{width:34mm;height:34mm;object-fit:contain;filter:grayscale(1)}
-.hdr-t{font:italic 900 24pt/1.02 Arial,sans-serif;letter-spacing:-.3pt}
-.hdr-e{font:italic 700 9pt Arial,sans-serif;margin-top:2mm}
+.hdr-t{font:italic 900 27pt/1.02 Arial,sans-serif;letter-spacing:-.3pt;text-align:center}
+.hdr-e{font:italic 700 9pt Arial,sans-serif;margin-top:2mm;text-align:center}
 .title{font:italic 700 17pt/1 Arial,sans-serif;text-decoration:underline;margin:0}
 .toprow{display:flex;justify-content:space-between;align-items:center;gap:6mm;margin:0 0 1.5mm}
 .datebox{border:1pt solid #000;flex:0 0 99mm;text-align:center;font:700 14pt/1 Arial,sans-serif;padding:2mm 0}
@@ -40,8 +41,9 @@ thead tr{border-bottom:1.4pt solid #000}
 .fx{margin-bottom:10mm}
 .fx td{height:8.5mm;font-size:7.5pt}
 .fxhead{border-bottom:1.4pt solid #000;margin-bottom:3mm}
-.tbl h3{font:700 10.5pt Arial,sans-serif;margin:3mm 0 1mm}
-.tbl table td,.tbl table th{font:700 6.8pt/1.1 Arial,sans-serif;border:.6pt solid #000;height:auto;padding:1.2mm 1.2mm;text-align:center}
+.tbl h3{font:700 10.5pt Arial,sans-serif;margin:2.5mm 0 1mm}
+.tbl table td,.tbl table th{font:700 6.8pt/1.1 Arial,sans-serif;border:.6pt solid #000;height:auto;padding:1mm 1.2mm;text-align:center;white-space:nowrap}
+.tbl table{table-layout:auto}
 .tbl table td:nth-child(2),.tbl table th:nth-child(2){text-align:left;width:46%}
 .tbl table thead tr,.tbl table tr:first-child{border-bottom:1.2pt solid #000}
 .tbl img{display:none}
@@ -105,22 +107,22 @@ async function build(){
   const dt=new Date(D+"T12:00:00");
   const dayBox=`- ${dt.toLocaleDateString("en-GB",{weekday:"long"}).toUpperCase()} ${dt.getDate()} ${dt.toLocaleDateString("en-GB",{month:"short"}).toUpperCase()} ${dt.getFullYear()} -`;
   const ukDate=`${String(dt.getDate()).padStart(2,"0")}/${String(dt.getMonth()+1).padStart(2,"0")}/${dt.getFullYear()}`;
-  const hdr=`<div class="hdr"><img src="/img/logo.png" alt=""><div><div class="hdr-t">${esc(S.siteName.toUpperCase())}</div>${S.contactEmail?`<div class="hdr-e">${esc(S.contactEmail)}</div>`:""}</div></div>`;
+  const hdr=`<div class="hdr"><img src="/img/logo.png" alt=""><div><div class="hdr-t">${esc(S.countyFA.toUpperCase())}<br>${esc((S.shortName||"Super 6s").toUpperCase().replace(/6S$/,"6s"))}</div>${S.contactEmail?`<div class="hdr-e">${esc(S.contactEmail)}</div>`:""}</div></div>`;
   const blank=(n,cols)=>Array.from({length:n},()=>`<tr>${"<td></td>".repeat(cols)}</tr>`).join("");
   document.title=`Paperwork ${L.night} ${ukDate} | ${S.name}`;
 
   // 1. Team payments
   const payRows=games.flatMap(g=>[g.home,g.away].map(t=>`<tr><td class="tick"></td><td class="c">${esc(g.time)}</td><td class="c">${esc(g.pitchNo)}</td><td>${esc(t)}</td><td class="c">${money(P.fee)}</td><td></td><td></td><td></td><td></td></tr>`)).join("");
-  const staff=[["EM","n/a"],...pitches.map(p=>["Ref",p])].map(([d,p])=>`<tr><td>${d}</td><td class="c">${esc(p)}</td><td></td><td class="c">${esc(P.staffStart||"")}</td><td class="c">${esc(P.staffEnd||"")}</td><td></td><td class="c">BACS - ${esc(SHORT[L.night]||L.night)}</td><td></td></tr>`).join("");
+  const staff=[["EM","n/a"],...pitches.map(p=>["Ref",p])].map(([d,p])=>`<tr><td>${d}</td><td class="c">${esc(p)}</td><td></td><td class="c">${esc(P.staffStart||"")}</td><td class="c">${esc(P.staffEnd||"")}</td><td></td><td class="c">BACS - paid Thurs</td><td></td></tr>`).join("");
   const p1=`<section class="sheet"><div class="frame">${hdr}
     <div class="toprow"><h1 class="title">TEAM PAYMENTS</h1><div class="datebox">${esc(dayBox)}</div></div>
     ${P.friendlyFee!=null?`<p class="nb">[NB. FRIENDLY MATCH FEE = ${money(P.friendlyFee)}]</p>`:'<p class="nb">&nbsp;</p>'}
     <table class="pay"><colgroup><col style="width:7mm"><col style="width:13mm"><col style="width:11mm"><col style="width:38mm"><col style="width:15mm"><col style="width:14mm"><col style="width:14mm"><col style="width:29mm"><col></colgroup>
-    <thead><tr><th>Tick</th><th class="c">Time</th><th class="c">Pitch</th><th class="c">Team Name</th><th class="c">Fee Due</th><th class="c">Fee Paid</th><th class="c">Credit / Arrears Check</th><th class="c">Captain's Signature</th><th class="c">Notes</th></tr></thead>
+    <thead><tr><th>Tick</th><th class="c">Time</th><th class="c">Pitch</th><th class="c">Team Name</th><th class="c">Fee Due</th><th class="c">Fee Collected</th><th class="c">Credit / Arrears</th><th class="c">Captain's Signature</th><th class="c">Notes</th></tr></thead>
     <tbody>${payRows}</tbody></table>
     <div class="sec"><h2 class="title">EM / REFEREES</h2>
     <table class="ref"><colgroup><col style="width:11mm"><col style="width:10mm"><col style="width:36mm"><col style="width:16mm"><col style="width:16mm"><col style="width:14mm"><col style="width:28mm"><col></colgroup>
-    <thead><tr><th>Desc</th><th class="c">Pitch</th><th class="c">Name</th><th class="c">Start</th><th class="c">Finish</th><th class="c">Hrs</th><th class="c">Pay (£)</th><th></th></tr></thead>
+    <thead><tr><th>Desc</th><th class="c">Pitch</th><th class="c">Name</th><th class="c">Start</th><th class="c">Finish</th><th class="c">Hrs</th><th class="c">Cash Amount</th><th></th></tr></thead>
     <tbody>${staff}</tbody></table></div></div></section>`;
 
   // 2. League fixtures, grouped by kick-off
@@ -149,7 +151,9 @@ async function build(){
 
   $("pages").innerHTML=p1+p2+p3+pitchPages;
   $("st").textContent=`${L.name}, ${EM.longDate(D)}: ${games.length} games, ${susp.length} suspensions. Loading tables…`;
+  fitPages();
   const ok=await loadTables();
+  fitPages();
   $("st").textContent=`${L.name}, ${EM.longDate(D)}: ${games.length} games, ${susp.length} suspensions.${ok?"":" Some tables did not load - check FA Full-Time, then reload."}`;
   $("dl").disabled=false;
 }
@@ -165,14 +169,28 @@ function loadTables(){
     let n=0; const t=setInterval(()=>{
       let tbl=null; try{ tbl=f.contentDocument&&f.contentDocument.querySelector(`#lrep${code} table`); }catch(e){}
       if(tbl){ clearInterval(t); const c=tbl.cloneNode(true); c.querySelectorAll("a").forEach(a=>a.replaceWith(...a.childNodes));
-        c.querySelectorAll("td,th").forEach(td=>{ td.textContent=S6.stripShirts(td.textContent); }); c.removeAttribute("style"); c.querySelectorAll("[style],[width]").forEach(x=>{x.removeAttribute("style");x.removeAttribute("width")});
+        c.querySelectorAll("td,th").forEach(td=>{ td.textContent=td.textContent.replace(/\s+/g," ").trim(); }); // keep "(Black Shirts)" as on the printed sheets c.removeAttribute("style"); c.querySelectorAll("[style],[width]").forEach(x=>{x.removeAttribute("style");x.removeAttribute("width")});
         box.replaceChildren(c); f.remove(); res(true); }
       else if(++n>60){ clearInterval(t); box.innerHTML='<div class="fail">Table did not load from FA Full-Time.</div>'; f.remove(); res(false); }
     },250);
     document.body.appendChild(f);
   })));
 }
-$("dl").onclick=()=>window.print();
+// Every sheet must print on exactly one A4 page: if its content is taller (or wider) than the
+// frame, shrink that sheet's content evenly until it fits. Runs after the tables arrive too.
+function fitPages(){
+  document.querySelectorAll(".sheet .frame").forEach(fr=>{
+    let w=fr.querySelector(":scope > .fit");
+    if(!w){ w=document.createElement("div"); w.className="fit"; while(fr.firstChild) w.appendChild(fr.firstChild); fr.appendChild(w); }
+    w.style.transform=""; w.style.width="";
+    const cs=getComputedStyle(fr), padV=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom), padH=parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight);
+    const availH=fr.clientHeight-padV, availW=fr.clientWidth-padH;
+    const k=Math.min(1, availH/w.scrollHeight, availW/w.scrollWidth);
+    if(k<1){ w.style.width=(availW/k)+"px"; const k2=Math.min(1,availH/w.scrollHeight); w.style.transform=`scale(${k2})`; w.dataset.scale=k2.toFixed(3); }
+    else w.dataset.scale="1";
+  });
+}
+$("dl").onclick=()=>{ fitPages(); window.print(); };
 })();
 </script>
 </body>

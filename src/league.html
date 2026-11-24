@@ -1,6 +1,125 @@
-<!--page {"title":"{{site.siteName}}","id":"league-redirect"}-->
+<!--page {"title":"League | {{site.siteName}}","desc":"Tables, fixtures and results for every division of the {{site.siteName}}.","id":"league"}-->
 <!doctype html>
-<html lang="en-GB"><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>{{page.title}}</title>
-<script>/* Old league page links: send them to the new Tables, Fixtures or Results page */
-(function(){ const q=new URLSearchParams(location.search), h=location.hash.slice(1), p={results:"results",fixtures:"fixtures"}[h]||"tables";
-  location.replace(`/${p}.html?${q.toString()}`); })();</script></head><body></body></html>
+<html lang="en-GB">
+<head>
+{{> head}}
+</head>
+<body data-page="league">
+{{> header}}
+<main id="main">
+  <div class="phead"><div class="wrap">
+    <h1 id="ltitle">League</h1>
+    <div class="hero-ctas lg-ctas"><a class="btn btn-accent" href="/join.html">Join a league</a><a class="btn btn-ghost" id="reqinfo" href="#">Ask a question</a></div>
+    <div class="phead-row">
+      <div class="seg" id="leagues" role="tablist" aria-label="League night"></div>
+      <div class="search search-dark">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="q" type="search" placeholder="Find your team" autocomplete="off" aria-label="Find your team">
+        <ul class="search-results" id="qres" role="listbox" hidden></ul>
+      </div>
+    </div>
+    <nav class="ltabs" role="tablist" aria-label="View">
+      <a href="#overview" data-v="overview" role="tab">League</a><a href="#fixtures" data-v="fixtures" role="tab">Fixtures</a><a href="#results" data-v="results" role="tab">Results</a>
+    </nav>
+  </div></div>
+  <div class="wrap">
+    <div id="overview-top" class="ov-top" hidden><article class="card details" id="ldetails"></article><div class="card gallery" id="gallery"></div></div>
+    <div class="chips" id="chips"></div>
+    <p class="stamp-line" id="stamp"></p>
+    <div id="view"></div>
+    <aside class="about card" id="about">
+      <h2>About the league</h2>
+      <p>Small-sided football is one of The FA's key growth areas for adult football, with nearly 30,000 small-sided teams playing across the country. It suits busy lives: turn up, pay as you play, and get your midweek football fix.</p>
+      <p>The {{site.siteName}} is affiliated to The FA through Herefordshire FA, uses FA-qualified referees and plays to The FA's Laws of Small-Sided Football.</p>
+      <p id="about-venue"></p>
+      <p><a class="btn btn-outline" href="/rules.html">League rules</a> <a class="btn btn-accent" href="/join.html">Join a league</a></p>
+    </aside>
+  </div>
+</main>
+{{> footer}}
+<script>
+(async function(){
+  const {S,esc,param,league,loadFixtures,table,divGames,formHTML,fmtDay,ymd,photoURL,slug,shirt,bibSVG,clash,teams}=S6;
+  const $=id=>document.getElementById(id), today=ymd(new Date());
+  let saved=""; try{ saved=localStorage.getItem("s6-league")||""; }catch(e){}
+  const V0=((location.hash||"").slice(1)==="table")?"overview":(location.hash||"").slice(1);
+  const VIEWS=["overview","fixtures","results"]; const st={l:(league(param("l"))||league(saved)||S.leagues[0]).id, d:param("d"), v:VIEWS.includes(V0)?V0:"overview"};
+  const cache={}, photosBy={};
+  async function data(id){ if(!cache[id]){ cache[id]=await loadFixtures(league(id))||[];
+      try{ const r=await fetch(`/.netlify/functions/team-photo?l=${id}&list=1`); photosBy[id]=r.ok?new Set((await r.json()).teams):new Set(); }catch(e){ photosBy[id]=new Set(); } }
+    return cache[id]; }
+  function sync(){ const u=new URL(location.href); u.searchParams.set("l",st.l); u.searchParams.set("d",st.d); u.hash=st.v; history.replaceState(null,"",u);
+    try{ localStorage.setItem("s6-league",st.l); }catch(e){} document.dispatchEvent(new CustomEvent("s6-league",{detail:st.l})); }
+  async function render(){
+    const L=league(st.l); if(!L.divisions.some(d=>d.name===st.d)) st.d=L.divisions[0].name; sync();
+    document.title=`${L.title||L.name} | ${S.siteName}`;
+    $("ltitle").textContent=L.title||L.name;
+    $("reqinfo").href=`mailto:${S.contactEmail}?subject=${encodeURIComponent("Super 6s enquiry: "+(L.title||L.name))}`;
+    const ov=st.v==="overview"; $("overview-top").hidden=!ov; $("chips").hidden=ov;
+    if(ov) overviewTop(L);
+    $("leagues").innerHTML=S.leagues.map(l=>`<button role="tab" aria-selected="${l.id===st.l}" data-l="${l.id}">${esc(l.night)}</button>`).join("");
+    document.querySelectorAll(".ltabs a").forEach(a=>a.setAttribute("aria-selected",a.dataset.v===st.v));
+    $("chips").innerHTML=L.divisions.map(d=>`<button aria-pressed="${d.name===st.d}" data-d="${esc(d.name)}">${esc(d.name)}</button>`).join("");
+    const fx=await data(L.id), photos=photosBy[L.id], g=divGames(fx,st.d), V=$("view");
+    $("stamp").textContent=fx.updated?`Updated ${new Date(fx.updated).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}`:"";
+    const avatar=(t,n)=>photos.has(slug(t))?`<span class="crest"><img src="${photoURL(L.id,t)}" alt="" loading="lazy"></span>`:shirt(L.id,t,n);
+    const tlink=t=>`<a class="tname" href="/team.html?l=${L.id}&t=${encodeURIComponent(t)}">${avatar(t,28)}<span>${esc(t)}</span></a>`;
+    const side=(t,win,cls,bib)=>`<span class="${cls}${win?" win":""}">${cls==="a"?(bib?bibSVG(22,`${t} in bibs`):shirt(L.id,t,22)):""}<a href="/team.html?l=${L.id}&t=${encodeURIComponent(t)}">${esc(t)}</a>${cls==="h"?shirt(L.id,t,22):""}</span>`;
+    const row=x=>{ const c=!x.played&&clash(L.id,x.home,x.away);
+      return `<div class="match">${side(x.home,x.played&&x.hs>x.as,"h")}<span class="sc${x.played?"":" ko"}">${x.played?`${x.hs} – ${x.as}`:esc(x.time||"TBC")}</span>${side(x.away,x.played&&x.as>x.hs,"a",c)}
+        ${!x.played&&x.pitch?`<small>${esc(x.pitch)}</small>`:""}${c?`<span class="clash">Shirt clash: ${esc(x.away)} wear bibs</span>`:""}</div>`; };
+    const byWeek=(list,desc)=>{ const m=new Map(); list.forEach(x=>{ if(!m.has(x.ymd)) m.set(x.ymd,[]); m.get(x.ymd).push(x); });
+      let ks=[...m.keys()].sort(); if(desc) ks.reverse();
+      return ks.map(k=>`<section class="week"><h3>${esc(fmtDay(k))}</h3><div class="card">${m.get(k).map(row).join("")}</div></section>`).join(""); };
+    if(ov){
+      V.innerHTML=L.divisions.map(dv=>{ const t=table(divGames(fx,dv.name)), size=L.divisionSize||0, spaces=Math.max(0,size-t.length);
+        return `<section class="card divtable"><header><h2>${esc(dv.name)}</h2><a href="#fixtures" data-div="${esc(dv.name)}">Fixtures &amp; results →</a></header>
+        ${t.length||spaces?`<div class="tablewrap"><table class="lt"><thead><tr><th>#</th><th>Team</th><th>P</th><th class="hide-sm">W</th><th class="hide-sm">D</th><th class="hide-sm">L</th><th class="hide-sm">F</th><th class="hide-sm">A</th><th>GD</th><th>Pts</th><th>Form</th></tr></thead><tbody>
+        ${t.map((r,i)=>`<tr class="${r.p&&r.pos===1?"top":""}"><td class="pos">${r.p?r.pos:i+1}</td><td>${tlink(r.team)}</td><td>${r.p}</td><td class="hide-sm">${r.w}</td><td class="hide-sm">${r.d}</td><td class="hide-sm">${r.l}</td><td class="hide-sm">${r.f}</td><td class="hide-sm">${r.a}</td><td>${r.gd>0?"+":""}${r.gd}</td><td class="pts">${r.pts}</td><td>${formHTML(r.form,5)}</td></tr>`).join("")}
+        ${Array.from({length:spaces},(_,i)=>`<tr class="space"><td class="pos">${t.length+i+1}</td><td colspan="10"><a href="/join.html">Place available in this division: join now</a></td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">Teams to follow.</div>`}</section>`; }).join("");
+      V.querySelectorAll("[data-div]").forEach(a=>a.onclick=e=>{ e.preventDefault(); st.d=a.dataset.div; st.v="fixtures"; render(); scrollTo({top:0,behavior:"smooth"}); });
+    } else if(st.v==="table"){
+      const t=table(g);
+      V.innerHTML=!t.length?`<div class="card empty">No teams loaded for ${esc(st.d)} yet.</div>`:`<div class="card tablewrap"><table class="lt"><thead><tr><th>#</th><th>Team</th><th>P</th><th class="hide-sm">W</th><th class="hide-sm">D</th><th class="hide-sm">L</th><th>GD</th><th>Pts</th><th>Form</th></tr></thead><tbody>
+      ${t.map((r,i)=>`<tr class="${r.p&&r.pos===1?"top":""}"><td class="pos">${r.p?r.pos:i+1}</td><td>${tlink(r.team)}</td><td>${r.p}</td><td class="hide-sm">${r.w}</td><td class="hide-sm">${r.d}</td><td class="hide-sm">${r.l}</td><td>${r.gd>0?"+":""}${r.gd}</td><td class="pts">${r.pts}</td><td>${formHTML(r.form,5)}</td></tr>`).join("")}</tbody></table></div>`;
+    } else if(st.v==="results"){ const p=g.filter(x=>x.played); V.innerHTML=p.length?byWeek(p,true):`<div class="card empty">No results yet for ${esc(st.d)}.</div>`; }
+    else { const u=g.filter(x=>!x.played&&x.ymd>=today); V.innerHTML=u.length?byWeek(u,false):`<div class="card empty">No upcoming fixtures for ${esc(st.d)}.</div>`; }
+    searchIndex();
+  }
+  // League overview: details card (like a league listing) and a photo gallery
+  function overviewTop(L){
+    const V=S.venue||{}, mins=(L.gameLength||"").match(/(\d+)\s*minutes?\s*each way/i), M=L.manager||{};
+    const price=(L.price||"").match(/£\s*(\d+(?:\.\d+)?)/);
+    const rows=[["Venue",V.name&&`<a href="${esc(V.map||"#")}" target="_blank" rel="noopener">${esc(V.name)}</a>, ${esc((V.address||[]).slice(-2).join(", "))}`],
+      ["Format",L.players&&`${esc(L.players)}-a-side`],["Night",`${esc(L.night)}s, ${esc(L.hours||"")}`],
+      ["Match length",mins&&`${mins[1]} minutes each way`],["Match fee",price&&`£${(+price[1]).toFixed(2)} a team`],
+      ["League manager",M.name&&`${esc(M.name)}${M.phone?` · <a href="tel:${esc(M.phone.replace(/\s/g,""))}">${esc(M.phone)}</a>`:""}`],
+      ["Rules",`<a href="/rules.html#terms">Terms of entry</a> · <a href="/rules.html#playing">Playing rules</a>`]].filter(r=>r[1]);
+    $("ldetails").innerHTML=`<h2>At a glance</h2><dl>${rows.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>`;
+    const G=S.gallery||[]; if(!G.length){ $("gallery").remove(); return; }
+    if($("gallery").dataset.done) return; $("gallery").dataset.done=1;
+    $("gallery").innerHTML=`<h2 class="g-h">On the night</h2><div class="g-track" id="gtrack">${G.map(g=>`<img src="/img/${esc(g.src)}" alt="${esc(g.alt||"")}" loading="lazy">`).join("")}</div>
+      <button type="button" class="g-btn prev" aria-label="Previous photo">‹</button><button type="button" class="g-btn next" aria-label="Next photo">›</button>`;
+    const tr=$("gtrack"); $("gallery").querySelector(".prev").onclick=()=>tr.scrollBy({left:-tr.clientWidth,behavior:"smooth"}); $("gallery").querySelector(".next").onclick=()=>tr.scrollBy({left:tr.clientWidth,behavior:"smooth"});
+  }
+  // Find your team (all leagues)
+  let all=null; const q=$("q"), qres=$("qres"); let sel=-1;
+  async function searchIndex(){ if(all) return; const lists=await Promise.all(S.leagues.map(async l=>({l,fx:await data(l.id)}))); all=lists.flatMap(({l,fx})=>fx&&fx.length?teams(fx).map(t=>({...t,l})):[]); }
+  q.addEventListener("input",()=>{ const v=q.value.trim().toLowerCase(); sel=-1; const hits=v&&all?all.filter(t=>t.name.toLowerCase().includes(v)).slice(0,8):[];
+    qres.hidden=!hits.length; qres._hits=hits;
+    qres.innerHTML=hits.map(t=>`<li role="option"><a href="/team.html?l=${t.l.id}&t=${encodeURIComponent(t.name)}">${shirt(t.l.id,t.name,22)}<span>${esc(t.name)}</span><small>${esc(t.l.night)} · ${esc(t.division)}</small></a></li>`).join(""); });
+  q.addEventListener("keydown",e=>{ const n=(qres._hits||[]).length; if(!n) return;
+    if(e.key==="ArrowDown"||e.key==="ArrowUp"){ e.preventDefault(); sel=(sel+(e.key==="ArrowDown"?1:-1)+n)%n; qres.querySelectorAll("a").forEach((a,i)=>a.classList.toggle("on",i===sel)); }
+    if(e.key==="Enter"){ e.preventDefault(); const t=qres._hits[Math.max(sel,0)]; location.href=`/team.html?l=${t.l.id}&t=${encodeURIComponent(t.name)}`; } });
+  document.addEventListener("click",e=>{ if(!e.target.closest(".search")) qres.hidden=true; });
+  $("leagues").onclick=e=>{ const l=e.target.dataset.l; if(l){ st.l=l; st.d=null; render(); } };
+  $("chips").onclick=e=>{ const d=e.target.dataset.d; if(d){ st.d=d; render(); } };
+  document.querySelector(".ltabs").onclick=e=>{ const v=e.target.dataset.v; if(v){ e.preventDefault(); st.v=v; render(); } };
+  addEventListener("hashchange",()=>{ let v=location.hash.slice(1); if(v==="table") v="overview"; if(VIEWS.includes(v)&&v!==st.v){ st.v=v; render(); } });
+  const vRules=V=>V&&V.rules&&V.rules.length?`<ul class="vrules">${V.rules.map(r=>`<li><b>${esc(r.h)}</b> ${esc(r.t)}</li>`).join("")}</ul>`:"";
+  if(S.venue){ const V=S.venue; $("about-venue").innerHTML=`<b>Venue:</b> ${esc(V.name)}, ${V.address.map(esc).join(", ")} · <a href="${esc(V.map)}" target="_blank" rel="noopener">Directions</a>${vRules(V)}`; }
+  render();
+})();
+</script>
+</body>
+</html>

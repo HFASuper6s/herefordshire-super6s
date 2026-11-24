@@ -23,30 +23,49 @@ const partnerLine = P ? ` in partnership with ${P.url ? `<a href="${esc(P.url)}"
 const sponsorBlock = P ? `<a class="sponsor" href="${esc(P.url||"#")}" target="_blank" rel="noopener"${P.url?"":" aria-disabled=\"true\""}>
   ${P.logo && fs.existsSync(path.join(countyDir,"assets",P.logo)) ? `<img src="/img/${esc(P.logo)}" alt="${esc(P.shortName||P.name)}" width="88" height="88" loading="lazy">` : ""}
   <span><small>${esc(P.label||"League partner")}</small><b>${esc(P.shortName||P.name)}</b>${P.url?`<em>Visit website</em>`:""}</span></a>` : "";
+// League rules: county/rules.json rendered as two tabs (playing rules, terms of entry)
+const R = fs.existsSync(path.join(countyDir,"rules.json")) ? JSON.parse(fs.readFileSync(path.join(countyDir,"rules.json"),"utf8")) : null;
+function rulesHTML(part){
+  if(!R) return "";
+  const fmt = t => esc(t).replace(/^(Fines tariff|Yellow card|Red card|Insurance):/,"<b>$1:</b>")
+    .replace("The FA – Laws and Rules",'<a href="https://www.thefa.com/football-rules-governance/lawsandrules" target="_blank" rel="noopener">The FA – Laws and Rules</a>');
+  return R[part].map(n=>{ const sec=R.sections[n];
+    const groups=sec.groups.map(g=>{ const items=g.items.map((t,i)=>{ const k=(g.nums&&g.nums[i])||i+1; return `<li value="${k}"><span class="rn">${n}.${k}</span> ${fmt(t)}</li>`}).join("");
+      return `${g.h?`<h3>${esc(g.h)}</h3>`:""}<ol class="rl">${items}</ol>`; }).join("");
+    let body=groups;
+    if(sec.table){ const t=sec.table, tbl=`<div class="rtable"><table><thead><tr>${t.head.map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+      body=body.replace(/(<li value="3">[\s\S]*?<\/li>)/,`$1</ol>${tbl}<ol class="rl" start="4">`); }
+    return `<section class="rsec" id="r${n}"><h2><span>${n}</span>${esc(sec.title)}</h2>${sec.intro?`<p class="rintro">${esc(sec.intro)}</p>`:""}${body}</section>`; }).join("")
+    + (part==="terms"&&R.disclaimer?`<section class="rsec" id="rdisc"><h2>Disclaimer</h2><p>${esc(R.disclaimer)}</p><p class="rver">${esc(R.version)}</p></section>`:"");
+}
+const rulesToc = part => R ? R[part].map(n=>`<a href="#r${n}">${n}. ${esc(R.sections[n].title)}</a>`).join("")+(part==="terms"?'<a href="#rdisc">Disclaimer</a>':"") : "";
+
 const ctx = {
   site: C,
   partnerLine, sponsorBlock,
   partnerBlurb: C.partner && C.partner.blurb ? `, with ${esc(C.partner.name.split(",")[0])} ${esc(C.partner.blurb)}` : "",
   // Main sections (same for every county): Home, Tables, Fixtures, Results, then News / Get involved / Wellbeing
-  navLinks: [["/","home","Home"],["/tables.html","tables","Tables"],["/fixtures.html","fixtures","Fixtures"],["/results.html","results","Results"]]
+  // Four sections for everyone; "Join a league" is the button in the header
+  navLinks: [["/","home","Home"],["/league.html","league","League"],["/news.html","news","News"],["/get-involved.html","involved","Get involved"]]
     .map(([h,id,t])=>`<a href="${h}" data-nav="${id}">${t}</a>`).join(""),
   tabLinks: [["/","home","Home",'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'],
-    ["/tables.html","tables","Tables",'<path d="M4 5h16M4 10h16M4 15h16M4 20h16M9 5v15"/>'],
-    ["/fixtures.html","fixtures","Fixtures",'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>'],
-    ["/results.html","results","Results",'<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>']]
+    ["/league.html","league","League",'<path d="M4 5h16M4 10h16M4 15h16M4 20h16M9 5v15"/>'],
+    ["/news.html","news","News",'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/>'],
+    ["/get-involved.html","involved","Get involved",'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M14 20c.3-2.4 1.6-4.5 4-5"/>']]
     .map(([h,id,t,ic])=>`<a href="${h}" data-nav="${id}"><svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg>${t}</a>`).join(""),
-  wellNav: C.wellbeing ? `<a href="/wellbeing.html" data-nav="wellbeing">Wellbeing</a>` : "",
-  wellFoot: C.wellbeing ? `<a class="foot-well" href="/wellbeing.html">Need to talk? Wellbeing support</a>` : "",
-  newsNav: `<a href="/news.html" data-nav="news">News</a>`,
-  newsTab: `<a href="/news.html" data-nav="news"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>News</a>`,
-  otherNav: (C.getInvolved||[]).length ? `<a href="/get-involved.html" data-nav="involved">Get involved</a>` : "",
-  otherTab: `<a href="/more.html" data-nav="more"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>More</a>`,
-  // Banner: up to 3 instant-photo style prints with handwritten captions (falls back to hero.jpg)
+  rulesPlaying: rulesHTML("playing"), rulesTerms: rulesHTML("terms"), tocPlaying: rulesToc("playing"), tocTerms: rulesToc("terms"), rulesIntro: R?esc(R.intro):"",
   polaroids: ((C.heroPhotos||[]).filter(p=>has(p.src)).slice(0,3).length ? C.heroPhotos.filter(p=>has(p.src)).slice(0,3) : [{src:"hero.jpg",caption:""}])
     .map((p,i)=>`<figure class="print p${i+1}"><img src="/img/${esc(p.src)}" alt="${esc(p.caption||"Super 6s")}" ${i?'loading="lazy"':'fetchpriority="high"'}><figcaption>${esc(p.caption||"")}</figcaption></figure>`).join(""),
   bannerWord: esc(C.shortName.replace(/^super\s*/i,"").trim() || "6s"),
   heroMobile: has("hero-mobile.jpg") ? "hero-mobile" : "hero",
   heroWebp: has("hero.webp"), featureImg: has("feature.jpg") ? "feature" : "hero",
+  // Homepage Champions photos (optional): champions.photos in config, files in county/assets. Each photo opens larger when tapped.
+  champions: (() => { const G = C.champions, ph = (G && G.photos || []).filter(p => has(p.src)); if (!ph.length) return "";
+    return `<section class="block" id="champs-sec"><div class="wrap">
+      <div class="sec-head"><h2 class="sec">${esc(G.title || "Champions")}</h2></div>${G.intro ? `<p class="champs-intro">${esc(G.intro)}</p>` : ""}
+      <div class="champs">${ph.map((p, i) => { const alt = [p.caption, p.sub].filter(Boolean).join(", ") || "Super 6s team photo";
+        return `<figure class="champ"><button type="button" class="champ-open" data-i="${i}" aria-label="View larger: ${esc(alt)}"><img src="/img/${esc(p.src)}" alt="${esc(alt)}" loading="lazy" decoding="async"></button><figcaption><b>${esc(p.caption || "")}</b>${p.sub ? `<span>${esc(p.sub)}</span>` : ""}</figcaption></figure>`; }).join("")}</div>
+    </div></section>`; })(),
 };
 const get = (o, p) => p.split(".").reduce((a, k) => a == null ? a : a[k], o);
 function render(tpl, page) {
@@ -63,6 +82,7 @@ const pages = [];
   if (fs.statSync(p).isDirectory()) walk(p); else if (f.endsWith(".html")) pages.push(p); } })(SRC);
 for (const p of pages) {
   if (p.endsWith(path.sep + "wellbeing.html") && !C.wellbeing) continue;
+  if (p.endsWith(path.sep + "rules.html") && !R) continue;
   if (p.endsWith(path.sep + "get-involved.html") && !(C.getInvolved||[]).length) continue; // page only exists when the county lists sessions
   let t = fs.readFileSync(p, "utf8"); const m = t.match(/^<!--page (\{.*?\})-->\n?/);
   const page = m ? JSON.parse(m[1]) : {}; if (m) t = t.slice(m[0].length);

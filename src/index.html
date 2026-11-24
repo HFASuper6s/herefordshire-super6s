@@ -1,70 +1,52 @@
-<!--page {"title":"{{site.siteName}} | Six-a-side leagues","desc":"{{site.intro}} Tables, results, fixtures and how to enter a team.","id":"home"}-->
+<!--page {"title":"{{site.siteName}} | {{site.headline}}","id":"home"}-->
 <!doctype html>
 <html lang="en-GB">
 <head>
 {{> head}}
-<script>/* Login emails (invite, password reset) land here: send them to the event manager area */
-if(/(invite|recovery|confirmation|email_change)_token=/.test(location.hash))location.replace("/admin/"+location.hash);</script>
 </head>
 <body data-page="home">
 {{> header}}
 <main id="main">
-  <section class="hero">
-    <div class="prints"><span class="bigword" aria-hidden="true">{{{bannerWord}}}</span>{{{polaroids}}}</div>
+  <section class="hero2">
     <div class="wrap">
-      <p class="eyebrow">{{site.countyFA}}</p>
-      <h1 id="headline">{{site.headline}}</h1>
-      <p class="lead">{{site.intro}}</p>
-      <div class="hero-ctas"><a class="btn btn-accent" href="/join.html">Enter a team</a><a class="btn btn-ghost" href="#finder">Find your team</a></div>
-      <div class="nextup" id="nextup" aria-label="Next league nights"></div>
-    </div>
-  </section>
-
-  <section class="finder wrap" id="finder" aria-label="Find your team">
-    <div class="finder-card">
-      <div id="mt"><h2>Find your team</h2><p>Fixtures, results, form and photos for every team.</p></div>
-      <div class="search">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
-        <input id="q" type="search" placeholder="Type your team name" autocomplete="off" aria-label="Team name" aria-controls="qres">
-        <ul class="search-results" id="qres" role="listbox" hidden></ul>
+      <div class="h-txt">
+        <p class="eyebrow">{{site.countyFA}} · {{site.shortName}}</p>
+        <h1>{{site.headline}}</h1>
+        <p class="lead">{{site.intro}}</p>
+        <div class="hero-ctas"><a class="btn btn-accent" href="/join.html">Join a league</a><a class="btn btn-ghost" href="/league.html">Find your team</a></div>
       </div>
     </div>
+    <picture class="h-pic"><source media="(max-width:860px)" srcset="/img/{{heroMobile}}.jpg"><img src="/img/hero.jpg" alt="A Super 6s match under the floodlights at The Hereford Academy" fetchpriority="high"></picture>
   </section>
 
-  <section class="block" id="leagues-sec">
+  <section class="facts" aria-label="Key facts"><div class="wrap"><dl id="facts"></dl></div></section>
+
+  <section class="block" id="week">
     <div class="wrap">
-      <div class="sec-head"><h2 class="sec">The leagues</h2></div>
-      <div class="grid g2" id="leagues"></div>
+      <div class="sec-head"><h2 class="sec">This week</h2><a class="stamp" href="/league.html#results">All results</a></div>
+      <div class="grid g2" id="nights"></div>
+      <div class="ribbon" id="ribbon" hidden></div>
     </div>
   </section>
 
-  <section class="block" id="results" hidden>
+  <section class="block">
     <div class="wrap">
-      <div class="sec-head"><h2 class="sec">Latest results</h2><a class="stamp" href="/results.html">All results</a></div>
-      <div class="ribbon" id="ribbon"></div>
+      <div class="sec-head"><h2 class="sec">Why play with us</h2></div>
+      <div class="grid g3" id="why"></div>
     </div>
   </section>
 
-  <section class="block" id="leaders-sec">
-    <div class="wrap">
-      <div class="sec-head"><h2 class="sec">Top of the table</h2><a class="stamp" href="/tables.html">All tables</a></div>
-      <div id="leaders"></div>
-    </div>
-  </section>
+  {{{champions}}}
 
-  <section class="band">
-    <div class="split">
-      <picture><img src="/img/{{featureImg}}.jpg" alt="An FA-qualified referee at a Herefordshire FA final" loading="lazy"></picture>
-      <div class="txt">
-        <h2>How it works</h2>
-        <ol class="steps">
-          <li><b>Register your team</b><span>Online, in a few minutes. The league confirms your place and first fixture.</span></li>
-          <li><b>Pay as you play</b><span>A weekly match fee by bank transfer before each game.</span></li>
-          <li><b>Play every week</b><span>Results, tables, form and team photos update here.</span></li>
-          <li data-prize><b>Win your division</b><span id="prize"></span></li>
-        </ol>
-        <a class="btn btn-light" href="/join.html">Enter a team</a>
-      </div>
+  <section class="band join-band">
+    <div class="wrap">
+      <h2>How to join</h2>
+      <ol class="steps steps-row">
+        <li><b>Register your team</b><span>Fill in the online form. Entry is free.</span></li>
+        <li><b>Get your fixtures</b><span>We confirm your division and first match night.</span></li>
+        <li><b>Turn up and play</b><span>Pay £30 a team each week by bank transfer. No long contracts.</span></li>
+      </ol>
+      <a class="btn btn-accent" href="/join.html">Join a league</a>
     </div>
   </section>
 
@@ -81,69 +63,42 @@ if(/(invite|recovery|confirmation|email_change)_token=/.test(location.hash))loca
 </main>
 {{> footer}}
 <script>
+/* Champions photos: tap one to see it larger; arrows, swipe or keys move between photos */
+(function(){
+  const items=[...document.querySelectorAll(".champ")]; if(!items.length||!window.HTMLDialogElement) return;
+  const d=document.createElement("dialog"); d.className="lightbox"; d.setAttribute("aria-label","Photo");
+  d.innerHTML=`<img alt=""><p></p><button type="button" class="lb-btn lb-close" aria-label="Close">&times;</button>`+(items.length>1?`<button type="button" class="lb-btn lb-prev" aria-label="Previous photo">&#8249;</button><button type="button" class="lb-btn lb-next" aria-label="Next photo">&#8250;</button>`:"");
+  document.body.appendChild(d);
+  const img=d.querySelector("img"), cap=d.querySelector("p"); let cur=0;
+  const show=i=>{ cur=(i+items.length)%items.length; const s=items[cur].querySelector("img"); img.src=s.src; img.alt=s.alt; cap.textContent=s.alt; };
+  items.forEach((it,i)=>it.querySelector(".champ-open").addEventListener("click",()=>{ show(i); d.showModal(); }));
+  d.addEventListener("click",e=>{ const b=e.target.closest("button");
+    if(b&&b.classList.contains("lb-prev")) show(cur-1); else if(b&&b.classList.contains("lb-next")) show(cur+1); else if(b||e.target===d) d.close(); });
+  d.addEventListener("keydown",e=>{ if(e.key==="ArrowLeft") show(cur-1); if(e.key==="ArrowRight") show(cur+1); });
+  let x0=null; d.addEventListener("touchstart",e=>{x0=e.touches[0].clientX},{passive:true});
+  d.addEventListener("touchend",e=>{ if(x0==null) return; const dx=e.changedTouches[0].clientX-x0; x0=null; if(Math.abs(dx)>50) show(cur+(dx<0?1:-1)); });
+})();
+</script>
+<script>
 (async function(){
-  const {S,esc,loadFixtures,table,divGames,formHTML,fmtDay,ymd,shirt}=S6;
-  const today=ymd(new Date()), $=id=>document.getElementById(id);
-  if(S.prize) $("prize").textContent=S.prize+"."; else document.querySelector("[data-prize]").remove();
-  // Non-breaking hyphens keep "Six-a-side" on one line
-  $("headline").innerHTML=esc(S.headline).replace(/-/g,"&#8209;");
-  S6.loadNews().then(posts=>{ if(!posts.length) return; document.getElementById("news-sec").hidden=false;
-    document.getElementById("headlines").innerHTML=posts.slice(0,2).map(p=>`<a class="card headline" href="/news.html#${esc(p.id)}"><time>${new Date(p.date+"T12:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</time><b>${esc(p.title)}</b><span>${esc((p.body||"").split(/\n/)[0].slice(0,140))}${(p.body||"").length>140?"…":""}</span></a>`).join(""); });
+  const {S,esc,ymd,fmtDay,loadFixtures,shirt}=S6, $=id=>document.getElementById(id), today=ymd(new Date());
+  $("facts").innerHTML=(S.facts||[]).map(f=>{ const inner=`<dt>${esc(f.k)}</dt><dd>${esc(f.v)}${f.s?`<small>${esc(f.s)}</small>`:""}</dd>`;
+    return f.href?`<a class="fact-link" href="${esc(f.href)}" target="_blank" rel="noopener">${inner}</a>`:`<div>${inner}</div>`; }).join("");
   if(S.wellbeing) $("talk-sec").hidden=false;
-  $("leagues").innerHTML=S.leagues.map(L=>{
-    const mins=(L.gameLength||"").match(/(\d+)\s*minutes?\s*each way/i), dur=mins?`${2*mins[1]} mins (${mins[1]} each way)`:L.gameLength;
-    const price=(L.price||"").match(/£\s*(\d+(?:\.\d+)?)/), M=L.manager||{};
-    const map=L.venue?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([L.venue,L.town].filter(Boolean).join(", "))}`:"";
-    const rows=[["Where",L.venue&&`<a href="${map}" target="_blank" rel="noopener">${esc(L.venue)}</a>${L.town?`, ${esc(L.town)}`:""}`],
-      ["Players",L.players&&`${esc(L.players)}-a-side`],["Kick-offs",L.kickOffs&&esc(L.kickOffs)],["Games",dur&&esc(dur)],
-      ["Price",price?`£${(+price[1]).toFixed(2)} per team`:L.price&&esc(L.price)],["Referees",S.referees&&esc(S.referees)],["Prizes",S.prize&&esc(S.prize)],
-      ["League manager",M.name&&`${esc(M.name)}${M.phone?` · <a href="tel:${esc(M.phone.replace(/\s/g,""))}">${esc(M.phone)}</a>`:""}`],
-      ["Rules",S.rulesUrl&&`<a href="${esc(S.rulesUrl)}" target="_blank" rel="noopener">League rules (PDF)</a>`]].filter(r=>r[1]);
-    return `<article class="card details league-card"><h2>${esc(L.night)} nights</h2><dl>${rows.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>
-      <div class="lc-acts"><a class="btn btn-accent" href="/join.html">Enter your team</a><a class="btn btn-outline" href="/tables.html?l=${L.id}">Tables</a></div></article>`; }).join("");
-  const data=await Promise.all(S.leagues.map(async l=>({l,fx:await loadFixtures(l)})));
-  $("nextup").innerHTML=data.map(({l,fx})=>{
-    const next=fx&&[...new Set(fx.filter(f=>f.ymd>=today).map(f=>f.ymd))].sort()[0];
-    return `<a href="/fixtures.html?l=${l.id}"><span>${esc(l.night)}</span><b>${next?esc(fmtDay(next)):"Tables"}</b></a>`;
-  }).join("");
-  // Find your team: search across every league; a followed team shows its next game here
-  const teams=data.flatMap(({l,fx})=>fx?S6.teams(fx).map(t=>({...t,l})):[]);
-  const q=$("q"), qres=$("qres"); let sel=-1;
-  const go=t=>location.href=`/team.html?l=${t.l.id}&t=${encodeURIComponent(t.name)}`;
-  function list(){ const v=q.value.trim().toLowerCase(); sel=-1;
-    const hits=v?teams.filter(t=>t.name.toLowerCase().includes(v)).slice(0,8):[];
-    qres.hidden=!hits.length;
-    qres.innerHTML=hits.map((t,i)=>`<li role="option"><a href="/team.html?l=${t.l.id}&t=${encodeURIComponent(t.name)}" data-i="${i}">${shirt(t.l.id,t.name,22)}<span>${esc(t.name)}</span><small>${esc(t.l.night)} · ${esc(t.division)}</small></a></li>`).join("");
-    qres._hits=hits; }
-  q.addEventListener("input",list);
-  q.addEventListener("keydown",e=>{ const n=(qres._hits||[]).length; if(!n) return;
-    if(e.key==="ArrowDown"||e.key==="ArrowUp"){ e.preventDefault(); sel=(sel+(e.key==="ArrowDown"?1:-1)+n)%n; qres.querySelectorAll("a").forEach((a,i)=>a.classList.toggle("on",i===sel)); }
-    if(e.key==="Enter"){ e.preventDefault(); go(qres._hits[Math.max(sel,0)]); } });
-  document.addEventListener("click",e=>{ if(!e.target.closest(".search")) qres.hidden=true; });
-  let fol=null; try{ fol=JSON.parse(localStorage.getItem("s6-follow")||"null"); }catch(e){}
-  const fd=fol&&data.find(x=>x.l.id===fol.l), ffx=fd&&fd.fx&&fd.fx.filter(g=>g.home===fol.t||g.away===fol.t);
-  if(ffx&&ffx.length){
-    const nx=ffx.find(g=>!g.played&&g.ymd>=today), last=[...ffx].reverse().find(g=>g.played), opp=g=>g.home===fol.t?g.away:g.home;
-    const line=nx?`Next: v ${esc(opp(nx))}, ${esc(fmtDay(nx.ymd))} ${esc(nx.time||"")}${nx.pitch?` · ${esc(nx.pitch)}`:""}`:last?`Last: ${esc(last.home)} ${last.hs} – ${last.as} ${esc(last.away)}`:"";
-    $("mt").innerHTML=`<div class="myteam">${shirt(fol.l,fol.t,48)}<div><p class="eyebrow" style="margin:0 0 4px;color:var(--muted)">Your team</p><div class="mt-name">${esc(fol.t)}</div><div class="mt-next">${line}</div></div><a class="btn btn-accent" href="/team.html?l=${fol.l}&t=${encodeURIComponent(fol.t)}">Team page</a></div>`;
-  }
-  const cards=[]; let updated="";
-  data.forEach(({l,fx})=>{ if(!fx) return; if(fx.updated>updated) updated=fx.updated; const played=fx.filter(f=>f.played); if(!played.length) return;
-    const d=played[played.length-1].ymd; played.filter(f=>f.ymd===d).forEach(g=>cards.push({l,g})); });
-  if(cards.length){
-    $("results").hidden=false;
-    const row=(t,s,w,id)=>`<div class="row${w?" win":""}"><span>${shirt(id,t,20)}${esc(t)}</span><b>${s}</b></div>`;
-    $("ribbon").innerHTML=cards.map(({l,g})=>`<a class="card res" href="/results.html?l=${l.id}&d=${encodeURIComponent(g.division)}"><div class="meta"><span>${esc(l.night)} · ${esc(g.division)}</span><span>${esc(fmtDay(g.ymd))}</span></div>
-      ${row(g.home,g.hs,g.hs>g.as,l.id)}${row(g.away,g.as,g.as>g.hs,l.id)}</a>`).join("");
-  }
-  $("leaders").innerHTML=data.map(({l,fx})=>{
-    if(!fx||!fx.some(f=>f.played)) return `<h3 class="group">${esc(l.name)}</h3><div class="card leader-empty"><span class="muted">Tables appear here once the first results are in.</span><a class="btn btn-outline" href="/tables.html?l=${l.id}">${esc(l.night)} tables</a></div>`;
-    return `<h3 class="group">${esc(l.name)}</h3>
-    <div class="grid g3">${l.divisions.map(d=>{
-      const t=fx?table(divGames(fx,d.name)):[], any=t.some(r=>r.p>0), link=`/tables.html?l=${l.id}&d=${encodeURIComponent(d.name)}`;
-      return `<article class="card leader"><h3><a href="${link}">${esc(d.name)}</a></h3>
-      ${any?`<table class="mini">${t.slice(0,3).map(r=>`<tr><td class="n">${r.pos}</td><td><a class="tname" href="/team.html?l=${l.id}&t=${encodeURIComponent(r.team)}">${shirt(l.id,r.team,24)}<span>${esc(r.team)}</span></a></td><td>${formHTML(r.form,3)}</td><td class="p">${r.pts}</td></tr>`).join("")}</table>`
-           :`<p class="muted small">No results yet. <a href="${link}">View the table</a></p>`}</article>`;}).join("")}</div>`;}).join("");
+  S6.loadNews().then(posts=>{ if(!posts.length) return; $("news-sec").hidden=false;
+    $("headlines").innerHTML=posts.slice(0,2).map(p=>`<a class="card headline" href="/news.html#${esc(p.id)}"><time>${new Date(p.date+"T12:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</time><b>${esc(p.title)}</b><span>${esc((p.body||"").split(/\n/)[0].slice(0,140))}${(p.body||"").length>140?"…":""}</span></a>`).join(""); });
+
+  const data=await Promise.all(S.leagues.map(async l=>({l,fx:await loadFixtures(l)||[]})));
+  // This week: next league night per league + the latest scores
+  $("nights").innerHTML=data.map(({l,fx})=>{ const next=[...new Set(fx.filter(g=>g.ymd>=today).map(g=>g.ymd))].sort()[0], n=next?fx.filter(g=>g.ymd===next).length:0;
+    return `<a class="card night-card" href="/league.html?l=${l.id}#fixtures"><span class="nc-day">${esc(l.night)} League</span><b>${next?esc(fmtDay(next)):"Season dates to follow"}</b><span>${next?`${n} games · ${esc(l.hours||"")}`:"Check back soon"}</span><em>Fixtures</em></a>`; }).join("");
+  const latest=data.flatMap(({l,fx})=>{ const d=[...new Set(fx.filter(g=>g.played).map(g=>g.ymd))].sort().pop(); return d?fx.filter(g=>g.played&&g.ymd===d).map(g=>({...g,l})):[]; });
+  if(latest.length){ const r=$("ribbon"); r.hidden=false;
+    r.innerHTML=latest.slice(0,12).map(g=>`<a class="card res" href="/league.html?l=${g.l.id}&d=${encodeURIComponent(g.division)}#results"><div class="meta"><span>${esc(g.l.night)} · ${esc(g.division)}</span><span>${esc(fmtDay(g.ymd))}</span></div>
+      <div class="row${g.hs>g.as?" win":""}"><span>${shirt(g.l.id,g.home,20)}${esc(g.home)}</span><b>${g.hs}</b></div><div class="row${g.as>g.hs?" win":""}"><span>${shirt(g.l.id,g.away,20)}${esc(g.away)}</span><b>${g.as}</b></div></a>`).join(""); }
+  // Why play with us: one photo per card, never repeated; the middle card counts the teams
+  const nTeams=new Set(data.flatMap(({fx})=>fx.flatMap(g=>[g.home,g.away]))).size;
+  $("why").innerHTML=(S.why||[]).map(w=>`<article class="card why">${w.img?`<img src="/img/${esc(w.img)}" alt="${esc(w.alt||"")}" loading="lazy">`:`<div class="why-stat"><b>${nTeams||"30+"}</b><span>teams playing this season</span></div>`}<div class="why-txt"><h3>${esc(w.h)}</h3><p>${esc(w.p)}</p></div></article>`).join("");
 })();
 </script>
 </body>

@@ -47,7 +47,7 @@
     const col = (...keys) => h.findIndex(x => keys.some(k => x.includes(k)));
     const exact = (...keys) => h.findIndex(x => keys.includes(x));
     const iDate=col("date"), iTime=col("time","ko"), iDiv=col("division","competition"),
-          iPitch=col("pitch","venue"), iHS=col("home score","home goals","home team score"),
+          iPitch=[exact("pitch","pitch no","pitch number"),col("pitch"),col("venue")].find(i=>i>=0)??-1, iHS=col("home score","home goals","home team score"),
           iAS=col("away score","away goals","away team score"), iScore=exact("score","result","scores","ft");
     let iHome=exact("home team","home"), iAway=exact("away team","away");
     if(iHome<0) iHome=h.findIndex(x=>x.includes("home")&&!/score|goal/.test(x));
@@ -190,6 +190,31 @@
   const newsImg = p => p.hasImage ? `/.netlify/functions/news?img=${encodeURIComponent(p.id)}` : (p.image ? "/img/"+p.image : "");
 
   window.S6 = {S, esc, val, league, param, ymd, slug, parseCSV, toDate, rowsToFixtures, loadFixtures, teams, fmtDate, fmtDay, table, divGames, formHTML, initials, photoURL, cleanName, stripShirts, shirtOf, shirtSVG, shirt, bibSVG, clash, loadNews, newsImg};
+
+  /* Latest scores ticker: the chosen league's most recent league night, scrolling under the header.
+     Pauses on hover or tap; shows as a still, swipeable row when motion is reduced. */
+  async function ticker(){
+    const el=document.getElementById("ticker"); if(!el||!S.leagues.length) return;
+    let id=""; try{ id=localStorage.getItem("s6-league")||""; }catch(e){}
+    const L=league(id)||S.leagues[0], fx=await loadFixtures(L)||[];
+    const day=[...new Set(fx.filter(g=>g.played).map(g=>g.ymd))].sort().pop();
+    const sw=S.leagues.length>1?`<span class="tk-sw">${S.leagues.map(l=>`<button type="button" data-l="${l.id}" aria-pressed="${l.id===L.id}">${esc(l.night.slice(0,3).toUpperCase())}</button>`).join("")}</span>`:"";
+    let items;
+    if(day){ const d=new Date(day+"T12:00:00").toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"}).toUpperCase();
+      items=`<span class="tk-day">${esc(d)}</span>`+fx.filter(g=>g.played&&g.ymd===day).map(g=>`<a href="/team.html?l=${L.id}&t=${encodeURIComponent(g.home)}"><em>${esc(g.division)}</em> ${esc(g.home)} <b>${g.hs}–${g.as}</b> ${esc(g.away)}</a>`).join('<i aria-hidden="true">•</i>');
+    } else { const next=[...new Set(fx.map(g=>g.ymd).filter(d=>d>=ymd(new Date())))].sort()[0];
+      items=`<span class="tk-day">${esc(L.night.toUpperCase())}</span><a href="/league.html?l=${L.id}#fixtures">${next?`Next league night: ${esc(new Date(next+"T12:00:00").toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"}))}`:"Results appear here after each league night"}</a>`; }
+    el.innerHTML=`<div class="wrap tk">${sw}<div class="tk-win" tabindex="0" aria-label="Latest ${esc(L.night)} scores"><div class="tk-run">${items}</div></div></div>`;
+    el.hidden=false;
+    const run=el.querySelector(".tk-run"), win=el.querySelector(".tk-win");
+    if(!matchMedia("(prefers-reduced-motion: reduce)").matches && run.scrollWidth>win.clientWidth){
+      run.innerHTML+=`<i aria-hidden="true">•</i>`+run.innerHTML.replace(/<a /g,'<a tabindex="-1" aria-hidden="true" ');
+      run.style.animationDuration=Math.max(20,run.scrollWidth/90)+"s"; run.classList.add("go"); }
+    win.addEventListener("click",e=>{ if(e.target.closest("a")) return; run.classList.toggle("paused"); });
+    el.querySelectorAll(".tk-sw button").forEach(b=>b.onclick=()=>{ try{ localStorage.setItem("s6-league",b.dataset.l); }catch(e){} ticker(); document.dispatchEvent(new CustomEvent("s6-ticker",{detail:b.dataset.l})); });
+  }
+  document.addEventListener("s6-league",()=>ticker());
+  if(document.readyState!=="loading") setTimeout(ticker,0); else document.addEventListener("DOMContentLoaded",ticker);
 
   if("serviceWorker" in navigator){ addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(()=>{})); }
 })();

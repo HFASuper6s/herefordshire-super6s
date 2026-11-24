@@ -1,11 +1,3 @@
-<!--page {"title":"Results | {{site.siteName}}","desc":"Results for every division in the {{site.siteName}}.","id":"results","view":"results","heading":"Results"}-->
-<!doctype html>
-<html lang="en-GB">
-<head>
-{{> head}}
-</head>
-<body data-page="results">
-{{> header}}
-{{> comp}}
-</body>
-</html>
+<!--page {"title":"{{site.siteName}}","id":"results-redirect"}-->
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>{{site.siteName}}</title>
+<script>location.replace("/league.html"+location.search+"#results");</script></head><body></body></html>

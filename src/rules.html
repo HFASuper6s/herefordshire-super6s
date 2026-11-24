@@ -1,0 +1,46 @@
+<!--page {"title":"League rules | {{site.siteName}}","desc":"Playing rules and terms of entry for the {{site.siteName}}.","id":"rules"}-->
+<!doctype html>
+<html lang="en-GB">
+<head>
+{{> head}}
+</head>
+<body data-page="rules">
+{{> header}}
+<main id="main">
+  <div class="phead"><div class="wrap">
+    <h1>League rules</h1>
+    <p>{{{rulesIntro}}}</p>
+    <nav class="ltabs" role="tablist" aria-label="Rules">
+      <a href="#playing" data-v="playing" role="tab">Playing rules</a><a href="#terms" data-v="terms" role="tab">Terms of entry</a>
+    </nav>
+  </div></div>
+  <div class="wrap rules">
+    <div class="print-head"><img src="/img/logo.png" alt=""><div><b>{{site.siteName}}</b><span id="ptitle">Playing rules</span></div></div>
+    <div class="card venue-box" id="venue-box" hidden><h2>At the venue</h2><div id="vb"></div></div>
+    <div class="rules-bar"><p class="muted small">Questions? <a href="mailto:{{site.contactEmail}}">{{site.contactEmail}}</a></p><button class="btn btn-navy" type="button" id="print">Print</button></div>
+    <div class="rules-grid">
+      <nav class="toc card" aria-label="Contents"><b>Contents</b><div data-part="playing">{{{tocPlaying}}}</div><div data-part="terms">{{{tocTerms}}}</div></nav>
+      <div>
+        <div data-part="playing">{{{rulesPlaying}}}</div>
+        <div data-part="terms">{{{rulesTerms}}}</div>
+      </div>
+    </div>
+  </div>
+</main>
+{{> footer}}
+<script>
+(function(){
+  const parts=["playing","terms"];
+  function show(){ let v=location.hash.slice(1); if(/^r(\d+|disc)$/.test(v)){ const el=document.getElementById(v); if(el) v=el.closest("[data-part]").dataset.part; } if(!parts.includes(v)) v="playing";
+    document.querySelectorAll("[data-part]").forEach(e=>e.hidden=e.dataset.part!==v);
+    document.querySelectorAll(".ltabs a").forEach(a=>a.setAttribute("aria-selected",a.dataset.v===v));
+    document.getElementById("ptitle").textContent=v==="playing"?"Playing rules":"Terms of entry";
+    document.title=(v==="playing"?"Playing rules":"Terms of entry")+" | "+S6.S.siteName; }
+  const V=S6.S.venue, esc=S6.esc; if(V&&V.rules&&V.rules.length){ document.getElementById("venue-box").hidden=false;
+    document.getElementById("vb").innerHTML=`<p class="small muted" style="margin:0 0 8px">${esc(V.name)}, ${V.address.map(esc).join(", ")}</p><ul class="vrules">${V.rules.map(r=>`<li><b>${esc(r.h)}</b> ${esc(r.t)}</li>`).join("")}</ul>`; }
+  addEventListener("hashchange",show); show();
+  document.getElementById("print").onclick=()=>print();
+})();
+</script>
+</body>
+</html>

@@ -11,8 +11,8 @@
     "label": "League sponsor",
     "blurb": "supporting serving personnel, veterans and their families across the county"
   },
-  "headline": "Six-a-side under the lights",
-  "intro": "Two weeknight leagues, short games, experienced FA-qualified referees, live tables and every team's form.",
+  "headline": "Herefordshire's biggest 6-a-side leagues",
+  "intro": "Fun, flexible and competitive midweek football. FA-affiliated, with FA-qualified referees, and you only pay when you play.",
   "contactEmail": "Super6s@HerefordshireFA.com",
   "registrationForm": "https://app.smartsheet.com/b/form/c2f97733b14a4c63acacd08e1eee5bc7",
   "colors": {
@@ -28,17 +28,17 @@
       "id": "monday",
       "name": "Monday League",
       "night": "Monday",
-      "kickOffs": "20:30 and 21:15",
+      "kickOffs": "19:00, 19:35, 20:10, 20:45 and 21:20",
       "gameLength": "16 minutes each way",
       "venue": "The Hereford Academy",
       "address": null,
-      "price": "\u00a330 per team per week",
+      "price": "£30 per team per week",
       "fixturesFile": "data/monday-fixtures.csv",
       "pack": {
         "fee": 30,
         "friendlyFee": 20,
-        "staffStart": null,
-        "staffEnd": null
+        "staffStart": "7.00pm",
+        "staffEnd": "10.00pm"
       },
       "divisions": [
         {
@@ -82,7 +82,10 @@
       "manager": {
         "name": "Martin Oliver",
         "phone": "07940 241587"
-      }
+      },
+      "hours": "7pm – 10pm",
+      "title": "Hereford Academy – Mon",
+      "divisionSize": 6
     },
     {
       "id": "thursday",
@@ -92,7 +95,7 @@
       "gameLength": "18 minutes each way",
       "venue": "The Hereford Academy",
       "address": null,
-      "price": "\u00a330 per team per week",
+      "price": "£30 per team per week",
       "fixturesFile": "data/thursday-fixtures.csv",
       "pack": {
         "fee": 30,
@@ -135,7 +138,10 @@
       "manager": {
         "name": "Martin Oliver",
         "phone": "07940 241587"
-      }
+      },
+      "hours": "7pm – 9.40pm",
+      "title": "Hereford Academy – Thurs",
+      "divisionSize": 6
     }
   ],
   "shirts": {
@@ -164,9 +170,40 @@
       "Inter Urnan": "Black",
       "To Be Determined": "Red"
     },
-    "monday": {}
+    "monday": {
+      "Old ‘n’ Unathletic": "Black",
+      "CPFC": "Blue",
+      "Swallows FC": "Blue",
+      "Below Average": "Purple",
+      "Perform UK": "White",
+      "Ledders FC": "Black",
+      "Weston Old Boys": "Yellow",
+      "UTP FC": "Red",
+      "Clap For Us FC": "White",
+      "Stranger Mings": "Claret/Blue",
+      "Exeter Gently": "White",
+      "Angry Tick": "Red",
+      "Elneny FC": "Black",
+      "Fiorentina Turner": "Red",
+      "Pathology United": "Orange",
+      "Stirling FC": "Blue",
+      "Scrambled Legs FC": "Yellow",
+      "Brom Dons": "Blue",
+      "Bayer Neverlosen": "White",
+      "The Ford's Finest": "Blue",
+      "Goon FC": "Gold",
+      "Kev And His Kids": "Navy",
+      "Tripods": "Blue",
+      "Goal Diggers": "Black",
+      "No Points United": "Black",
+      "Scorgasms": "Black",
+      "Son Of A Pitch": "Black",
+      "Athletico Hereford": "Black",
+      "Warehouse Vankers": "Blue",
+      "Atletico Beefy": "Red"
+    }
   },
-  "rulesUrl": "/img/league-rules.pdf",
+  "rulesUrl": "/rules.html",
   "prize": "Team trophy for divisional champions",
   "heroPhotos": [
     {
@@ -182,23 +219,49 @@
       "caption": "Divisional champions"
     }
   ],
+  "champions": {
+    "title": "Champions",
+    "intro": "Divisional winners, under the lights at The Hereford Academy.",
+    "photos": [
+      {
+        "src": "champions-1.jpg",
+        "caption": "Divisional champions",
+        "sub": ""
+      },
+      {
+        "src": "champions-2.jpg",
+        "caption": "Divisional champions",
+        "sub": ""
+      },
+      {
+        "src": "champions-3.jpg",
+        "caption": "Divisional champions",
+        "sub": ""
+      },
+      {
+        "src": "champions-4.jpg",
+        "caption": "Divisional champions",
+        "sub": ""
+      }
+    ]
+  },
   "getInvolved": [
     {
       "tag": "Play",
       "name": "Drop In & Play",
       "note": "New time, same place",
       "summary": "Turn up and play. No team needed.",
-      "when": "Sundays, 7pm \u2013 8pm",
+      "when": "Sundays, 7pm – 8pm",
       "where": "The Herefordshire FA (3G pitch)",
-      "price": "\u00a34"
+      "price": "£4"
     },
     {
       "tag": "Play",
       "name": "Daytime Walking Football",
       "summary": "Football without the running. A friendly way for over-50s to stay active.",
-      "when": "Thursdays, 11am \u2013 12pm, then refreshments until 1pm",
+      "when": "Thursdays, 11am – 12pm, then refreshments until 1pm",
       "where": "Herefordshire FA, Widemarsh Common, Hereford, HR4 9NA",
-      "price": "\u00a35",
+      "price": "£5",
       "who": "Over-50s",
       "contact": {
         "name": "Scott Russell",
@@ -209,7 +272,7 @@
       "tag": "Play",
       "name": "Adult Futsal",
       "summary": "Fast-paced indoor drop-in football, all year round and never cancelled for weather.",
-      "when": "Wednesdays, 6.30pm \u2013 7.30pm",
+      "when": "Wednesdays, 6.30pm – 7.30pm",
       "where": "St Mary's High School, HR1 4DR",
       "who": "Adults",
       "contact": {
@@ -222,12 +285,12 @@
       "name": "FA Referee Course",
       "summary": "Qualify as an FA referee.",
       "dates": [
-        "Thursday 14 January 2027, 6.30pm \u2013 9.30pm",
-        "Sunday 17 January 2027, 10am \u2013 6pm",
-        "Thursday 25 March 2027, 7pm \u2013 9pm"
+        "Thursday 14 January 2027, 6.30pm – 9.30pm",
+        "Sunday 17 January 2027, 10am – 6pm",
+        "Thursday 25 March 2027, 7pm – 9pm"
       ],
       "where": "SSAFA County Ground, Herefordshire FA, Widemarsh Common, Hereford, HR4 9NA",
-      "price": "\u00a3145 per person",
+      "price": "£145 per person",
       "who": "Open to anyone aged 14+",
       "contact": {
         "name": "Jack",
@@ -241,7 +304,7 @@
       "id": "christmas-haf-camp-2026",
       "date": "2026-11-22",
       "title": "Christmas HAF Camp",
-      "body": "Football, arts and crafts and fun activities for 5 to 10 year olds, run by our FA-qualified coaches, in partnership with Herefordshire Council.\n\nMonday 21 and Tuesday 22 December 2026, 10am \u2013 3pm, at the SSAFA County Ground, Widemarsh Common, Hereford, HR4 9NA.\n\nHealthy meals provided, with all dietary requirements catered for. Free for children who receive benefit-related free school meals.",
+      "body": "Football, arts and crafts and fun activities for 5 to 10 year olds, run by our FA-qualified coaches, in partnership with Herefordshire Council.\n\nMonday 21 and Tuesday 22 December 2026, 10am – 3pm, at the SSAFA County Ground, Widemarsh Common, Hereford, HR4 9NA.\n\nHealthy meals provided, with all dietary requirements catered for. Free for children who receive benefit-related free school meals.",
       "link": "https://www.facebook.com/share/r/1Dj3YT44gS/",
       "linkLabel": "Watch on Facebook"
     }
@@ -273,7 +336,7 @@
         "name": "CALM",
         "what": "For anyone who's down or has hit a wall.",
         "call": "0800 58 58 58",
-        "hours": "5pm \u2013 midnight, every day",
+        "hours": "5pm – midnight, every day",
         "url": "https://www.thecalmzone.net",
         "logo": "logo-calm.png",
         "logoShowsName": true
@@ -282,7 +345,7 @@
         "name": "Mind",
         "what": "Mental health support line.",
         "call": "0300 102 1234",
-        "hours": "9am \u2013 6pm, Monday to Friday",
+        "hours": "9am – 6pm, Monday to Friday",
         "url": "https://www.mind.org.uk",
         "logo": "logo-mind.png",
         "logoShowsName": true
@@ -305,5 +368,96 @@
         "logo": "logo-andysmanclub.png"
       }
     ]
-  }
+  },
+  "facts": [
+    {
+      "k": "Monday nights",
+      "v": "7pm – 10pm"
+    },
+    {
+      "k": "Thursday nights",
+      "v": "7pm – 9.40pm"
+    },
+    {
+      "k": "Entry",
+      "v": "Free"
+    },
+    {
+      "k": "Match fee",
+      "v": "£30 a team",
+      "s": "Just £3.75 a player in a squad of 8"
+    },
+    {
+      "k": "Seasons",
+      "v": "10 weeks",
+      "s": "Multiple divisions"
+    },
+    {
+      "k": "Venue",
+      "v": "Hereford Academy 3G",
+      "s": "Marlbrook Road, HR2 7NG · Directions",
+      "href": "https://www.google.com/maps?ll=52.037472,-2.727611&z=14&t=m&hl=en&gl=GB&mapclient=embed&cid=13556200943706621325"
+    }
+  ],
+  "why": [
+    {
+      "img": "feature.jpg",
+      "alt": "An FA-qualified referee at a Herefordshire FA final",
+      "h": "Proper referees",
+      "p": "Fully FA-affiliated, with FA-qualified referees on every pitch, every week."
+    },
+    {
+      "stat": "teams",
+      "h": "The biggest in the county",
+      "p": "The largest 6-a-side leagues in Herefordshire, with divisions for every level."
+    },
+    {
+      "img": "tile-trophies.jpg",
+      "alt": "Divisional champions' trophies on the pitch",
+      "h": "Something to play for",
+      "p": "A team trophy for every divisional champion, every season."
+    }
+  ],
+  "venue": {
+    "name": "The Hereford Church of England Academy",
+    "short": "Hereford Academy 3G",
+    "address": [
+      "Marlbrook Road",
+      "Hereford",
+      "HR2 7NG"
+    ],
+    "map": "https://www.google.com/maps?ll=52.037472,-2.727611&z=14&t=m&hl=en&gl=GB&mapclient=embed&cid=13556200943706621325",
+    "rules": [
+      {
+        "h": "Speed limit",
+        "t": "The speed limit on The Academy site is 10mph."
+      },
+      {
+        "h": "No dogs",
+        "t": "No dogs are allowed on site, except assistance dogs."
+      },
+      {
+        "h": "No smoking or vaping",
+        "t": "Smoking and vaping are strictly prohibited on site."
+      }
+    ]
+  },
+  "gallery": [
+    {
+      "src": "tile-match.jpg",
+      "alt": "Super 6s match under the floodlights"
+    },
+    {
+      "src": "tile-trophies.jpg",
+      "alt": "Divisional champions' trophies"
+    },
+    {
+      "src": "referee-cards.jpg",
+      "alt": "FA referee with yellow and red cards"
+    },
+    {
+      "src": "feature.jpg",
+      "alt": "FA-qualified referee at a Herefordshire FA final"
+    }
+  ]
 }
