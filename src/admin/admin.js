@@ -7,8 +7,10 @@
   const today = () => ymd(window.__TEST_TODAY ? new Date(window.__TEST_TODAY+"T12:00:00") : new Date());
   const longDate = s => new Date(s+"T12:00:00").toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
   const shortDate = s => new Date(s+"T12:00:00").toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"});
-  // Paperwork opens the day before a league night and stays open on the night itself
-  const packOpen = (night, t=today()) => t >= addDays(night,-1) && t <= night;
+  // Paperwork can be downloaded at any time. "Early" = more than a day before the night: the event manager
+  // is reminded that suspensions or changes added after printing won't be on it.
+  const packOpen = () => true;
+  const packEarly = (night, t=today()) => t < addDays(night,-1);
   // A suspension prints if it covers the night (start and end dates included)
   const activeOn = (s, night) => s.start <= night && night <= s.end;
 
@@ -36,5 +38,5 @@
     if(!ID()){ fn(null); return; }
     ID().on("init", go); ID().on("login", u => { ID().close(); go(); }); ID().on("logout", go);
   }
-  window.EM = { ymd, addDays, today, longDate, shortDate, packOpen, activeOn, isAdmin, api, post, fixtures, onAuth };
+  window.EM = { ymd, addDays, today, longDate, shortDate, packOpen, packEarly, activeOn, isAdmin, api, post, fixtures, onAuth };
 })();

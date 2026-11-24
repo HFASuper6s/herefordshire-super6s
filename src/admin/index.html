@@ -145,10 +145,10 @@ async function start(){
     fx.forEach(f=>{teams.add(f.home);teams.add(f.away)});
     const night=[...new Set(fx.map(f=>f.ymd).filter(Boolean))].sort().find(d=>d>=t);
     if(!night){ body.innerHTML=`<p class="meta">No more league nights in the fixture list.</p>`; continue; }
-    const open=EM.packOpen(night,t), games=fx.filter(f=>f.ymd===night).length;
+    const early=EM.packEarly(night,t), games=fx.filter(f=>f.ymd===night).length;
     body.innerHTML=`<p class="meta">Next: <b>${EM.longDate(night)}</b> · ${games} games</p>
-      ${open?`<a class="btn btn-accent" href="pack.html?l=${l.id}&d=${night}">Download paperwork</a>`
-            :`<button class="btn btn-accent" disabled>Download paperwork</button><p class="msg">Available from ${EM.shortDate(EM.addDays(night,-1))}.</p>`}`;
+      <a class="btn btn-accent" href="pack.html?l=${l.id}&d=${night}">Download paperwork</a>
+      ${early?`<p class="msg">Printing early? Any suspensions or changes added after you print won't be on it, so print again nearer the night if anything changes.</p>`:""}`;
   }
   $("teamlist").innerHTML=[...teams].sort().map(x=>`<option value="${esc(x)}">`).join("");
   await load();

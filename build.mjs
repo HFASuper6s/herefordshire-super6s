@@ -100,6 +100,14 @@ if (fs.existsSync(path.join(countyDir, "data"))) copyDir(path.join(countyDir, "d
 // Theme colours into the stylesheet
 const k = C.colors, theme = `--brand:${k.brand}; --brand-dark:${k.brandDark}; --brand-light:${k.brandLight}; --accent:${k.accent}; --accent-dark:${k.accentDark}; --logo-bg:${k.logoBg};`;
 const cssP = path.join(OUT, "css", "site.css"); fs.writeFileSync(cssP, fs.readFileSync(cssP, "utf8").replace("/*THEME*/", theme));
+// "Ask a question" FAQ list (optional): county/faq.json -> /data/faq.json, loaded only when the helper opens
+const faqFile = path.join(countyDir, "faq.json");
+if (fs.existsSync(faqFile)) {
+  const faq = JSON.parse(fs.readFileSync(faqFile, "utf8"));
+  if (!Array.isArray(faq)) throw new Error("county/faq.json must be a list of { q, k, a } entries");
+  faq.forEach((f, i) => { if (!f.q || !f.a) throw new Error(`county/faq.json entry ${i + 1} needs a question (q) and an answer (a)`); });
+  fs.writeFileSync(path.join(OUT, "data", "faq.json"), JSON.stringify(faq));
+}
 // Settings for the browser
 fs.writeFileSync(path.join(OUT, "js", "config.js"), "/* Generated from county/config.json by build.mjs - edit that file, not this one. */\nwindow.SITE = " + JSON.stringify(C, null, 1) + ";\n");
 // App manifest and offline cache

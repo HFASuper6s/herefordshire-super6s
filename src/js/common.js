@@ -93,16 +93,25 @@
       document.body.appendChild(f);
     });
   }
-  // Pull (date, home, home score, away score, away) out of whatever columns the snippet uses
+  /* Pull (date, home, home score, away score, away) out of the snippet's table.
+     Full-Time's "recent results" snippet (Nov 2026) puts the date on its own row ("Mon 23 Nov 2026 19:00")
+     followed by the match row, with the score split over three cells ("1", "-", "2"). Older layouts used one
+     cell ("1-2") and a dd/mm/yyyy date on the same row; both are handled. */
+  const MON={jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11}, pad2=n=>String(n).padStart(2,"0");
   function parseResults(rows){
-    const out=[];
+    const out=[]; let day="";
     rows.forEach(r=>{
-      const i=r.findIndex(c=>/^\d{1,2}\s*[-–:]\s*\d{1,2}$/.test(c)); if(i<1||i>=r.length-1) return;
-      const m=r[i].match(/(\d+)\s*[-–:]\s*(\d+)/);
-      let h=i-1; while(h>=0&&!/[a-z]/i.test(r[h])) h--; let a=i+1; while(a<r.length&&!/[a-z]/i.test(r[a])) a++;
+      const line=r.join(" ");
+      const dm=line.match(/\b(\d{1,2})\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+(\d{4})\b/i), ds=line.match(/\b(\d{1,2})\/(\d{1,2})\/(\d{2,4})\b/);
+      const rowDay=dm?`${dm[3]}-${pad2(MON[dm[2].toLowerCase()]+1)}-${pad2(dm[1])}`:ds?`${ds[3].length===2?"20"+ds[3]:ds[3]}-${pad2(ds[2])}-${pad2(ds[1])}`:"";
+      let i=-1, end=-1, hs, as;
+      for(let k=0;k<r.length;k++){ const one=r[k].match(/^(\d{1,2})\s*[-–:]\s*(\d{1,2})$/);
+        if(one){ i=end=k; hs=+one[1]; as=+one[2]; break; }
+        if(/^\d{1,2}$/.test(r[k])&&/^[-–:]$/.test(r[k+1]||"")&&/^\d{1,2}$/.test(r[k+2]||"")){ i=k; end=k+2; hs=+r[k]; as=+r[k+2]; break; } }
+      if(i<0){ if(rowDay) day=rowDay; return; }   // a date-only row: applies to the match row(s) below it
+      let h=i-1; while(h>=0&&!/[a-z]/i.test(r[h])) h--; let a=end+1; while(a<r.length&&!/[a-z]/i.test(r[a])) a++;
       if(h<0||a>=r.length) return;
-      const dc=r.find(c=>/\d{1,2}\/\d{1,2}\/\d{2,4}/.test(c)), d=dc?toDate(dc.match(/\d{1,2}\/\d{1,2}\/\d{2,4}/)[0]):null;
-      out.push({ymd:d?ymd(d):"",home:tidy(r[h]),away:tidy(r[a]),hs:+m[1],as:+m[2]});
+      out.push({ymd:rowDay||day,home:tidy(r[h]),away:tidy(r[a]),hs,as});
     });
     return out;
   }

@@ -40,10 +40,13 @@ Netlify reads `netlify.toml`, runs `node build.mjs` and publishes `dist/`.
 4. When they have accepted: click their name > **Edit settings > Roles** > type `admin` > Save.
 The event manager area is at `your-site-address/admin`.
 
+## "Ask a question" helper (free, no AI)
+The **Ask a question** button on the League page opens a helper that answers from the county's own question list, `county/faq.json`. Each entry has `q` (the question), `k` (extra words people might use, e.g. "astros trainers studs") and `a` (the answer; start lines with `- ` for a list, and write site pages as `/venue.html` to make links). Only when nothing matches, or the visitor says it didn't help, does it offer **Email the league** with their question filled in. To add a question, add an entry and push. With no `county/faq.json`, the button just opens an email.
+
 ## Every week (event manager)
 - **Scores update by themselves:** the site reads each division's FA Full-Time results snippet (the `results` code in county/config.json) and fills in any score not uploaded yet. Check them after each league night.
 - **Results upload (backup):** after each league night, export the fixtures and results from FA Full-Time. Then go to `/admin` > the league's card > **Upload Full-Time results**, and pick the file (.xls, .xlsx or .csv). Tables, form, charts and the paperwork update straight away.
-- **Paperwork:** the day before each league night, go to `/admin` > **Download paperwork** > **Download PDF** (choose "Save as PDF").
+- **Paperwork:** any time before each league night, go to `/admin` > **Download paperwork** > **Download PDF** (choose "Save as PDF"). If you print more than a day early, print again if suspensions or fixtures change.
 - **Team photos:** `/admin` > **Team photos** > pick the team > take or choose a photo > **Save team photo**.
 - **Suspensions:** `/admin` > **Suspensions**. These print on every referee sheet between the start and end dates.
 

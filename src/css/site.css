@@ -617,3 +617,29 @@ address.venue b{display:block}
 @media (max-width:860px){.venue-top{grid-template-columns:1fr}.venue-top img{width:100%;height:200px}.vr3,.fw-grid{grid-template-columns:1fr}}
 .mgr{display:flex;align-items:center;gap:12px}
 .mgr img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--line);flex:none}
+/* "Ask a question" helper panel */
+.ask{border:0;padding:0;width:min(520px,94vw);max-height:min(720px,90vh);border-radius:var(--r);background:var(--card);color:var(--ink);box-shadow:var(--shadow-lg);flex-direction:column;overflow:hidden}
+.ask[open]{display:flex}
+.ask::backdrop{background:rgba(4,8,24,.6)}
+.ask-top{display:flex;align-items:center;justify-content:space-between;background:var(--brand);color:#fff;padding:14px 18px;border-bottom:3px solid var(--accent)}
+.ask-top h2{font-size:1.55rem;text-transform:uppercase}
+.ask-x{border:0;background:none;color:#fff;font-size:1.9rem;line-height:1;cursor:pointer;padding:4px 8px;border-radius:8px}
+.ask-x:hover{background:rgba(255,255,255,.12)}
+.ask-log{flex:1;min-height:0;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.ask-msg{max-width:88%;padding:10px 14px;border-radius:14px;font-size:.98rem;line-height:1.45;overflow-wrap:anywhere}
+.ask-msg p{margin:0}.ask-msg p+p{margin-top:8px}.ask-msg ul{margin:6px 0 0;padding-left:20px}
+.ask-msg a{color:inherit;font-weight:700}
+.ask-msg.bot{align-self:flex-start;background:var(--tint);border-bottom-left-radius:4px}
+.ask-msg.me{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:4px}
+.ask-msg.choices{max-width:100%;padding:0 0 4px}
+.ask-sub{font-size:.85rem;color:var(--muted);margin:0 0 6px!important}
+.ask-no{display:block;margin-top:8px;padding:0;border:0;background:none;color:var(--muted);font:600 .84rem var(--body);text-decoration:underline;cursor:pointer}
+.ask-no:hover{color:var(--ink)}
+.ask-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ask-chips button{border:1px solid var(--line-2);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 12px;font:600 .88rem var(--body);cursor:pointer}
+.ask-chips button:hover{border-color:var(--brand)}
+.ask-mail{margin:0 18px 12px;align-self:flex-start}
+.ask-form{display:flex;gap:8px;padding:12px 18px 16px;border-top:1px solid var(--line)}
+.ask-form textarea{flex:1;resize:none;font:400 1rem/1.4 var(--body);padding:10px 12px;border:1px solid var(--line-2);border-radius:10px;background:var(--card);color:var(--ink);min-width:0}
+.ask-form .btn{padding:10px 16px}
+@media (max-width:600px){.ask{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;border-radius:0}}

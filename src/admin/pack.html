@@ -96,7 +96,6 @@ EM.onAuth(user=>{
 
 async function build(){
   if(!L||!/^\d{4}-\d{2}-\d{2}$/.test(D)) return stop("This paperwork link is not valid. Go back and pick the league night again.");
-  if(!EM.packOpen(D)) return stop(`The paperwork for ${esc(EM.longDate(D))} opens on ${esc(EM.longDate(EM.addDays(D,-1)))}.`);
   const fx=await EM.fixtures(L);
   if(!fx) return stop(`No fixture file is loaded for the ${esc(L.name)}.`);
   const games=fx.filter(f=>f.ymd===D).sort((a,b)=>a.time.localeCompare(b.time)||(+a.pitchNo||0)-(+b.pitchNo||0));
@@ -109,7 +108,7 @@ async function build(){
   const ukDate=`${String(dt.getDate()).padStart(2,"0")}/${String(dt.getMonth()+1).padStart(2,"0")}/${dt.getFullYear()}`;
   const hdr=`<div class="hdr"><img src="/img/logo.png" alt=""><div><div class="hdr-t">${esc(S.countyFA.toUpperCase())}<br>${esc((S.shortName||"Super 6s").toUpperCase().replace(/6S$/,"6s"))}</div>${S.contactEmail?`<div class="hdr-e">${esc(S.contactEmail)}</div>`:""}</div></div>`;
   const blank=(n,cols)=>Array.from({length:n},()=>`<tr>${"<td></td>".repeat(cols)}</tr>`).join("");
-  document.title=`Paperwork ${L.night} ${ukDate} | ${S.name}`;
+  document.title=`Paperwork ${L.night} ${ukDate} | ${S.siteName}`;   // also the suggested PDF file name
 
   // 1. Team payments
   const payRows=games.flatMap(g=>[g.home,g.away].map(t=>`<tr><td class="tick"></td><td class="c">${esc(g.time)}</td><td class="c">${esc(g.pitchNo)}</td><td>${esc(t)}</td><td class="c">${money(P.fee)}</td><td></td><td></td><td></td><td></td></tr>`)).join("");
