@@ -51,11 +51,11 @@ const ctx = {
   // Main sections (same for every county): Home, Tables, Fixtures, Results, then News / Get involved / Wellbeing
   // Four sections for everyone; "Join a league" is the button in the header
   // Safeguarding appears only when the county fills in its safeguarding section
-  navLinks: [["/","home","Home"],["/league.html","league","League"],["/news.html","news","News"],["/get-involved.html","involved","Get involved"],
+  navLinks: [["/","home","Home"],["/league.html","league","Leagues"],["/news.html","news","News"],["/get-involved.html","involved","Get involved"],
     ...(C.safeguarding ? [["/safeguarding.html","safeguarding","Safeguarding"]] : [])]
     .map(([h,id,t])=>`<a href="${h}" data-nav="${id}">${t}</a>`).join(""),
   tabLinks: [["/","home","Home",'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'],
-    ["/league.html","league","League",'<path d="M4 5h16M4 10h16M4 15h16M4 20h16M9 5v15"/>'],
+    ["/league.html","league","Leagues",'<path d="M4 5h16M4 10h16M4 15h16M4 20h16M9 5v15"/>'],
     ["/news.html","news","News",'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/>'],
     ["/get-involved.html","involved","Get involved",'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M14 20c.3-2.4 1.6-4.5 4-5"/>'],
     ...(C.safeguarding ? [["/safeguarding.html","safeguarding","Safeguarding",'<path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/>']] : [])]

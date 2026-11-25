@@ -311,11 +311,12 @@
   "news": [
     {
       "id": "christmas-break-2026",
-      "image": "christmas-ball.jpg",
-      "imagePos": "56% 55%",
+      "image": "christmas-ball-tall.webp",
+      "imagePos": "50% 50%",
+      "imageTall": true,
       "date": "2026-11-25",
       "title": "Christmas break",
-      "body": "The last event of the year takes place on Thursday 17th December, with The Hereford Academy closing for a 2-week break over Christmas & New Year.\n\nThe fixtures have been scheduled to reflect this break in the season, so the key dates for each league are confirmed as follows:\n\n**Monday League**\n- Last Super 6's event of 2026: Monday 14th December\n- First Super 6's event of 2027: Monday 4th January\n\n**Thursday League**\n- Last Super 6's event of 2026: Thursday 17th December\n- First Super 6's event of 2027: Thursday 7th January\n\nWe would like to take this opportunity to thank you for your ongoing support, and to wish all of our players and staff a merry Christmas, and a happy and healthy New Year!",
+      "body": "The last event of the year takes place on Thursday 17th December, with The Hereford Academy closing for a 2-week break over Christmas & New Year.\n\nThe fixtures have been scheduled to reflect this break in the season, so the key dates for each league are confirmed as follows:\n\n**Monday League**\n- Last event of 2026: Monday 14th December\n- First event of 2027: Monday 4th January\n\n**Thursday League**\n- Last event of 2026: Thursday 17th December\n- First event of 2027: Thursday 7th January\n\nWe would like to take this opportunity to thank you for your ongoing support, and to wish all of our players and staff a merry Christmas, and a happy and healthy New Year!",
       "link": "/league.html#fixtures",
       "linkLabel": "See fixtures"
     },

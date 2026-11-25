@@ -782,3 +782,7 @@ body:has(#nl-badge-frame){padding-bottom:64px}
 .post-body li{margin:2px 0}
 /* News photos keep a fixed 4:3 shape at the top of the post instead of stretching with long text */
 @media (min-width:700px){.post.has-img .post-img{height:auto;min-height:0;aspect-ratio:4/3;align-self:start}}
+/* News posts with a tall (portrait) photo: narrower 2:3 picture so small portraits stay sharp */
+.post.tall-img .post-img{aspect-ratio:2/3;max-height:none}
+@media (min-width:700px){.post.has-img.tall-img{grid-template-columns:220px minmax(0,1fr)}.post.has-img.tall-img .post-img{aspect-ratio:2/3}}
+@media (max-width:699px){.post.tall-img .post-img{width:min(240px,70%);margin:var(--s3) auto 0;border-radius:10px}}

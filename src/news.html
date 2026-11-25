@@ -28,7 +28,7 @@
       else { flush(); html+=b?`<h3 class="post-sub">${esc(b[1])}</h3>`:`<p>${esc(l)}</p>`; } }
     flush(); return html; }).join("");
   box.innerHTML=posts.length?posts.map(p=>{ const img=newsImg(p);
-    return `<article class="card post${img?" has-img":""}" id="${esc(p.id)}">${img?`<img class="post-img" src="${img}" alt="" loading="lazy" style="object-position:${esc(p.imagePos||"50% 40%")}">`:""}
+    return `<article class="card post${img?" has-img":""}${img&&p.imageTall?" tall-img":""}" id="${esc(p.id)}">${img?`<img class="post-img" src="${img}" alt="" loading="lazy" style="object-position:${esc(p.imagePos||"50% 40%")}">`:""}
       <div class="post-body"><time datetime="${esc(p.date)}">${fmt(p.date)}</time><h2>${esc(p.title)}</h2>
       ${body(p.body)}
       ${p.link?`<a class="btn btn-accent" href="${esc(p.link)}"${/^https?:/.test(p.link)?' target="_blank" rel="noopener"':""}>${esc(p.linkLabel||"Find out more")}</a>`:""}</div></article>`; }).join("")
