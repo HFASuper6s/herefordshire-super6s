@@ -740,3 +740,8 @@ img.fit-contain{background:#1b2a1b}
 
 /* Team photos shown straight under the Gallery strip */
 .champs-under{padding-top:var(--s3)}
+/* Ticker: one group per division */
+.tk-div{display:inline-flex;align-items:center;gap:14px}
+.tk-run i.tk-sep{color:var(--muted);font-weight:700;padding:0 4px}
+/* News: picture beside the text on wider screens (keeps small photos sharp), full width on phones */
+@media (min-width:700px){.post.has-img{grid-template-columns:300px minmax(0,1fr)}.post.has-img .post-img{width:100%;height:100%;max-height:none;min-height:230px}}

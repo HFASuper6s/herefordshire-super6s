@@ -224,7 +224,11 @@
     const sw=S.leagues.length>1?`<span class="tk-sw">${S.leagues.map(l=>`<button type="button" data-l="${l.id}" aria-pressed="${l.id===L.id}">${esc(l.night.slice(0,3).toUpperCase())}</button>`).join("")}</span>`:"";
     let items;
     if(day){ const d=new Date(day+"T12:00:00").toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"}).toUpperCase();
-      items=`<span class="tk-day">${esc(d)}</span>`+fx.filter(g=>g.played&&g.ymd===day).map(g=>`<a href="/team.html?l=${L.id}&t=${encodeURIComponent(g.home)}"><em>${esc(g.division)}</em> ${esc(g.home)} <b>${g.hs}–${g.as}</b> ${esc(g.away)}</a>`).join('<i aria-hidden="true">•</i>');
+      // Grouped by division, in the league's own division order (Premiership first), each in kick-off order
+      const games=fx.filter(g=>g.played&&g.ymd===day), order=(L.divisions||[]).map(d=>d.name);
+      const divs=[...order.filter(n=>games.some(g=>g.division===n)), ...[...new Set(games.map(g=>g.division))].filter(n=>!order.includes(n))];
+      items=`<span class="tk-day">${esc(d)}</span>`+divs.map(n=>`<span class="tk-div"><em>${esc(n)}</em>`+games.filter(g=>g.division===n).sort((a,b)=>(a.time||"").localeCompare(b.time||"")||(a.pitch||"").localeCompare(b.pitch||"",undefined,{numeric:true}))
+        .map(g=>`<a href="/team.html?l=${L.id}&t=${encodeURIComponent(g.home)}">${esc(g.home)} <b>${g.hs}–${g.as}</b> ${esc(g.away)}</a>`).join('<i aria-hidden="true">•</i>')+`</span>`).join('<i class="tk-sep" aria-hidden="true">|</i>');
     } else { const next=[...new Set(fx.map(g=>g.ymd).filter(d=>d>=ymd(new Date())))].sort()[0];
       items=`<span class="tk-day">${esc(L.night.toUpperCase())}</span><a href="/league.html?l=${L.id}#fixtures">${next?`Next league night: ${esc(new Date(next+"T12:00:00").toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"}))}`:"Results appear here after each league night"}</a>`; }
     el.innerHTML=`<div class="wrap tk">${sw}<div class="tk-win" tabindex="0" aria-label="Latest ${esc(L.night)} scores"><div class="tk-run">${items}</div></div></div>`;

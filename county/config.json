@@ -12,7 +12,7 @@
     "blurb": "supporting serving personnel, veterans and their families across the county"
   },
   "headline": "Your midweek football fix",
-  "intro": "FA-affiliated 6-a-side leagues on Monday and Thursday nights at Hereford Academy 3G. FA-qualified referees, 10-week seasons and a simple £30 weekly match fee per team.",
+  "intro": "Competitive 6-a-side football with a great atmosphere, every Monday and Thursday night at The Hereford Academy 3G. Open to players aged 16 and over, with FA-qualified referees and two up, two down promotion and relegation every season.",
   "contactEmail": "Super6s@HerefordshireFA.com",
   "registrationForm": "https://app.smartsheet.com/b/form/c2f97733b14a4c63acacd08e1eee5bc7",
   "colors": {
@@ -296,6 +296,8 @@
   "news": [
     {
       "id": "new-website-2026",
+      "image": "hero.jpg",
+      "imagePos": "50% 30%",
       "date": "2026-11-24",
       "title": "Welcome to the new Super 6s website",
       "body": "Tables, fixtures and results for both leagues now update automatically after each league night, with form, charts and a page for every team.\n\nFind your team from the League page, and tap Follow on your team's page to see your next game on the home page."
@@ -312,6 +314,8 @@
     },
     {
       "id": "adult-futsal",
+      "image": "pic-night-action.jpg",
+      "imagePos": "50% 45%",
       "date": "2026-11-24",
       "title": "Adult futsal on Wednesday nights",
       "body": "Fast, indoor drop-in football all year round, never cancelled for the weather. Wednesdays, 6.30pm – 7.30pm at St Mary's High School, HR1 4DR.\n\nEmail Kyle Williams at Kyle.Williams@herefordshirefa.com to join.",
@@ -320,6 +324,8 @@
     },
     {
       "id": "walking-football",
+      "image": "pic-pitch-day.jpg",
+      "imagePos": "50% 60%",
       "date": "2026-11-24",
       "title": "Daytime walking football for over-50s",
       "body": "Football without the running. Thursdays, 11am – 12pm at Herefordshire FA, Widemarsh Common, with refreshments until 1pm. £5.\n\nContact Scott Russell at Scott.Russell@herefordshirefa.com.",
@@ -328,6 +334,8 @@
     },
     {
       "id": "drop-in-play-new-time",
+      "image": "pic-night-pitch.jpg",
+      "imagePos": "50% 50%",
       "date": "2026-11-24",
       "title": "Drop In & Play: new time, same place",
       "body": "Sunday drop-in football at The Herefordshire FA 3G pitch now runs from 7pm to 8pm. £4, no team needed.",
@@ -336,6 +344,8 @@
     },
     {
       "id": "christmas-haf-camp-2026",
+      "image": "tile-trophies.jpg",
+      "imagePos": "50% 55%",
       "date": "2026-11-22",
       "title": "Christmas HAF Camp",
       "body": "Football, arts and crafts and fun activities for 5 to 10 year olds, run by our FA-qualified coaches, in partnership with Herefordshire Council.\n\nMonday 21 and Tuesday 22 December 2026, 10am – 3pm, at the SSAFA County Ground, Widemarsh Common, Hereford, HR4 9NA.\n\nHealthy meals provided, with all dietary requirements catered for. Free for children who receive benefit-related free school meals.",
