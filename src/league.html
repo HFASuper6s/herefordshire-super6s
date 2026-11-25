@@ -28,11 +28,11 @@
     <div class="chips" id="chips"></div>
     <p class="stamp-line" id="stamp"></p>
     <div id="view"></div>
+    <section class="card getting-there" id="getting-there"></section>
     <aside class="about card" id="about">
       <h2>About the league</h2>
       <p>Small-sided football is one of The FA's key growth areas for adult football, with nearly 30,000 small-sided teams playing across the country. It suits busy lives: turn up, pay as you play, and get your midweek football fix.</p>
       <p>The {{site.siteName}} is affiliated to The FA through Herefordshire FA, uses FA-qualified referees and plays to The FA's Laws of Small-Sided Football.</p>
-      <p id="about-venue"></p>
       <p><a class="btn btn-outline" href="/rules.html">League rules</a> <a class="btn btn-accent" href="/join.html">Join a league</a></p>
     </aside>
   </div>
@@ -71,7 +71,7 @@
         ${!x.played&&x.pitch?`<small>${esc(x.pitch)}</small>`:""}${c?`<span class="clash">Shirt clash: ${esc(x.away)} wear bibs</span>`:""}</div>`; };
     const byWeek=(list,desc)=>{ const m=new Map(); list.forEach(x=>{ if(!m.has(x.ymd)) m.set(x.ymd,[]); m.get(x.ymd).push(x); });
       let ks=[...m.keys()].sort(); if(desc) ks.reverse();
-      return ks.map(k=>`<section class="week"><h3>${esc(fmtDay(k))}</h3><div class="card">${m.get(k).map(row).join("")}</div></section>`).join(""); };
+      return ks.map(k=>`<section class="week"><h2 class="wk">${esc(fmtDay(k))}</h2><div class="card">${m.get(k).map(row).join("")}</div></section>`).join(""); };
     if(ov){
       V.innerHTML=L.divisions.map(dv=>{ const t=table(divGames(fx,dv.name)), size=L.divisionSize||0, spaces=Math.max(0,size-t.length);
         return `<section class="card divtable"><header><h2>${esc(dv.name)}</h2><a href="#fixtures" data-div="${esc(dv.name)}">Fixtures &amp; results →</a></header>
@@ -99,7 +99,7 @@
     $("ldetails").innerHTML=`<h2>At a glance</h2><dl>${rows.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>`;
     const G=S.gallery||[]; if(!G.length){ $("gallery").remove(); return; }
     if($("gallery").dataset.done) return; $("gallery").dataset.done=1;
-    $("gallery").innerHTML=`<h2 class="g-h">On the night</h2><div class="g-track" id="gtrack">${G.map(g=>`<img src="/img/${esc(g.src)}" alt="${esc(g.alt||"")}" loading="lazy">`).join("")}</div>
+    $("gallery").innerHTML=`<h2 class="g-h">On the night</h2><div class="g-track" id="gtrack">${G.map(g=>S6.pic(esc(g.src),`alt="${esc(g.alt||"")}" loading="lazy" style="object-position:${esc(g.pos||"50% 50%")}"`)).join("")}</div>
       <button type="button" class="g-btn prev" aria-label="Previous photo">‹</button><button type="button" class="g-btn next" aria-label="Next photo">›</button>`;
     const tr=$("gtrack"); $("gallery").querySelector(".prev").onclick=()=>tr.scrollBy({left:-tr.clientWidth,behavior:"smooth"}); $("gallery").querySelector(".next").onclick=()=>tr.scrollBy({left:tr.clientWidth,behavior:"smooth"});
   }
@@ -118,7 +118,12 @@
   document.querySelector(".ltabs").onclick=e=>{ const v=e.target.dataset.v; if(v){ e.preventDefault(); st.v=v; render(); } };
   addEventListener("hashchange",()=>{ let v=location.hash.slice(1); if(v==="table") v="overview"; if(VIEWS.includes(v)&&v!==st.v){ st.v=v; render(); } });
   const vRules=V=>V&&V.rules&&V.rules.length?`<ul class="vrules">${V.rules.map(r=>`<li><b>${esc(r.h)}</b> ${esc(r.t)}</li>`).join("")}</ul>`:"";
-  if(S.venue){ const V=S.venue; $("about-venue").innerHTML=`<b>Venue:</b> ${esc(V.name)}, ${V.address.map(esc).join(", ")} · <a href="${esc(V.map)}" target="_blank" rel="noopener">Directions</a>${vRules(V)}<a class="venue-link" href="/venue.html#footwear">Footwear guidance and venue info →</a>`; }
+  // Getting there: map, directions and enter now (site rules and footwear live on the Venue page)
+  if(S.venue){ const V=S.venue, q=encodeURIComponent([V.name,...(V.address||[])].join(", "));
+    $("getting-there").innerHTML=`<iframe title="Map of ${esc(V.name)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=${q}&z=15&output=embed"></iframe>
+      <div class="gt-txt"><h2>Getting there</h2><address class="venue"><b>${esc(V.name)}</b>${(V.address||[]).map(esc).join("<br>")}</address>
+      <div class="gt-btns"><a class="btn btn-outline" href="${esc(V.map)}" target="_blank" rel="noopener">Directions</a><a class="btn btn-accent" href="/join.html">Enter now</a></div>
+      <a class="venue-link" href="/venue.html">Site rules and footwear guidance →</a></div>`; } else $("getting-there").remove();
   render();
 })();
 </script>

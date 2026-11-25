@@ -57,7 +57,7 @@ main{padding-bottom:var(--s6)}
 .nav a.cta{background:var(--accent);color:#fff;margin-left:6px;padding:10px 16px}
 .nav a.cta:hover{background:var(--accent-dark)}
 .nav .more-link{display:none}
-@media (max-width:1180px) and (min-width:701px){.nav a[data-nav="involved"],.nav a[data-nav="wellbeing"]{display:none}.nav .more-link{display:inline-flex}}
+
 @media (max-width:700px){.nav a:not(.cta){display:none}.nav a.cta{padding:8px 13px;font-size:.9rem}.brand small{display:none}.brand b{font-size:1.35rem}.brand img{width:40px;height:40px}}
 
 /* ---------- Phone tab bar ---------- */
@@ -643,3 +643,65 @@ address.venue b{display:block}
 .ask-form textarea{flex:1;resize:none;font:400 1rem/1.4 var(--body);padding:10px 12px;border:1px solid var(--line-2);border-radius:10px;background:var(--card);color:var(--ink);min-width:0}
 .ask-form .btn{padding:10px 16px}
 @media (max-width:600px){.ask{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;border-radius:0}}
+/* Rules: number + text as two columns, text wraps normally */
+.rl li{display:grid;grid-template-columns:44px minmax(0,1fr)}
+.rt{min-width:0}
+/* Photos: honour focal points; whole-image photos sit on a calm background */
+img.fit-contain{background:#1b2a1b}
+.why img.fit-contain,.g-track img.fit-contain{background:linear-gradient(#2c3b2a,#3f5a38)}
+/* League: getting there */
+.getting-there{display:grid;grid-template-columns:1.4fr 1fr;overflow:hidden;margin-top:var(--s4)}
+.getting-there iframe{width:100%;height:100%;min-height:300px;border:0;display:block}
+.gt-txt{padding:22px 24px}
+.gt-txt h2{font-size:1.7rem;text-transform:uppercase;margin-bottom:10px}
+.gt-btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+@media (max-width:860px){.getting-there{grid-template-columns:1fr}.getting-there iframe{min-height:220px}}
+.news-list{max-width:860px}
+.post{display:grid;grid-template-columns:1fr}
+.post-img{max-height:300px;object-position:50% 45%}
+.post h2{font-size:1.8rem}
+
+@media (max-width:1000px) and (min-width:701px){.nav a{padding:8px 8px;font-size:.92rem}.brand small{display:none}}
+@media (max-width:860px){.h-pic img{object-position:50% 25%}.h-pic{height:260px}}
+.rtable td,.rtable th{overflow-wrap:normal;word-break:normal;hyphens:none}.rtable td:last-child,.rtable th:last-child{white-space:nowrap}@media (max-width:600px){.rtable table{font-size:.86rem}.rtable td,.rtable th{padding:8px 6px}}
+.why picture,.g-track picture{display:block}
+.why picture img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.g-track picture{flex:0 0 100%}
+.g-track picture img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.brand picture{display:block;line-height:0}
+/* Trust strip */
+.trust{background:var(--card);border-bottom:1px solid var(--line)}
+.trust .wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 28px;padding:12px 0;font:700 .82rem var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.trust span{display:inline-flex;align-items:center;gap:8px}
+.trust span::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+/* Photo mosaic: small tiles suit the small originals */
+.mosaic{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:960px;margin:0 auto}
+.mosaic picture{display:block}
+.mosaic img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;box-shadow:var(--shadow)}
+@media (max-width:700px){.mosaic{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
+.week h2.wk{font:800 1.3rem var(--display);font-stretch:70%;text-transform:uppercase;letter-spacing:.03em;margin:0 0 10px;color:var(--ink-2)}
+/* Tap targets: controls at least 44px, in-text links at least 24px */
+.tk{min-height:46px}
+.tk-sw button{min-width:44px;min-height:36px;padding:6px 10px;font-size:.78rem}
+.sec-head a.stamp{display:inline-flex;align-items:center;min-height:44px;padding:0 4px}
+.divtable header a{display:inline-flex;align-items:center;min-height:44px}
+.match .h a,.match .a a,.lt .tname{display:inline-flex;align-items:center;min-height:32px}
+.help .more{display:inline-flex;align-items:center;min-height:44px}
+.agree-box input{width:28px;height:28px}
+.venue-link,.foot-links a{display:inline-block;padding:6px 0}
+@media (max-width:860px){.venue-top img{max-width:420px;height:240px}}
+.next-steps{list-style:none;counter-reset:n;margin:18px 0 0;padding:16px 0 0;border-top:1px solid var(--line);display:grid;gap:10px}
+.next-steps li{counter-increment:n;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;font-size:.95rem}
+.next-steps li::before{content:counter(n);width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font:800 .9rem var(--display)}
+/* Controls at least 44px */
+.nav a{min-height:44px;display:inline-flex;align-items:center}
+.nav a.cta{min-height:44px}
+@media (max-width:700px){.nav a.cta{min-height:44px;padding:8px 14px}}
+.ltabs a{min-height:44px;display:inline-flex;align-items:center}
+.tk-sw button{min-height:40px}
+.crumb a{display:inline-block;padding:10px 0}
+@media (min-width:561px) and (max-width:860px){.venue-top img{max-width:300px;height:220px}}
+.chips button{min-height:44px}
+.follow{min-height:44px;padding:8px 16px}
+@media (max-width:860px){.gallery{max-width:600px;width:100%;justify-self:center}}
+.mosaic img{height:auto;aspect-ratio:1/1;object-position:50% 50%}

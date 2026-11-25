@@ -11,8 +11,8 @@
     "label": "League sponsor",
     "blurb": "supporting serving personnel, veterans and their families across the county"
   },
-  "headline": "Herefordshire's biggest 6-a-side leagues",
-  "intro": "Fun, flexible and competitive midweek football. FA-affiliated, with FA-qualified referees, and you only pay when you play.",
+  "headline": "Your midweek football fix",
+  "intro": "FA-affiliated 6-a-side leagues on Monday and Thursday nights at Hereford Academy 3G. FA-qualified referees, 10-week seasons, and you only pay when you play.",
   "contactEmail": "Super6s@HerefordshireFA.com",
   "registrationForm": "https://app.smartsheet.com/b/form/c2f97733b14a4c63acacd08e1eee5bc7",
   "colors": {
@@ -295,6 +295,46 @@
   ],
   "news": [
     {
+      "id": "new-website-2026",
+      "date": "2026-11-24",
+      "title": "Welcome to the new Super 6s website",
+      "body": "Tables, fixtures and results for both leagues now update automatically after each league night, with form, charts and a page for every team.\n\nFind your team from the League page, and tap Follow on your team's page to see your next game on the home page."
+    },
+    {
+      "id": "referee-course-jan-2027",
+      "date": "2026-11-24",
+      "title": "FA Referee Course: January 2027",
+      "image": "referee-cards.jpg",
+      "body": "Herefordshire FA's next FA Referee Course runs on Thursday 14 January (6.30pm – 9.30pm), Sunday 17 January (10am – 6pm) and Thursday 25 March 2027 (7pm – 9pm) at the SSAFA County Ground, Widemarsh Common, Hereford.\n\nOpen to anyone aged 14 and over. £145 per person. To book, email Jack at referees@herefordshirefa.com.",
+      "link": "mailto:referees@herefordshirefa.com",
+      "linkLabel": "Email to book",
+      "imagePos": "50% 30%"
+    },
+    {
+      "id": "adult-futsal",
+      "date": "2026-11-24",
+      "title": "Adult futsal on Wednesday nights",
+      "body": "Fast, indoor drop-in football all year round, never cancelled for the weather. Wednesdays, 6.30pm – 7.30pm at St Mary's High School, HR1 4DR.\n\nEmail Kyle Williams at Kyle.Williams@herefordshirefa.com to join.",
+      "link": "/get-involved.html",
+      "linkLabel": "Other ways to play"
+    },
+    {
+      "id": "walking-football",
+      "date": "2026-11-24",
+      "title": "Daytime walking football for over-50s",
+      "body": "Football without the running. Thursdays, 11am – 12pm at Herefordshire FA, Widemarsh Common, with refreshments until 1pm. £5.\n\nContact Scott Russell at Scott.Russell@herefordshirefa.com.",
+      "link": "/get-involved.html",
+      "linkLabel": "Other ways to play"
+    },
+    {
+      "id": "drop-in-play-new-time",
+      "date": "2026-11-24",
+      "title": "Drop In & Play: new time, same place",
+      "body": "Sunday drop-in football at The Herefordshire FA 3G pitch now runs from 7pm to 8pm. £4, no team needed.",
+      "link": "/get-involved.html",
+      "linkLabel": "Other ways to play"
+    },
+    {
       "id": "christmas-haf-camp-2026",
       "date": "2026-11-22",
       "title": "Christmas HAF Camp",
@@ -396,17 +436,19 @@
   "why": [
     {
       "img": "feature.jpg",
+      "pos": "50% 18%",
       "alt": "An FA-qualified referee at a Herefordshire FA final",
       "h": "Proper referees",
       "p": "Fully FA-affiliated, with FA-qualified referees on every pitch, every week."
     },
     {
       "stat": "teams",
-      "h": "The biggest in the county",
-      "p": "The largest 6-a-side leagues in Herefordshire, with divisions for every level."
+      "h": "A level for every team",
+      "p": "Five divisions on Mondays and four on Thursdays, so you play teams of a similar standard."
     },
     {
-      "img": "tile-trophies.jpg",
+      "img": "trophies-wide.jpg",
+      "pos": "50% 50%",
       "alt": "Divisional champions' trophies on the pitch",
       "h": "Something to play for",
       "p": "A team trophy for every divisional champion, every season."
@@ -469,19 +511,42 @@
   "gallery": [
     {
       "src": "tile-match.jpg",
-      "alt": "Super 6s match under the floodlights"
+      "alt": "Super 6s match under the floodlights",
+      "pos": "50% 45%"
     },
     {
-      "src": "tile-trophies.jpg",
-      "alt": "Divisional champions' trophies"
+      "src": "trophies-wide.jpg",
+      "alt": "Divisional champions' trophies",
+      "pos": "50% 50%"
     },
     {
       "src": "referee-cards.jpg",
-      "alt": "FA referee with yellow and red cards"
+      "alt": "FA referee with yellow and red cards",
+      "pos": "50% 45%"
     },
     {
       "src": "feature.jpg",
-      "alt": "FA-qualified referee at a Herefordshire FA final"
+      "alt": "FA-qualified referee at a Herefordshire FA final",
+      "pos": "50% 15%"
     }
-  ]
+  ],
+  "mosaic": [
+    {
+      "src": "pic-night-action.jpg",
+      "alt": "Super 6s match under the lights at Hereford Academy"
+    },
+    {
+      "src": "pic-pitch-day.jpg",
+      "alt": "The 3G pitch at The Hereford Academy"
+    },
+    {
+      "src": "pic-presentation.jpg",
+      "alt": "Trophy presentation at the Herefordshire FA ground"
+    },
+    {
+      "src": "pic-night-pitch.jpg",
+      "alt": "Floodlit 3G pitch at night"
+    }
+  ],
+  "siteUrl": "https://hfasuper6s.com"
 }

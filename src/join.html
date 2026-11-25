@@ -18,6 +18,7 @@
       <label class="agree-box"><input type="checkbox" id="agree-tick">
         <span>I am the team captain and I am 18 or over. On behalf of my team, I agree to the league's <a href="/rules.html#terms" target="_blank" rel="noopener">Terms of entry</a>, and I accept that as captain I am responsible for paying the team's weekly match fees and any fines or money the team owes (rule 2).</span></label>
       <p class="hint" id="agree-hint">Tick the box to open the registration form.</p>
+      <ol class="next-steps"><li><b>Send the form</b> with your captain's and players' details.</li><li><b>We confirm</b> your division and first match night by email.</li><li><b>Turn up and play.</b> Pay the £30 team fee each week by bank transfer.</li></ol>
     </div>
     <div class="card embed-form" id="formcard" hidden>
       <iframe id="regform" title="Team registration form" loading="lazy"></iframe>
@@ -51,7 +52,7 @@
   if(u){ a.href=u; } else { f.replaceWith(Object.assign(document.createElement("p"),{className:"empty",textContent:"Registration opens soon."})); a.parentElement.remove(); }
   document.querySelectorAll("[data-rules]").forEach(e=>{ if(S.rulesUrl) e.outerHTML=`<a href="${esc(S.rulesUrl)}" target="_blank" rel="noopener">league rules</a>`; });
   const vRules=V=>V&&V.rules&&V.rules.length?`<ul class="vrules">${V.rules.map(r=>`<li><b>${esc(r.h)}</b> ${esc(r.t)}</li>`).join("")}</ul>`:"";
-  const V=S.venue; if(V) document.getElementById("venue").innerHTML=`<address class="venue"><b>${esc(V.name)}</b>${V.address.map(esc).join("<br>")}</address><a class="btn btn-outline" href="${esc(V.map)}" target="_blank" rel="noopener">Directions</a>${vRules(V)}<a class="venue-link" href="/venue.html#footwear">Footwear guidance and venue info →</a>`;
+  const V=S.venue; if(V) document.getElementById("venue").innerHTML=`<address class="venue"><b>${esc(V.name)}</b>${V.address.map(esc).join("<br>")}</address><a class="btn btn-outline" href="${esc(V.map)}" target="_blank" rel="noopener">Directions</a><a class="venue-link" href="/venue.html">Site rules and footwear guidance →</a>`;
   document.getElementById("nights").innerHTML=S.leagues.map(l=>`<a href="/league.html?l=${l.id}#table"><b>${esc(l.night)}s</b><span>${esc(l.hours||"")}</span></a>`).join("");
 })();
 </script>

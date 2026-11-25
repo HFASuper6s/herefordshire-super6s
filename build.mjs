@@ -30,7 +30,7 @@ function rulesHTML(part){
   const fmt = t => esc(t).replace(/^(Fines tariff|Yellow card|Red card|Insurance):/,"<b>$1:</b>")
     .replace("The FA – Laws and Rules",'<a href="https://www.thefa.com/football-rules-governance/lawsandrules" target="_blank" rel="noopener">The FA – Laws and Rules</a>');
   return R[part].map(n=>{ const sec=R.sections[n];
-    const groups=sec.groups.map(g=>{ const items=g.items.map((t,i)=>{ const k=(g.nums&&g.nums[i])||i+1; return `<li value="${k}"><span class="rn">${n}.${k}</span> ${fmt(t)}</li>`}).join("");
+    const groups=sec.groups.map(g=>{ const items=g.items.map((t,i)=>{ const k=(g.nums&&g.nums[i])||i+1; return `<li value="${k}"><span class="rn">${n}.${k}</span><span class="rt">${fmt(t)}</span></li>`}).join("");
       return `${g.h?`<h3>${esc(g.h)}</h3>`:""}<ol class="rl">${items}</ol>`; }).join("");
     let body=groups;
     if(sec.table){ const t=sec.table, tbl=`<div class="rtable"><table><thead><tr>${t.head.map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
@@ -46,13 +46,18 @@ const ctx = {
   partnerBlurb: C.partner && C.partner.blurb ? `, with ${esc(C.partner.name.split(",")[0])} ${esc(C.partner.blurb)}` : "",
   // Main sections (same for every county): Home, Tables, Fixtures, Results, then News / Get involved / Wellbeing
   // Four sections for everyone; "Join a league" is the button in the header
-  navLinks: [["/","home","Home"],["/league.html","league","League"],["/news.html","news","News"],["/get-involved.html","involved","Get involved"]]
+  navLinks: [["/","home","Home"],["/league.html","league","League"],["/news.html","news","News"],["/get-involved.html","involved","Other ways to play"]]
     .map(([h,id,t])=>`<a href="${h}" data-nav="${id}">${t}</a>`).join(""),
   tabLinks: [["/","home","Home",'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'],
     ["/league.html","league","League",'<path d="M4 5h16M4 10h16M4 15h16M4 20h16M9 5v15"/>'],
     ["/news.html","news","News",'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/>'],
-    ["/get-involved.html","involved","Get involved",'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M14 20c.3-2.4 1.6-4.5 4-5"/>']]
+    ["/get-involved.html","involved","Ways to play",'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M14 20c.3-2.4 1.6-4.5 4-5"/>']]
     .map(([h,id,t,ic])=>`<a href="${h}" data-nav="${id}"><svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg>${t}</a>`).join(""),
+  jsonld: `<script type="application/ld+json">${JSON.stringify({"@context":"https://schema.org","@type":"SportsOrganization","name":C.siteName,"sport":"Football","url":C.siteUrl,"email":C.contactEmail,"logo":(C.siteUrl||"")+"/img/icon-512.png",
+     "parentOrganization":{"@type":"SportsOrganization","name":C.countyFA},
+     "location":C.venue?{"@type":"SportsActivityLocation","name":C.venue.name,"address":{"@type":"PostalAddress","streetAddress":C.venue.address[0],"addressLocality":C.venue.address[1],"postalCode":C.venue.address[2],"addressCountry":"GB"}}:undefined}).replace(/</g,"\\u003c")}</script>`,
+  factsHtml: (C.facts||[]).map(f=>{ const inner=`<dt>${esc(f.k)}</dt><dd>${esc(f.v)}${f.s?`<small>${esc(f.s)}</small>`:""}</dd>`;
+    return f.href?`<a class="fact-link" href="${esc(f.href)}"${/^https?:/.test(f.href)?' target="_blank" rel="noopener"':""}>${inner}</a>`:`<div>${inner}</div>`; }).join(""),
   rulesPlaying: rulesHTML("playing"), rulesTerms: rulesHTML("terms"), tocPlaying: rulesToc("playing"), tocTerms: rulesToc("terms"), rulesIntro: R?esc(R.intro):"",
   polaroids: ((C.heroPhotos||[]).filter(p=>has(p.src)).slice(0,3).length ? C.heroPhotos.filter(p=>has(p.src)).slice(0,3) : [{src:"hero.jpg",caption:""}])
     .map((p,i)=>`<figure class="print p${i+1}"><img src="/img/${esc(p.src)}" alt="${esc(p.caption||"Super 6s")}" ${i?'loading="lazy"':'fetchpriority="high"'}><figcaption>${esc(p.caption||"")}</figcaption></figure>`).join(""),
@@ -88,8 +93,17 @@ for (const p of pages) {
   let t = fs.readFileSync(p, "utf8"); const m = t.match(/^<!--page (\{.*?\})-->\n?/);
   const page = m ? JSON.parse(m[1]) : {}; if (m) t = t.slice(m[0].length);
   page.title = render(page.title || C.siteName, page); page.desc = render(page.desc || C.intro, page);
+  const rel = path.relative(SRC, p).split(path.sep).join("/");
+  page.url = (C.siteUrl||"").replace(/\/$/,"") + "/" + (rel==="index.html" ? "" : rel);
+  page.noindex = /^admin\//.test(rel) || /redirect/.test(page.id||"");
+  if (!page.noindex && rel!=="team.html") (globalThis.__sitemap ||= []).push(page.url);
   const out = path.join(OUT, path.relative(SRC, p)); fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, render(t, page));
+}
+// Search engines: sitemap and robots
+if (C.siteUrl) {
+  fs.writeFileSync(path.join(OUT,"sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${(globalThis.__sitemap||[]).map(u=>`  <url><loc>${u}</loc></url>`).join("\n")}\n</urlset>\n`);
+  fs.writeFileSync(path.join(OUT,"robots.txt"), `User-agent: *\nDisallow: /admin/\nSitemap: ${C.siteUrl.replace(/\/$/,"")}/sitemap.xml\n`);
 }
 // Static files
 copyDir(path.join(SRC, "css"), path.join(OUT, "css")); copyDir(path.join(SRC, "js"), path.join(OUT, "js"));
@@ -109,10 +123,10 @@ if (fs.existsSync(faqFile)) {
   fs.writeFileSync(path.join(OUT, "data", "faq.json"), JSON.stringify(faq));
 }
 // Settings for the browser
-fs.writeFileSync(path.join(OUT, "js", "config.js"), "/* Generated from county/config.json by build.mjs - edit that file, not this one. */\nwindow.SITE = " + JSON.stringify(C, null, 1) + ";\n");
+fs.writeFileSync(path.join(OUT, "js", "config.js"), "/* Generated from county/config.json by build.mjs - edit that file, not this one. */\nwindow.SITE = " + JSON.stringify({...C, webp: fs.readdirSync(path.join(countyDir,"assets")).filter(f=>f.endsWith(".webp")).map(f=>f.replace(/\.webp$/,""))}, null, 1) + ";\n");
 // App manifest and offline cache
 fs.writeFileSync(path.join(OUT, "manifest.webmanifest"), JSON.stringify({ name: C.siteName, short_name: C.shortName, start_url: "/", display: "standalone",
-  background_color: k.brand, theme_color: k.brand, icons: [{ src: "/img/logo.png", sizes: "any", type: "image/png", purpose: "any" }] }, null, 1));
+  background_color: k.brand, theme_color: k.brand, icons: [{ src: "/img/icon-192.png", sizes: "192x192", type: "image/png" },{ src: "/img/icon-512.png", sizes: "512x512", type: "image/png" }] }, null, 1));
 const sw = fs.readFileSync(path.join(SRC, "sw.js"), "utf8").replace("__VERSION__", Date.now().toString(36));
 fs.writeFileSync(path.join(OUT, "sw.js"), sw);
 console.log(`Built ${C.siteName}: ${pages.length} pages, ${C.leagues.length} leagues -> dist/`);

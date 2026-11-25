@@ -205,7 +205,14 @@
   }
   const newsImg = p => p.hasImage ? `/.netlify/functions/news?img=${encodeURIComponent(p.id)}` : (p.image ? "/img/"+p.image : "");
 
-  window.S6 = {S, esc, val, league, param, ymd, slug, parseCSV, toDate, rowsToFixtures, loadFixtures, teams, fmtDate, fmtDay, table, divGames, formHTML, initials, photoURL, cleanName, stripShirts, shirtOf, shirtSVG, shirt, bibSVG, clash, loadNews, newsImg, readSnippet, parseSnippet, tidy};
+  // Netlify Identity emails (invite, password reset, email confirm) link to the home page.
+  // Send them to the event manager page, which runs the login widget that completes them.
+  if(/(invite_token|recovery_token|confirmation_token|email_change_token)=/.test(location.hash) && !/^\/admin\//.test(location.pathname)){
+    location.replace("/admin/"+location.hash); }
+
+  const pic = (src, attrs="") => { const base=String(src).replace(/\.(jpe?g|png)$/i,""); const has=(S.webp||[]).includes(base.replace(/^.*\//,""));
+    return `<picture>${has?`<source srcset="/img/${base}.webp" type="image/webp">`:""}<img src="/img/${src}" ${attrs}></picture>`; };
+  window.S6 = {S, esc, val, league, param, ymd, slug, parseCSV, toDate, rowsToFixtures, loadFixtures, teams, fmtDate, fmtDay, table, divGames, formHTML, initials, photoURL, cleanName, stripShirts, shirtOf, shirtSVG, shirt, bibSVG, clash, loadNews, newsImg, pic, readSnippet, parseSnippet, tidy};
 
   /* Latest scores ticker: the chosen league's most recent league night, scrolling under the header.
      Pauses on hover or tap; shows as a still, swipeable row when motion is reduced. */

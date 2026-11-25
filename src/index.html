@@ -3,6 +3,8 @@
 <html lang="en-GB">
 <head>
 {{> head}}
+{{{jsonld}}}
+<link rel="preload" as="image" href="/img/hero.webp" media="(min-width:561px)" type="image/webp"><link rel="preload" as="image" href="/img/{{heroMobile}}.webp" media="(max-width:560px)" type="image/webp">
 </head>
 <body data-page="home">
 {{> header}}
@@ -16,10 +18,12 @@
         <div class="hero-ctas"><a class="btn btn-accent" href="/join.html">Join a league</a><a class="btn btn-ghost" href="/league.html">Find your team</a></div>
       </div>
     </div>
-    <picture class="h-pic"><source media="(max-width:860px)" srcset="/img/{{heroMobile}}.jpg"><img src="/img/hero.jpg" alt="A Super 6s match under the floodlights at The Hereford Academy" fetchpriority="high"></picture>
+    <picture class="h-pic"><source media="(max-width:560px)" srcset="/img/{{heroMobile}}.webp" type="image/webp"><source media="(max-width:560px)" srcset="/img/{{heroMobile}}.jpg"><source srcset="/img/hero.webp" type="image/webp"><img src="/img/hero.jpg" width="1200" height="800" alt="A Super 6s match under the floodlights at The Hereford Academy" fetchpriority="high"></picture>
   </section>
 
-  <section class="facts" aria-label="Key facts"><div class="wrap"><dl id="facts"></dl></div></section>
+  <section class="trust" aria-label="Affiliation"><div class="wrap"><span>Affiliated to The FA</span><span>Run by {{site.countyFA}}</span><span id="trust-partner"></span><span>FA-qualified referees</span></div></section>
+
+  <section class="facts" aria-label="Key facts"><div class="wrap"><dl id="facts">{{{factsHtml}}}</dl></div></section>
 
   <section class="block" id="week">
     <div class="wrap">
@@ -35,6 +39,8 @@
       <div class="grid g3" id="why"></div>
     </div>
   </section>
+
+  <section class="block tight" id="mosaic-sec" hidden><div class="wrap"><div class="mosaic" id="mosaic"></div></div></section>
 
   {{{champions}}}
 
@@ -82,9 +88,10 @@
 <script>
 (async function(){
   const {S,esc,ymd,fmtDay,loadFixtures,shirt}=S6, $=id=>document.getElementById(id), today=ymd(new Date());
-  $("facts").innerHTML=(S.facts||[]).map(f=>{ const inner=`<dt>${esc(f.k)}</dt><dd>${esc(f.v)}${f.s?`<small>${esc(f.s)}</small>`:""}</dd>`;
-    return f.href?`<a class="fact-link" href="${esc(f.href)}"${/^https?:/.test(f.href)?' target="_blank" rel="noopener"':""}>${inner}</a>`:`<div>${inner}</div>`; }).join("");
+
   if(S.wellbeing) $("talk-sec").hidden=false;
+  if(S.partner&&S.partner.name){ $("trust-partner").textContent="In partnership with "+S.partner.name.replace(/,.*$/,""); } else $("trust-partner").remove();
+  if((S.mosaic||[]).length){ $("mosaic-sec").hidden=false; $("mosaic").innerHTML=S.mosaic.map(m=>S6.pic(esc(m.src),`alt="${esc(m.alt||"")}" loading="lazy" width="412" height="412"`)).join(""); }
   S6.loadNews().then(posts=>{ if(!posts.length) return; $("news-sec").hidden=false;
     $("headlines").innerHTML=posts.slice(0,2).map(p=>`<a class="card headline" href="/news.html#${esc(p.id)}"><time>${new Date(p.date+"T12:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</time><b>${esc(p.title)}</b><span>${esc((p.body||"").split(/\n/)[0].slice(0,140))}${(p.body||"").length>140?"…":""}</span></a>`).join(""); });
 
@@ -98,7 +105,7 @@
       <div class="row${g.hs>g.as?" win":""}"><span>${shirt(g.l.id,g.home,20)}${esc(g.home)}</span><b>${g.hs}</b></div><div class="row${g.as>g.hs?" win":""}"><span>${shirt(g.l.id,g.away,20)}${esc(g.away)}</span><b>${g.as}</b></div></a>`).join(""); }
   // Why play with us: one photo per card, never repeated; the middle card counts the teams
   const nTeams=new Set(data.flatMap(({fx})=>fx.flatMap(g=>[g.home,g.away]))).size;
-  $("why").innerHTML=(S.why||[]).map(w=>`<article class="card why">${w.img?`<img src="/img/${esc(w.img)}" alt="${esc(w.alt||"")}" loading="lazy">`:`<div class="why-stat"><b>${nTeams||"30+"}</b><span>teams playing this season</span></div>`}<div class="why-txt"><h3>${esc(w.h)}</h3><p>${esc(w.p)}</p></div></article>`).join("");
+  $("why").innerHTML=(S.why||[]).map(w=>`<article class="card why">${w.img?S6.pic(esc(w.img),`alt="${esc(w.alt||"")}" loading="lazy" style="object-position:${esc(w.pos||"50% 50%")}"`):`<div class="why-stat"><b>${nTeams||"30+"}</b><span>teams playing this season</span></div>`}<div class="why-txt"><h3>${esc(w.h)}</h3><p>${esc(w.p)}</p></div></article>`).join("");
 })();
 </script>
 </body>

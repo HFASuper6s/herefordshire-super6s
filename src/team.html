@@ -61,13 +61,13 @@
         <div class="hero-meta">${me.p?`<span class="posbadge">${sfx(me.pos)}<small>of ${nTeams}</small></span>`:""}<button class="follow" id="follow" aria-pressed="false">☆ Follow</button></div>
       </div></div></section>
     <div class="wrap">
-      <p class="season-line">${played.length} played · ${next.length} to play${pending.length?` · ${pending.length} awaiting result`:""}</p>
+      <p class="season-line">${played.length} played · ${next.length} remaining${pending.length?` · ${pending.length} awaiting result`:""}</p>
       <div class="tiles">${[["Played",me.p],["Form",formHTML(played.map(res),5)],["Goal diff",(me.gd>0?"+":"")+me.gd],["Points",me.pts]].map(([k,v])=>`<div class="card tile"><b>${v}</b><span>${k==="Form"?"Last 5 games":k}</span></div>`).join("")}</div>
       <div class="grid g2 gap-lg">
         <article class="card panel chart"><h2>Goals each game</h2>${goalsChart()}</article>
         <article class="card panel chart"><h2>League position</h2>${posChart()}</article>
-        <section><h2 class="sec sm">To play <span class="count">${next.length}</span></h2><div class="card">${next.length?next.map(line).join(""):`<div class="empty">No games left this season.</div>`}</div></section>
-        <section><h2 class="sec sm">Played <span class="count">${played.length+pending.length}</span></h2><div class="card">${(played.length+pending.length)?[...played,...pending].sort((a,b)=>b.ymd.localeCompare(a.ymd)).map(line).join(""):`<div class="empty">No games played yet.</div>`}</div></section>
+        <section><h2 class="sec sm">Remaining fixtures <span class="count">${next.length}</span></h2><div class="card">${next.length?next.map(line).join(""):`<div class="empty">No games left this season.</div>`}</div></section>
+        <section><h2 class="sec sm">Results <span class="count">${played.length+pending.length}</span></h2><div class="card">${(played.length+pending.length)?[...played,...pending].sort((a,b)=>b.ymd.localeCompare(a.ymd)).map(line).join(""):`<div class="empty">No games played yet.</div>`}</div></section>
       </div>
     </div>`;
   // Follow this team: the home page then shows its next game
@@ -77,7 +77,8 @@
   // Team photo replaces the shirt panel; the shirt then sits beside the name instead (shown once either way)
   const img=new Image(); img.alt=`${T} team photo`;
   img.onload=()=>{ const p=document.getElementById("pic"); p.innerHTML=""; p.appendChild(img); document.getElementById("kit").innerHTML=shirt(L.id,T,48); };
-  img.src=photoURL(L.id,T);
+  // Only ask for the photo when the team has one (avoids a "not found" request on every team page)
+  fetch(`/.netlify/functions/team-photo?l=${L.id}&list=1`).then(r=>r.ok?r.json():{teams:[]}).then(j=>{ if((j.teams||[]).includes(S6.slug(T))) img.src=photoURL(L.id,T); }).catch(()=>{});
 })();
 </script>
 </body>
