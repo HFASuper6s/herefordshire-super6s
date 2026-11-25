@@ -33,9 +33,9 @@ function rulesHTML(part){
     const groups=sec.groups.map(g=>{ const items=g.items.map((t,i)=>{ const k=(g.nums&&g.nums[i])||i+1; return `<li value="${k}"><span class="rn">${n}.${k}</span><span class="rt">${fmt(t)}</span></li>`}).join("");
       return `${g.h?`<h3>${esc(g.h)}</h3>`:""}<ol class="rl">${items}</ol>`; }).join("");
     let body=groups;
-    if(sec.table){ const t=sec.table, tbl=`<div class="rtable"><table><thead><tr>${t.head.map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+    if(sec.table){ const t=sec.table, tbl=`<div class="rtable"><table><thead><tr>${t.head.map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map((c,i)=>`<td data-label="${esc(t.head[i])}">${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
       body=body.replace(/(<li value="3">[\s\S]*?<\/li>)/,`$1</ol>${tbl}<ol class="rl" start="4">`); }
-    return `<section class="rsec" id="r${n}"><h2><span>${n}</span>${esc(sec.title)}</h2>${sec.intro?`<p class="rintro">${esc(sec.intro)}</p>`:""}${body}</section>`; }).join("")
+    return `<section class="rsec" id="r${n}"><h2><span>${n}</span><span class="rh">${esc(sec.title)}</span></h2>${sec.intro?`<p class="rintro">${esc(sec.intro)}</p>`:""}${body}</section>`; }).join("")
     + (part==="terms"&&R.disclaimer?`<section class="rsec" id="rdisc"><h2>Disclaimer</h2><p>${esc(R.disclaimer)}</p><p class="rver">${esc(R.version)}</p></section>`:"");
 }
 const rulesToc = part => R ? R[part].map(n=>`<a href="#r${n}">${n}. ${esc(R.sections[n].title)}</a>`).join("")+(part==="terms"?'<a href="#rdisc">Disclaimer</a>':"") : "";
@@ -46,12 +46,12 @@ const ctx = {
   partnerBlurb: C.partner && C.partner.blurb ? `, with ${esc(C.partner.name.split(",")[0])} ${esc(C.partner.blurb)}` : "",
   // Main sections (same for every county): Home, Tables, Fixtures, Results, then News / Get involved / Wellbeing
   // Four sections for everyone; "Join a league" is the button in the header
-  navLinks: [["/","home","Home"],["/league.html","league","League"],["/news.html","news","News"],["/get-involved.html","involved","Other ways to play"]]
+  navLinks: [["/","home","Home"],["/league.html","league","League"],["/news.html","news","News"],["/get-involved.html","involved","Get involved"]]
     .map(([h,id,t])=>`<a href="${h}" data-nav="${id}">${t}</a>`).join(""),
   tabLinks: [["/","home","Home",'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'],
     ["/league.html","league","League",'<path d="M4 5h16M4 10h16M4 15h16M4 20h16M9 5v15"/>'],
     ["/news.html","news","News",'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/>'],
-    ["/get-involved.html","involved","Ways to play",'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M14 20c.3-2.4 1.6-4.5 4-5"/>']]
+    ["/get-involved.html","involved","Get involved",'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M14 20c.3-2.4 1.6-4.5 4-5"/>']]
     .map(([h,id,t,ic])=>`<a href="${h}" data-nav="${id}"><svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg>${t}</a>`).join(""),
   jsonld: `<script type="application/ld+json">${JSON.stringify({"@context":"https://schema.org","@type":"SportsOrganization","name":C.siteName,"sport":"Football","url":C.siteUrl,"email":C.contactEmail,"logo":(C.siteUrl||"")+"/img/icon-512.png",
      "parentOrganization":{"@type":"SportsOrganization","name":C.countyFA},
@@ -64,10 +64,11 @@ const ctx = {
   bannerWord: esc(C.shortName.replace(/^super\s*/i,"").trim() || "6s"),
   heroMobile: has("hero-mobile.jpg") ? "hero-mobile" : "hero",
   heroWebp: has("hero.webp"), featureImg: has("feature.jpg") ? "feature" : "hero",
-  // Homepage Champions photos (optional): champions.photos in config, files in county/assets. Each photo opens larger when tapped.
+  // Homepage team photos (optional): champions.photos in config, files in county/assets. Each photo opens larger when tapped.
+  // With no title they sit straight under the Gallery photo strip, as part of the same section.
   champions: (() => { const G = C.champions, ph = (G && G.photos || []).filter(p => has(p.src)); if (!ph.length) return "";
-    return `<section class="block" id="champs-sec"><div class="wrap">
-      <div class="sec-head"><h2 class="sec">${esc(G.title || "Champions")}</h2></div>${G.intro ? `<p class="champs-intro">${esc(G.intro)}</p>` : ""}
+    return `<section class="block${G.title ? "" : " tight champs-under"}" id="champs-sec"><div class="wrap">
+      ${G.title ? `<div class="sec-head"><h2 class="sec">${esc(G.title)}</h2></div>` : ""}${G.intro ? `<p class="champs-intro">${esc(G.intro)}</p>` : ""}
       <div class="champs">${ph.map((p, i) => { const alt = p.alt || [p.caption, p.sub].filter(Boolean).join(", ") || "A Super 6s team under the floodlights";
         const cap = p.caption ? `<figcaption><b>${esc(p.caption)}</b>${p.sub ? `<span>${esc(p.sub)}</span>` : ""}</figcaption>` : "";
         return `<figure class="champ${cap ? "" : " nocap"}"><button type="button" class="champ-open" data-i="${i}" aria-label="View photo ${i + 1} larger"><img src="/img/${esc(p.src)}" alt="${esc(alt)}" loading="lazy" decoding="async"></button>${cap}</figure>`; }).join("")}</div>

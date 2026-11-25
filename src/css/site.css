@@ -465,7 +465,7 @@ footer.site a{color:#fff}
 .toc div{display:grid}
 .rsec{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px 28px;margin-bottom:var(--s3);scroll-margin-top:130px}
 .rsec h2{display:flex;align-items:center;gap:12px;font-size:1.8rem;text-transform:uppercase;margin-bottom:14px}
-.rsec h2 span{display:inline-grid;place-items:center;min-width:40px;height:40px;border-radius:50%;background:var(--brand);color:#fff;font-size:1.3rem}
+.rsec h2 span:first-child{display:inline-grid;place-items:center;min-width:40px;height:40px;border-radius:50%;background:var(--brand);color:#fff;font-size:1.3rem}
 .rsec h3{font:800 1.15rem var(--display);font-stretch:72%;text-transform:uppercase;letter-spacing:.04em;color:var(--accent);margin:18px 0 6px}
 .rintro{font-weight:600}
 .rl{list-style:none;margin:0;padding:0;display:grid;gap:10px}
@@ -705,3 +705,38 @@ img.fit-contain{background:#1b2a1b}
 .follow{min-height:44px;padding:8px 16px}
 @media (max-width:860px){.gallery{max-width:600px;width:100%;justify-self:center}}
 .mosaic img{height:auto;aspect-ratio:1/1;object-position:50% 50%}
+/* Text that sits beside a number or icon always wraps as one block */
+.next-steps li>span{min-width:0}
+.rsec h2 .rh{min-width:0;flex:1}
+
+/* Discipline table: give the offence column room; the table scrolls inside its box on very small phones */
+/* League page title on phones */
+@media (max-width:600px){#ltitle{font-size:clamp(2.1rem,10vw,2.8rem)}}
+@media (max-width:380px){.match .h a,.match .a a{font-size:.86rem}}
+
+.rsec h2 .rh{display:block;background:none;color:inherit;min-width:0;height:auto;border-radius:0}
+@media (max-width:600px){.rsec h2{font-size:1.4rem;gap:10px;align-items:flex-start}.rsec h2 span:first-child{min-width:34px;height:34px;font-size:1.1rem;flex:none}}
+/* Discipline table on phones: one card per offence, labels beside values */
+@media (max-width:600px){
+  .rtable{overflow:visible}
+  .rtable table,.rtable tbody,.rtable tr,.rtable td{display:block;width:100%}
+  .rtable thead{display:none}
+  .rtable tr{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px;background:var(--card)}
+  .rtable td{border:0!important;padding:3px 0!important;white-space:normal!important;display:grid;grid-template-columns:108px minmax(0,1fr);gap:10px}
+  .rtable td::before{content:attr(data-label);font:700 .72rem var(--body);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding-top:3px}
+}
+.nw{white-space:nowrap}
+/* Section sub-heading */
+.sec-sub{margin:6px 0 0;color:var(--muted)}
+/* Badge watermark in the blue page headers (all pages except home) */
+.phead{isolation:isolate}
+.phead::before{content:"";position:absolute;z-index:0;right:max(-60px,calc((100vw - 1200px)/2 - 40px));top:50%;transform:translateY(-50%) rotate(-8deg);width:min(440px,70vw);aspect-ratio:1;background:url(/img/badge-watermark.png) center/contain no-repeat;opacity:.09;pointer-events:none}
+.phead::after{display:none}
+.phead .wrap{position:relative;z-index:1}
+@media (max-width:700px){.phead::before{width:300px;right:-90px;opacity:.07}}
+@media print{.phead::before{display:none}}
+/* Ticker: each division label in its own light box */
+.tk-run em{border:1px solid var(--line-2);border-radius:5px;padding:2px 6px;margin-right:6px;background:var(--tint)}
+
+/* Team photos shown straight under the Gallery strip */
+.champs-under{padding-top:var(--s3)}

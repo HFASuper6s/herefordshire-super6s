@@ -36,6 +36,8 @@ h2.sub{font:800 1.6rem/1 var(--display);margin:28px 0 12px}
 .out button{font:600 .95rem var(--body);background:none;border:1.5px solid rgba(255,255,255,.5);color:#fff;border-radius:8px;padding:7px 12px;cursor:pointer}
 .check{display:flex;align-items:center;gap:10px;min-height:44px}.check input{width:24px;height:24px}
 #logout,.logout{min-height:44px}
+.nl-date{font:800 1.3rem/1.15 var(--display);font-stretch:72%;text-transform:uppercase;margin:2px 0 4px}
+.acts button{min-height:44px;min-width:44px}
 </style>
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script src="/js/xlsx.full.min.js"></script>
@@ -148,7 +150,7 @@ async function start(){
     const night=[...new Set(fx.map(f=>f.ymd).filter(Boolean))].sort().find(d=>d>=t);
     if(!night){ body.innerHTML=`<p class="meta">No more league nights in the fixture list.</p>`; continue; }
     const early=EM.packEarly(night,t), games=fx.filter(f=>f.ymd===night).length;
-    body.innerHTML=`<p class="meta">Next: <b>${EM.longDate(night)}</b> · ${games} games</p>
+    body.innerHTML=`<p class="meta">Next league night</p><p class="nl-date">${EM.longDate(night)}</p><p class="meta">${games} games</p>
       <a class="btn btn-accent" href="pack.html?l=${l.id}&d=${night}">Download paperwork</a>
       ${early?`<p class="msg">Printing early? Any suspensions or changes added after you print won't be on it, so print again nearer the night if anything changes.</p>`:""}`;
   }

@@ -20,7 +20,7 @@
       </div>
     </div>
     <nav class="ltabs" role="tablist" aria-label="View">
-      <a href="#overview" data-v="overview" role="tab">League</a><a href="#fixtures" data-v="fixtures" role="tab">Fixtures</a><a href="#results" data-v="results" role="tab">Results</a>
+      <a href="#overview" data-v="overview" role="tab">League</a><a href="#fixtures" data-v="fixtures" role="tab">Fixtures</a><a href="#tables" data-v="tables" role="tab">Tables</a><a href="#results" data-v="results" role="tab">Results</a>
     </nav>
   </div></div>
   <div class="wrap">
@@ -43,8 +43,8 @@
   const {S,esc,param,league,loadFixtures,table,divGames,formHTML,fmtDay,ymd,photoURL,slug,shirt,bibSVG,clash,teams}=S6;
   const $=id=>document.getElementById(id), today=ymd(new Date());
   let saved=""; try{ saved=localStorage.getItem("s6-league")||""; }catch(e){}
-  const V0=((location.hash||"").slice(1)==="table")?"overview":(location.hash||"").slice(1);
-  const VIEWS=["overview","fixtures","results"]; const st={l:(league(param("l"))||league(saved)||S.leagues[0]).id, d:param("d"), v:VIEWS.includes(V0)?V0:"overview"};
+  const V0=((location.hash||"").slice(1)==="table")?"tables":(location.hash||"").slice(1);
+  const VIEWS=["overview","fixtures","tables","results"]; const st={l:(league(param("l"))||league(saved)||S.leagues[0]).id, d:param("d"), v:VIEWS.includes(V0)?V0:"overview"};
   const cache={}, photosBy={};
   async function data(id){ if(!cache[id]){ cache[id]=await loadFixtures(league(id))||[];
       try{ const r=await fetch(`/.netlify/functions/team-photo?l=${id}&list=1`); photosBy[id]=r.ok?new Set((await r.json()).teams):new Set(); }catch(e){ photosBy[id]=new Set(); } }
@@ -54,9 +54,9 @@
   async function render(){
     const L=league(st.l); if(!L.divisions.some(d=>d.name===st.d)) st.d=L.divisions[0].name; sync();
     document.title=`${L.title||L.name} | ${S.siteName}`;
-    $("ltitle").textContent=L.title||L.name;
+    { const t=L.title||L.name, i=t.lastIndexOf(" – "); $("ltitle").innerHTML=i>0?`${esc(t.slice(0,i))} <span class="nw">– ${esc(t.slice(i+3))}</span>`:esc(t); }
     $("reqinfo").href=`mailto:${S.contactEmail}?subject=${encodeURIComponent("Super 6s enquiry: "+(L.title||L.name))}`;
-    const ov=st.v==="overview"; $("overview-top").hidden=!ov; $("chips").hidden=ov;
+    const ov=st.v==="overview", tv=st.v==="tables"; $("overview-top").hidden=!ov; $("chips").hidden=ov||tv; $("getting-there")&&($("getting-there").hidden=!ov); $("about").hidden=!ov; $("stamp").hidden=ov;
     if(ov) overviewTop(L);
     $("leagues").innerHTML=S.leagues.map(l=>`<button role="tab" aria-selected="${l.id===st.l}" data-l="${l.id}">${esc(l.night)}</button>`).join("");
     document.querySelectorAll(".ltabs a").forEach(a=>a.setAttribute("aria-selected",a.dataset.v===st.v));
@@ -72,7 +72,8 @@
     const byWeek=(list,desc)=>{ const m=new Map(); list.forEach(x=>{ if(!m.has(x.ymd)) m.set(x.ymd,[]); m.get(x.ymd).push(x); });
       let ks=[...m.keys()].sort(); if(desc) ks.reverse();
       return ks.map(k=>`<section class="week"><h2 class="wk">${esc(fmtDay(k))}</h2><div class="card">${m.get(k).map(row).join("")}</div></section>`).join(""); };
-    if(ov){
+    if(ov){ V.innerHTML=""; }
+    else if(tv){
       V.innerHTML=L.divisions.map(dv=>{ const t=table(divGames(fx,dv.name)), size=L.divisionSize||0, spaces=Math.max(0,size-t.length);
         return `<section class="card divtable"><header><h2>${esc(dv.name)}</h2><a href="#fixtures" data-div="${esc(dv.name)}">Fixtures &amp; results →</a></header>
         ${t.length||spaces?`<div class="tablewrap"><table class="lt"><thead><tr><th>#</th><th>Team</th><th>P</th><th class="hide-sm">W</th><th class="hide-sm">D</th><th class="hide-sm">L</th><th class="hide-sm">F</th><th class="hide-sm">A</th><th>GD</th><th>Pts</th><th>Form</th></tr></thead><tbody>
@@ -116,7 +117,7 @@
   $("leagues").onclick=e=>{ const l=e.target.dataset.l; if(l){ st.l=l; st.d=null; render(); } };
   $("chips").onclick=e=>{ const d=e.target.dataset.d; if(d){ st.d=d; render(); } };
   document.querySelector(".ltabs").onclick=e=>{ const v=e.target.dataset.v; if(v){ e.preventDefault(); st.v=v; render(); } };
-  addEventListener("hashchange",()=>{ let v=location.hash.slice(1); if(v==="table") v="overview"; if(VIEWS.includes(v)&&v!==st.v){ st.v=v; render(); } });
+  addEventListener("hashchange",()=>{ let v=location.hash.slice(1); if(v==="table") v="tables"; if(VIEWS.includes(v)&&v!==st.v){ st.v=v; render(); } });
   const vRules=V=>V&&V.rules&&V.rules.length?`<ul class="vrules">${V.rules.map(r=>`<li><b>${esc(r.h)}</b> ${esc(r.t)}</li>`).join("")}</ul>`:"";
   // Getting there: map, directions and enter now (site rules and footwear live on the Venue page)
   if(S.venue){ const V=S.venue, q=encodeURIComponent([V.name,...(V.address||[])].join(", "));

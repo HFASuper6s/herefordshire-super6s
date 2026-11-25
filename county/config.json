@@ -12,7 +12,7 @@
     "blurb": "supporting serving personnel, veterans and their families across the county"
   },
   "headline": "Your midweek football fix",
-  "intro": "FA-affiliated 6-a-side leagues on Monday and Thursday nights at Hereford Academy 3G. FA-qualified referees, 10-week seasons, and you only pay when you play.",
+  "intro": "FA-affiliated 6-a-side leagues on Monday and Thursday nights at Hereford Academy 3G. FA-qualified referees, 10-week seasons and a simple £30 weekly match fee per team.",
   "contactEmail": "Super6s@HerefordshireFA.com",
   "registrationForm": "https://app.smartsheet.com/b/form/c2f97733b14a4c63acacd08e1eee5bc7",
   "colors": {
@@ -222,8 +222,8 @@
     }
   ],
   "champions": {
-    "title": "On the pitch",
-    "intro": "Teams and moments from Super 6s nights over the years.",
+    "title": "",
+    "intro": "",
     "photos": [
       {
         "src": "champions-1.jpg"
@@ -316,7 +316,7 @@
       "title": "Adult futsal on Wednesday nights",
       "body": "Fast, indoor drop-in football all year round, never cancelled for the weather. Wednesdays, 6.30pm – 7.30pm at St Mary's High School, HR1 4DR.\n\nEmail Kyle Williams at Kyle.Williams@herefordshirefa.com to join.",
       "link": "/get-involved.html",
-      "linkLabel": "Other ways to play"
+      "linkLabel": "Get involved"
     },
     {
       "id": "walking-football",
@@ -324,7 +324,7 @@
       "title": "Daytime walking football for over-50s",
       "body": "Football without the running. Thursdays, 11am – 12pm at Herefordshire FA, Widemarsh Common, with refreshments until 1pm. £5.\n\nContact Scott Russell at Scott.Russell@herefordshirefa.com.",
       "link": "/get-involved.html",
-      "linkLabel": "Other ways to play"
+      "linkLabel": "Get involved"
     },
     {
       "id": "drop-in-play-new-time",
@@ -332,7 +332,7 @@
       "title": "Drop In & Play: new time, same place",
       "body": "Sunday drop-in football at The Herefordshire FA 3G pitch now runs from 7pm to 8pm. £4, no team needed.",
       "link": "/get-involved.html",
-      "linkLabel": "Other ways to play"
+      "linkLabel": "Get involved"
     },
     {
       "id": "christmas-haf-camp-2026",
@@ -548,5 +548,7 @@
       "alt": "Floodlit 3G pitch at night"
     }
   ],
-  "siteUrl": "https://hfasuper6s.com"
+  "siteUrl": "https://hfasuper6s.com",
+  "mosaicTitle": "Gallery",
+  "mosaicSub": "Teams and moments from our leagues"
 }
