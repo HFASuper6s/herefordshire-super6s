@@ -222,20 +222,32 @@
     }
   ],
   "champions": {
-    "title": "",
-    "intro": "",
+    "title": "Gallery",
+    "intro": "Teams and moments from our leagues",
     "photos": [
       {
-        "src": "champions-1.jpg"
+        "src": "champions-1.jpg",
+        "alt": "A Super 6s team under the floodlights at The Hereford Academy"
       },
       {
-        "src": "champions-2.jpg"
+        "src": "pic-night-action.jpg",
+        "alt": "Super 6s match under the lights at The Hereford Academy"
       },
       {
-        "src": "champions-3.jpg"
+        "src": "champions-2.jpg",
+        "alt": "A Super 6s team under the floodlights at The Hereford Academy"
       },
       {
-        "src": "champions-4.jpg"
+        "src": "champions-3.jpg",
+        "alt": "A Super 6s team under the floodlights at The Hereford Academy"
+      },
+      {
+        "src": "pic-presentation.jpg",
+        "alt": "Trophy presentation at the Herefordshire FA ground"
+      },
+      {
+        "src": "champions-4.jpg",
+        "alt": "A Super 6s team under the floodlights at The Hereford Academy"
       }
     ]
   },
@@ -445,9 +457,9 @@
   ],
   "why": [
     {
-      "img": "feature.jpg",
-      "pos": "50% 18%",
-      "alt": "An FA-qualified referee at a Herefordshire FA final",
+      "img": "referee-cards.jpg",
+      "pos": "50% 45%",
+      "alt": "FA referee with yellow and red cards",
       "h": "Proper referees",
       "p": "Fully FA-affiliated, with FA-qualified referees on every pitch, every week."
     },
@@ -525,9 +537,19 @@
       "pos": "50% 45%"
     },
     {
+      "src": "champions-2.jpg",
+      "alt": "A Super 6s team under the floodlights at The Hereford Academy",
+      "pos": "50% 55%"
+    },
+    {
       "src": "trophies-wide.jpg",
       "alt": "Divisional champions' trophies",
       "pos": "50% 50%"
+    },
+    {
+      "src": "champions-4.jpg",
+      "alt": "A Super 6s team under the floodlights at The Hereford Academy",
+      "pos": "50% 55%"
     },
     {
       "src": "referee-cards.jpg",
@@ -535,29 +557,17 @@
       "pos": "50% 45%"
     },
     {
-      "src": "feature.jpg",
-      "alt": "FA-qualified referee at a Herefordshire FA final",
-      "pos": "50% 15%"
+      "src": "champions-3.jpg",
+      "alt": "A Super 6s team under the floodlights at The Hereford Academy",
+      "pos": "50% 50%"
+    },
+    {
+      "src": "champions-1.jpg",
+      "alt": "A Super 6s team under the floodlights at The Hereford Academy",
+      "pos": "50% 45%"
     }
   ],
-  "mosaic": [
-    {
-      "src": "pic-night-action.jpg",
-      "alt": "Super 6s match under the lights at Hereford Academy"
-    },
-    {
-      "src": "pic-pitch-day.jpg",
-      "alt": "The 3G pitch at The Hereford Academy"
-    },
-    {
-      "src": "pic-presentation.jpg",
-      "alt": "Trophy presentation at the Herefordshire FA ground"
-    },
-    {
-      "src": "pic-night-pitch.jpg",
-      "alt": "Floodlit 3G pitch at night"
-    }
-  ],
+  "mosaic": [],
   "siteUrl": "https://hfasuper6s.com",
   "mosaicTitle": "Gallery",
   "mosaicSub": "Teams and moments from our leagues"

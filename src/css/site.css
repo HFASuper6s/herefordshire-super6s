@@ -745,3 +745,13 @@ img.fit-contain{background:#1b2a1b}
 .tk-run i.tk-sep{color:var(--muted);font-weight:700;padding:0 4px}
 /* News: picture beside the text on wider screens (keeps small photos sharp), full width on phones */
 @media (min-width:700px){.post.has-img{grid-template-columns:300px minmax(0,1fr)}.post.has-img .post-img{width:100%;height:100%;max-height:none;min-height:230px}}
+/* Gallery prints: three to a row when there are six; pictures fill their print */
+@media (min-width:1001px){.champs.c3{grid-template-columns:repeat(3,1fr)}}
+.champ-open picture{display:block}
+/* Netlify's "Powered by Netlify" badge (added by Netlify on free plans, bottom-right).
+   Lift it to sit just above the phone menu bar so it never covers a menu button,
+   and leave room at the foot of every page so the last content can scroll clear of it. */
+#nl-badge-frame{bottom:var(--tabbar-h,0px)!important}
+body:has(#nl-badge-frame){padding-bottom:64px}
+@media (max-width:700px){body:has(#nl-badge-frame){padding-bottom:calc(66px + 58px + env(safe-area-inset-bottom,0px))}}
+@media print{#nl-badge-frame{display:none!important}}

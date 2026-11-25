@@ -243,5 +243,11 @@
   document.addEventListener("s6-league",()=>ticker());
   if(document.readyState!=="loading") setTimeout(ticker,0); else document.addEventListener("DOMContentLoaded",ticker);
 
+  // Tell the CSS how tall the phone menu bar is (0 when hidden), so Netlify's badge can sit just above it
+  const tabH=()=>{ const t=document.querySelector(".tabbar"); const h=t&&getComputedStyle(t).display!=="none"?Math.round(t.getBoundingClientRect().height):0;
+    document.documentElement.style.setProperty("--tabbar-h",h+"px"); };
+  if(document.readyState!=="loading") tabH(); else document.addEventListener("DOMContentLoaded",tabH);
+  addEventListener("resize",tabH); addEventListener("orientationchange",tabH);
+
   if("serviceWorker" in navigator){ addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(()=>{})); }
 })();

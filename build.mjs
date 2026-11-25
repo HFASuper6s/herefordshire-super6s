@@ -70,12 +70,14 @@ const ctx = {
   heroWebp: has("hero.webp"), featureImg: has("feature.jpg") ? "feature" : "hero",
   // Homepage team photos (optional): champions.photos in config, files in county/assets. Each photo opens larger when tapped.
   // With no title they sit straight under the Gallery photo strip, as part of the same section.
+  // A title (and intro) gives the photos their own heading; six (or nine) photos sit three to a row on wide screens.
   champions: (() => { const G = C.champions, ph = (G && G.photos || []).filter(p => has(p.src)); if (!ph.length) return "";
+    const webp = src => { const w = src.replace(/\.(jpe?g|png)$/i, ".webp"); return w !== src && has(w) ? `<source srcset="/img/${esc(w)}" type="image/webp">` : ""; };
     return `<section class="block${G.title ? "" : " tight champs-under"}" id="champs-sec"><div class="wrap">
-      ${G.title ? `<div class="sec-head"><h2 class="sec">${esc(G.title)}</h2></div>` : ""}${G.intro ? `<p class="champs-intro">${esc(G.intro)}</p>` : ""}
-      <div class="champs">${ph.map((p, i) => { const alt = p.alt || [p.caption, p.sub].filter(Boolean).join(", ") || "A Super 6s team under the floodlights";
+      ${G.title ? `<div class="sec-head"><div><h2 class="sec">${esc(G.title)}</h2>${G.intro ? `<p class="sec-sub">${esc(G.intro)}</p>` : ""}</div></div>` : (G.intro ? `<p class="champs-intro">${esc(G.intro)}</p>` : "")}
+      <div class="champs${ph.length % 3 === 0 && ph.length % 4 !== 0 ? " c3" : ""}">${ph.map((p, i) => { const alt = p.alt || [p.caption, p.sub].filter(Boolean).join(", ") || "A Super 6s team under the floodlights";
         const cap = p.caption ? `<figcaption><b>${esc(p.caption)}</b>${p.sub ? `<span>${esc(p.sub)}</span>` : ""}</figcaption>` : "";
-        return `<figure class="champ${cap ? "" : " nocap"}"><button type="button" class="champ-open" data-i="${i}" aria-label="View photo ${i + 1} larger"><img src="/img/${esc(p.src)}" alt="${esc(alt)}" loading="lazy" decoding="async"></button>${cap}</figure>`; }).join("")}</div>
+        return `<figure class="champ${cap ? "" : " nocap"}"><button type="button" class="champ-open" data-i="${i}" aria-label="View photo ${i + 1} larger"><picture>${webp(p.src)}<img src="/img/${esc(p.src)}" alt="${esc(alt)}" loading="lazy" decoding="async"></picture></button>${cap}</figure>`; }).join("")}</div>
     </div></section>`; })(),
 };
 const get = (o, p) => p.split(".").reduce((a, k) => a == null ? a : a[k], o);
