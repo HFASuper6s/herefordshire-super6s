@@ -10,7 +10,8 @@ export function cleanFixtures(list) {
   if (!Array.isArray(list) || list.length > 2000) return null;
   const out = list.map(f => ({
     ymd: /^\d{4}-\d{2}-\d{2}$/.test(f.ymd) ? f.ymd : "", time: str(f.time, 5), division: str(f.division, 60),
-    home: str(f.home, 80), away: str(f.away, 80), pitch: str(f.pitch, 40), hs: score(f.hs), as: score(f.as)
+    home: str(f.home, 80), away: str(f.away, 80), pitch: str(f.pitch, 40), hs: score(f.hs), as: score(f.as),
+    ...(f.ft === true ? { ft: true } : {})   // filled in from Full-Time's snippets rather than an upload
   })).filter(f => f.home && f.away);
   return out.length ? out : null;
 }
@@ -26,9 +27,11 @@ export async function handle({ method, query, body, user, store }) {
     if (!isLeague(input.league)) return json(400, { error: "Unknown league." });
     const fixtures = cleanFixtures(input.fixtures);
     if (!fixtures) return json(400, { error: "No fixtures found in that file." });
-    const data = { fixtures, updated: new Date().toISOString(), by: user.email || "" };
+    // An upload replaces everything (so uploaded scores always win). A Full-Time sync keeps the upload date.
+    const now = new Date().toISOString(), prev = input.sync ? await store.get("league/" + input.league, { type: "json" }) : null;
+    const data = input.sync && prev ? { ...prev, fixtures, synced: now } : { fixtures, updated: now, by: user.email || "" };
     await store.setJSON("league/" + input.league, data);
-    return json(200, { count: fixtures.length, played: fixtures.filter(f => f.hs != null).length, updated: data.updated });
+    return json(200, { count: fixtures.length, played: fixtures.filter(f => f.hs != null).length, updated: data.updated, synced: data.synced });
   }
   return json(405, { error: "Method not allowed." });
 }

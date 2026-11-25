@@ -151,7 +151,21 @@ async function start(){
       ${early?`<p class="msg">Printing early? Any suspensions or changes added after you print won't be on it, so print again nearer the night if anything changes.</p>`:""}`;
   }
   $("teamlist").innerHTML=[...teams].sort().map(x=>`<option value="${esc(x)}">`).join("");
+  syncAll();
   await load();
+}
+
+// Save the latest Full-Time results, fixtures and pitch numbers every time this page opens
+async function syncAll(){
+  for(const l of S.leagues){
+    const m=$("up-msg-"+l.id); m.className="msg"; m.textContent="Checking Full-Time for new results…";
+    try{
+      const r=await EM.syncFullTime(l);
+      if(!r.read){ m.textContent="Full-Time didn't respond. Nothing changed; it will try again next time you open this page."; continue; }
+      const bits=[r.scores&&`${r.scores} result${r.scores>1?"s":""}`, r.added&&`${r.added} new fixture${r.added>1?"s":""}`, r.pitches&&`${r.pitches} pitch number${r.pitches>1?"s":""}`].filter(Boolean);
+      m.textContent=bits.length?`Saved from Full-Time: ${bits.join(", ")}.`:"Up to date with Full-Time.";
+    }catch(e){ m.className="msg err"; m.textContent="Couldn't save from Full-Time: "+e.message; }
+  }
 }
 
 async function load(){

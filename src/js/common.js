@@ -98,23 +98,30 @@
      followed by the match row, with the score split over three cells ("1", "-", "2"). Older layouts used one
      cell ("1-2") and a dd/mm/yyyy date on the same row; both are handled. */
   const MON={jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11}, pad2=n=>String(n).padStart(2,"0");
-  function parseResults(rows){
-    const out=[]; let day="";
+  // Reads results ("1","-","2") and fixtures ("v") rows alike. Fixtures come back with hs/as null.
+  // home/away are tidied for matching; homeName/awayName are the display names (shirt colours removed).
+  function parseSnippet(rows){
+    const out=[]; let day="", time="";
     rows.forEach(r=>{
       const line=r.join(" ");
       const dm=line.match(/\b(\d{1,2})\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+(\d{4})\b/i), ds=line.match(/\b(\d{1,2})\/(\d{1,2})\/(\d{2,4})\b/);
       const rowDay=dm?`${dm[3]}-${pad2(MON[dm[2].toLowerCase()]+1)}-${pad2(dm[1])}`:ds?`${ds[3].length===2?"20"+ds[3]:ds[3]}-${pad2(ds[2])}-${pad2(ds[1])}`:"";
-      let i=-1, end=-1, hs, as;
-      for(let k=0;k<r.length;k++){ const one=r[k].match(/^(\d{1,2})\s*[-–:]\s*(\d{1,2})$/);
+      const tm=line.match(/\b([01]?\d|2[0-3]):([0-5]\d)\b/), rowTime=tm?`${pad2(tm[1])}:${tm[2]}`:"";
+      let i=-1, end=-1, hs=null, as=null;
+      for(let k=0;k<r.length;k++){ if(!r.slice(0,k).some(c=>/[a-z]/i.test(c))) continue;   // a score comes after the home team (so "19:35" isn't read as a score)
+        const one=r[k].match(/^(\d{1,2})\s*[-–:]\s*(\d{1,2})$/);
         if(one){ i=end=k; hs=+one[1]; as=+one[2]; break; }
-        if(/^\d{1,2}$/.test(r[k])&&/^[-–:]$/.test(r[k+1]||"")&&/^\d{1,2}$/.test(r[k+2]||"")){ i=k; end=k+2; hs=+r[k]; as=+r[k+2]; break; } }
-      if(i<0){ if(rowDay) day=rowDay; return; }   // a date-only row: applies to the match row(s) below it
+        if(/^\d{1,2}$/.test(r[k])&&/^[-–:]$/.test(r[k+1]||"")&&/^\d{1,2}$/.test(r[k+2]||"")){ i=k; end=k+2; hs=+r[k]; as=+r[k+2]; break; }
+        if(/^v(s|\.)?$/i.test(r[k])&&k>0){ i=end=k; break; } }
+      if(i<0){ if(rowDay){ day=rowDay; time=rowTime; } return; }   // a date-only row: applies to the match row(s) below it
       let h=i-1; while(h>=0&&!/[a-z]/i.test(r[h])) h--; let a=end+1; while(a<r.length&&!/[a-z]/i.test(r[a])) a++;
       if(h<0||a>=r.length) return;
-      out.push({ymd:rowDay||day,home:tidy(r[h]),away:tidy(r[a]),hs,as});
+      const pc=r.slice(a+1).join(" ").match(/pitch\s*(\d+)/i);
+      out.push({ymd:rowDay||day,time:rowTime||time,home:tidy(r[h]),away:tidy(r[a]),homeName:cleanName(r[h]),awayName:cleanName(r[a]),hs,as,pitch:pc?"Pitch "+pc[1]:""});
     });
     return out;
   }
+  const parseResults = rows => parseSnippet(rows).filter(r=>r.hs!=null);
   async function addLiveScores(lg, fx){
     const key="s6-live-"+lg.id; let got=null;
     try{ const c=JSON.parse(sessionStorage.getItem(key)||"null"); if(c&&Date.now()-c.at<600000) got=c.results; }catch(e){}
@@ -198,7 +205,7 @@
   }
   const newsImg = p => p.hasImage ? `/.netlify/functions/news?img=${encodeURIComponent(p.id)}` : (p.image ? "/img/"+p.image : "");
 
-  window.S6 = {S, esc, val, league, param, ymd, slug, parseCSV, toDate, rowsToFixtures, loadFixtures, teams, fmtDate, fmtDay, table, divGames, formHTML, initials, photoURL, cleanName, stripShirts, shirtOf, shirtSVG, shirt, bibSVG, clash, loadNews, newsImg};
+  window.S6 = {S, esc, val, league, param, ymd, slug, parseCSV, toDate, rowsToFixtures, loadFixtures, teams, fmtDate, fmtDay, table, divGames, formHTML, initials, photoURL, cleanName, stripShirts, shirtOf, shirtSVG, shirt, bibSVG, clash, loadNews, newsImg, readSnippet, parseSnippet, tidy};
 
   /* Latest scores ticker: the chosen league's most recent league night, scrolling under the header.
      Pauses on hover or tap; shows as a still, swipeable row when motion is reduced. */
