@@ -50,6 +50,8 @@ const ctx = {
   partnerBlurb: C.partner && C.partner.blurb ? `, with ${esc(C.partner.name.split(",")[0])} ${esc(C.partner.blurb)}` : "",
   // Main sections (same for every county): Home, Tables, Fixtures, Results, then News / Get involved / Wellbeing
   // Four sections for everyone; "Join a league" is the button in the header
+  // Optional words splashed across the homepage banner photo (county setting "heroSplash")
+  heroSplash: C.heroSplash ? `<div class="h-splash" aria-hidden="true"><span>${esc(C.heroSplash)}</span></div>` : "",
   // Safeguarding appears only when the county fills in its safeguarding section
   navLinks: [["/","home","Home"],["/league.html","league","Leagues"],["/news.html","news","News"],["/get-involved.html","involved","Get involved"],
     ...(C.safeguarding ? [["/safeguarding.html","safeguarding","Safeguarding"]] : [])]

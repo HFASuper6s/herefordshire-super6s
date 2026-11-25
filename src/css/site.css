@@ -786,3 +786,8 @@ body:has(#nl-badge-frame){padding-bottom:64px}
 .post.tall-img .post-img{aspect-ratio:2/3;max-height:none}
 @media (min-width:700px){.post.has-img.tall-img{grid-template-columns:220px minmax(0,1fr)}.post.has-img.tall-img .post-img{aspect-ratio:2/3}}
 @media (max-width:699px){.post.tall-img .post-img{width:min(240px,70%);margin:var(--s3) auto 0;border-radius:10px}}
+/* Homepage banner: words splashed across the photo (county setting heroSplash). Sits over the same box as the photo. */
+.h-splash{position:absolute;z-index:3;top:0;right:0;bottom:0;width:50%;display:flex;align-items:flex-end;justify-content:flex-end;padding:0 5% 10%;pointer-events:none}
+.h-splash span{display:block;max-width:85%;text-align:right;font:900 clamp(2.4rem,5.2vw,4.6rem)/.9 var(--display);font-stretch:68%;text-transform:uppercase;color:#fff;letter-spacing:-.01em;text-shadow:0 3px 18px rgba(0,0,0,.65),0 1px 3px rgba(0,0,0,.6);transform:rotate(-4deg)}
+.h-splash span::after{content:"";display:block;height:6px;width:60%;margin:10px 0 0 auto;background:var(--accent);border-radius:3px}
+@media (max-width:860px){.h-splash{bottom:auto;height:240px;width:100%;padding:0 6% 26px}.h-splash span{font-size:clamp(2rem,9vw,2.8rem)}.h-splash span::after{height:5px;margin-top:8px}}
