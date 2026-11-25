@@ -15,7 +15,7 @@ One codebase. Each county gets its own copy with its own settings, pictures, dom
 ## New county in 30 minutes
 1. **Copy** this whole folder (or the GitHub repository) and rename it, e.g. `shropshire-super6s`.
 2. **Settings:** open `county/config.json` and change every value:
-   - `siteName`, `shortName`, `countyFA`, `countyFAUrl`, `headline`, `intro`
+   - `siteName`, `shortName`, `countyFA`, `countyFAFull` (full name, e.g. "Herefordshire County Football Association"), `countyFAUrl`, `headline`, `intro`
    - `partner`: `{ "name": "...", "blurb": "..." }`, or `null` for no partner
    - `colors`: six hex colours. `brand` (main), `brandDark`, `brandLight`, `accent` (buttons), `accentDark`, `logoBg` (behind the logo)
    - `contactEmail`, `registrationForm` (the Smartsheet form link)
