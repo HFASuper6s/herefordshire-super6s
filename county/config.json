@@ -310,6 +310,16 @@
   ],
   "news": [
     {
+      "id": "christmas-break-2026",
+      "image": "christmas-ball.jpg",
+      "imagePos": "56% 55%",
+      "date": "2026-11-25",
+      "title": "Christmas break",
+      "body": "The last event of the year takes place on Thursday 17th December, with The Hereford Academy closing for a 2-week break over Christmas & New Year.\n\nThe fixtures have been scheduled to reflect this break in the season, so the key dates for each league are confirmed as follows:\n\n**Monday League**\n- Last Super 6's event of 2026: Monday 14th December\n- First Super 6's event of 2027: Monday 4th January\n\n**Thursday League**\n- Last Super 6's event of 2026: Thursday 17th December\n- First Super 6's event of 2027: Thursday 7th January\n\nWe would like to take this opportunity to thank you for your ongoing support, and to wish all of our players and staff a merry Christmas, and a happy and healthy New Year!",
+      "link": "/league.html#fixtures",
+      "linkLabel": "See fixtures"
+    },
+    {
       "id": "new-website-2026",
       "image": "hero.jpg",
       "imagePos": "50% 30%",
@@ -369,6 +379,51 @@
     }
   ],
   "referees": "Experienced FA-qualified referees",
+  "safeguarding": {
+    "title": "Safeguarding",
+    "intro": "Players aged 16 and 17 can play in our leagues. Everyone involved shares the job of keeping them safe, under The FA's Safeguarding Policy and Procedures.",
+    "players": {
+      "h": "If you're 16 or 17",
+      "points": [
+        "You have the right to enjoy football in a safe, friendly environment.",
+        "If anything worries you, on or off the pitch, talk to someone you trust or contact the Designated Safeguarding Officer below.",
+        "Find out more about your rights in football from The FA."
+      ],
+      "links": [
+        { "label": "Understanding your rights in football (The FA)", "url": "https://www.thefa.com/-/media/cfa/gloucestershirefa/files/about/safeguarding/7-1---understanding-your-rights-in-football.ashx?la=en" },
+        { "label": "The FA's guidance for under-18s", "url": "https://www.thefa.com/football-rules-governance/safeguarding/section-7-children-and-young-people-under-18s" }
+      ]
+    },
+    "teams": {
+      "h": "If your team has 16 or 17 year old players",
+      "intro": "Captains and team managers are responsible for the safeguards around their team. The FA asks you to:",
+      "steps": [
+        "Know which of your players are 16 or 17.",
+        "Know who manages or coaches the team, including any assistants.",
+        "Make sure anyone aged 16 or over who has an unsupervised role with under-18s has an FA DBS check. One check covers all your roles in grassroots football.",
+        "Follow The FA's Safeguarding Children Policy.",
+        "Give your 16 and 17 year old players safeguarding information.",
+        "Ask your team officials to complete The FA's free Safeguarding For All online course."
+      ],
+      "links": [
+        { "label": "DBS checks and safer recruitment (The FA)", "url": "https://www.thefa.com/football-rules-governance/safeguarding/section-3-safer-recruitment-and-dbs-checks" },
+        { "label": "Safeguarding courses, including the free Safeguarding For All (Herefordshire FA)", "url": "https://www.herefordshirefa.com/safeguarding-and-inclusion/safeguarding-courses" },
+        { "label": "The FA's Safeguarding Policy and Procedures", "url": "https://www.thefa.com/football-rules-governance/safeguarding/section-1-footballs-safeguarding-framework" }
+      ]
+    },
+    "contact": {
+      "h": "Report a concern or ask for advice",
+      "text": "Contact Herefordshire FA's Designated Safeguarding Officer.",
+      "email": "Safeguarding@HerefordshireFA.com",
+      "phone": "01432 342179 (option 3)",
+      "emergency": "If a young person is in immediate danger, call 999."
+    },
+    "more": [
+      { "label": "Herefordshire FA: safeguarding U18s in open-age football", "url": "https://www.herefordshirefa.com/safeguarding-and-inclusion/safeguarding-u18-in-open-age-football" },
+      { "label": "The FA's safeguarding hub", "url": "https://www.thefa.com/football-rules-governance/safeguarding" },
+      { "label": "The FA's complete safeguarding downloads", "url": "https://www.thefa.com/football-rules-governance/safeguarding/section-11-the-complete-downloads-directory" }
+    ]
+  },
   "wellbeing": {
     "intro": "Football is good for your head as well as your legs. If things are getting on top of you, it's okay to talk. These services are free and confidential.",
     "emergency": "If you or someone else is in danger right now, call 999 or go to A&E.",

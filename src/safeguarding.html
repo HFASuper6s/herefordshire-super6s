@@ -1,0 +1,44 @@
+<!--page {"title":"Safeguarding | {{site.siteName}}","desc":"Keeping 16 and 17 year old players safe in our open-age leagues: what players and teams need to know, and who to contact.","id":"safeguarding"}-->
+<!doctype html>
+<html lang="en-GB">
+<head>
+{{> head}}
+</head>
+<body data-page="safeguarding">
+{{> header}}
+<main id="main">
+  <div class="phead"><div class="wrap pb">
+    <h1 id="sg-title">Safeguarding</h1>
+    <p id="sg-intro"></p>
+  </div></div>
+  <div class="wrap sg">
+    <section class="card sg-contact" id="sg-contact"></section>
+    <div class="grid g2 sg-cols">
+      <section class="card sg-card" id="sg-players"></section>
+      <section class="card sg-card" id="sg-teams"></section>
+    </div>
+    <section class="sg-more" id="sg-more"></section>
+  </div>
+</main>
+{{> footer}}
+<script>
+(function(){
+  const {S,esc}=S6, G=S.safeguarding||{}, $=id=>document.getElementById(id);
+  const link=l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a></li>`;
+  const links=(L,h)=>L&&L.length?`${h?`<h3>${esc(h)}</h3>`:""}<ul class="sg-links">${L.map(link).join("")}</ul>`:"";
+  if(G.title) $("sg-title").textContent=G.title;
+  $("sg-intro").textContent=G.intro||"";
+  const C=G.contact||{};
+  $("sg-contact").innerHTML=`<h2>${esc(C.h||"Report a concern")}</h2><p>${esc(C.text||"")}</p>
+    ${C.email?`<p class="sg-mail"><a class="btn btn-accent" href="mailto:${esc(C.email)}">Email ${esc(C.email)}</a></p>`:""}
+    ${C.phone?`<p>Or call <a href="tel:${esc(C.phone.replace(/\(.*\)/,"").replace(/\s/g,""))}">${esc(C.phone)}</a></p>`:""}
+    ${C.emergency?`<p class="sg-urgent">${esc(C.emergency).replace("call 999",'<a href="tel:999">call 999</a>')}</p>`:""}`;
+  const P=G.players||{};
+  $("sg-players").innerHTML=`<h2>${esc(P.h||"")}</h2><ul class="sg-points">${(P.points||[]).map(t=>`<li>${esc(t)}</li>`).join("")}</ul>${links(P.links,"Read more")}`;
+  const T=G.teams||{};
+  $("sg-teams").innerHTML=`<h2>${esc(T.h||"")}</h2>${T.intro?`<p>${esc(T.intro)}</p>`:""}<ol class="sg-steps">${(T.steps||[]).map(t=>`<li><span>${esc(t)}</span></li>`).join("")}</ol>${links(T.links,"Useful links")}`;
+  $("sg-more").innerHTML=G.more&&G.more.length?`<h2 class="sec sm">More from The FA and ${esc(S.countyFA)}</h2>${links(G.more)}`:"";
+})();
+</script>
+</body>
+</html>

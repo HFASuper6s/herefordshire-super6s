@@ -19,10 +19,18 @@
   const {esc,loadNews,newsImg}=S6, box=document.getElementById("posts");
   const posts=await loadNews();
   const fmt=d=>new Date(d+"T12:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
+  // Post text: blank lines start a new paragraph; lines starting "- " become a bulleted list;
+  // a line in **double stars** becomes a small heading. Everything is escaped first.
+  const body=t=>(t||"").split(/\n\s*\n/).map(block=>{ const lines=block.split(/\n/).map(l=>l.trim()).filter(Boolean); let html="", list=[];
+    const flush=()=>{ if(list.length){ html+=`<ul>${list.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`; list=[]; } };
+    for(const l of lines){ const b=l.match(/^\*\*(.+)\*\*$/);
+      if(/^[-•]\s+/.test(l)) list.push(l.replace(/^[-•]\s+/,""));
+      else { flush(); html+=b?`<h3 class="post-sub">${esc(b[1])}</h3>`:`<p>${esc(l)}</p>`; } }
+    flush(); return html; }).join("");
   box.innerHTML=posts.length?posts.map(p=>{ const img=newsImg(p);
     return `<article class="card post${img?" has-img":""}" id="${esc(p.id)}">${img?`<img class="post-img" src="${img}" alt="" loading="lazy" style="object-position:${esc(p.imagePos||"50% 40%")}">`:""}
       <div class="post-body"><time datetime="${esc(p.date)}">${fmt(p.date)}</time><h2>${esc(p.title)}</h2>
-      ${(p.body||"").split(/\n\s*\n/).map(t=>`<p>${esc(t)}</p>`).join("")}
+      ${body(p.body)}
       ${p.link?`<a class="btn btn-accent" href="${esc(p.link)}"${/^https?:/.test(p.link)?' target="_blank" rel="noopener"':""}>${esc(p.linkLabel||"Find out more")}</a>`:""}</div></article>`; }).join("")
     :`<div class="card empty">No news yet.</div>`;
   if(location.hash){ const el=document.getElementById(location.hash.slice(1)); if(el) el.scrollIntoView(); }
