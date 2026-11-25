@@ -303,7 +303,9 @@
         "name": "Jack",
         "email": "referees@herefordshirefa.com"
       },
-      "image": "referee-cards.jpg"
+      "image": "feature.jpg",
+      "imagePos": "50% 6%",
+      "imageRatio": "4/3"
     }
   ],
   "news": [
@@ -319,11 +321,11 @@
       "id": "referee-course-jan-2027",
       "date": "2026-11-24",
       "title": "FA Referee Course: January 2027",
-      "image": "referee-cards.jpg",
+      "image": "feature.jpg",
       "body": "Herefordshire FA's next FA Referee Course runs on Thursday 14 January (6.30pm – 9.30pm), Sunday 17 January (10am – 6pm) and Thursday 25 March 2027 (7pm – 9pm) at the SSAFA County Ground, Widemarsh Common, Hereford.\n\nOpen to anyone aged 14 and over. £145 per person. To book, email Jack at referees@herefordshirefa.com.",
       "link": "mailto:referees@herefordshirefa.com",
       "linkLabel": "Email to book",
-      "imagePos": "50% 30%"
+      "imagePos": "50% 5%"
     },
     {
       "id": "adult-futsal",

@@ -28,7 +28,7 @@
       ["Where",w.where&&`<a href="${map(w.where)}" target="_blank" rel="noopener">${esc(w.where)}</a>`],
       ["Cost",w.price&&esc(w.price)],["Who",w.who&&esc(w.who)],
       ["Contact",(C.name||C.email)&&`${esc(C.name||"")}${C.email?`${C.name?", ":""}<a href="mailto:${esc(C.email)}">${esc(C.email)}</a>`:""}`]].filter(r=>r[1]);
-    return `<article class="card details way">${w.image?`<img class="way-img" src="/img/${esc(w.image)}" alt="" loading="lazy">`:""}<h2>${w.tag?`<span class="way-tag">${esc(w.tag)}</span>`:""}${esc(w.name)}</h2>
+    return `<article class="card details way">${w.image?`<img class="way-img" src="/img/${esc(w.image)}" alt="" loading="lazy"${w.imagePos||w.imageRatio?` style="${w.imagePos?`object-position:${esc(w.imagePos)};`:""}${w.imageRatio?`aspect-ratio:${esc(w.imageRatio)};`:""}"`:""}>`:""}<h2>${w.tag?`<span class="way-tag">${esc(w.tag)}</span>`:""}${esc(w.name)}</h2>
       ${w.note?`<p class="way-note">${esc(w.note)}</p>`:""}${w.summary?`<p class="way-sum">${esc(w.summary)}</p>`:""}
       <dl>${rows.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl></article>`;}).join("");
 })();
