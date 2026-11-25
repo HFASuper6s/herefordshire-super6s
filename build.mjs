@@ -42,6 +42,10 @@ const rulesToc = part => R ? R[part].map(n=>`<a href="#r${n}">${n}. ${esc(R.sect
 
 const ctx = {
   site: C,
+  // Shown on the event manager page so anyone can tell which version they are looking at.
+  // Netlify sets COMMIT_REF during its builds; local builds just show the time.
+  buildInfo: new Date().toLocaleString("en-GB", { timeZone: "Europe/London", day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })
+    + (process.env.COMMIT_REF ? ` (${process.env.COMMIT_REF.slice(0, 7)})` : ""),
   partnerLine, sponsorBlock,
   partnerBlurb: C.partner && C.partner.blurb ? `, with ${esc(C.partner.name.split(",")[0])} ${esc(C.partner.blurb)}` : "",
   // Main sections (same for every county): Home, Tables, Fixtures, Results, then News / Get involved / Wellbeing
