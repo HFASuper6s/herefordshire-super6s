@@ -257,6 +257,8 @@
     {
       "tag": "Play",
       "name": "Drop In & Play",
+      "image": "pic-training.jpg",
+      "imagePos": "50% 50%",
       "note": "New time, same place",
       "summary": "Turn up and play. No team needed.",
       "when": "Sundays, 7pm – 8pm",
@@ -266,6 +268,8 @@
     {
       "tag": "Play",
       "name": "Daytime Walking Football",
+      "image": "pic-walking.jpg",
+      "imagePos": "50% 60%",
       "summary": "Football without the running. A friendly way for over-50s to stay active.",
       "when": "Thursdays, 11am – 12pm, then refreshments until 1pm",
       "where": "Herefordshire FA, Widemarsh Common, Hereford, HR4 9NA",
@@ -279,6 +283,8 @@
     {
       "tag": "Play",
       "name": "Adult Futsal",
+      "image": "pic-futsal.jpg",
+      "imagePos": "48% 50%",
       "summary": "Fast-paced indoor drop-in football, all year round and never cancelled for weather.",
       "when": "Wednesdays, 6.30pm – 7.30pm",
       "where": "St Mary's High School, HR1 4DR",
