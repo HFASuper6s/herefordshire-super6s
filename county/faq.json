@@ -2,12 +2,12 @@
   {
     "q": "How much does it cost?",
     "k": "price fee fees cost money pay payment charge expensive cheap per week match fee invoice bank transfer cash entry free",
-    "a": "Entry is free. The match fee is £30 a team each week (about £3.75 a player in a squad of 8).\nFees for the 10-week season are invoiced at the start and paid weekly by bank transfer, at least 24 hours before each match night. Cash isn't accepted on the night (rules 2.2 and 2.3)."
+    "a": "Entry is free. The match fee is £30 a team each week (about £3.75 a player in a squad of 8).\nYou're invoiced each week, by email to the captain the day before the league night. Pay online using the “Review & Pay” button on the invoice, on or before match day. Please don't pay by bank transfer, and cash isn't accepted (terms of entry, rules 2.2 and 2.3)."
   },
   {
     "q": "How do I enter a team?",
     "k": "join enter register sign up signup new team start apply application form entry how mates mate friends friend group",
-    "a": "Fill in the online registration form on the Join a league page: /join.html\nThe captain must be 18 or over, and every team needs at least 6 registered players, including the captain, before its first fixture (rules 1.1 and 1.4)."
+    "a": "Fill in the online registration form on the Join a league page: /join.html\nThe captain must be 18 or over, and every team needs at least 6 registered players, including the captain, before its first fixture (terms of entry, rules 1.1 and 1.4)."
   },
   {
     "q": "What nights and times are the games?",
@@ -22,22 +22,22 @@
   {
     "q": "What boots can I wear?",
     "k": "boots boot footwear shoes trainers studs moulds moulded screw blades astro astros wear feet shin pads shinpads",
-    "a": "- Moulded studs or screw-in studs: fine\n- Astro trainers: only as a last resort if you have no suitable boots\n- Bladed (chevron) studs and flat-soled trainers: not allowed on the 3G pitch\nShin pads are compulsory (rules 5.23 and 5.24). More on the Venue page: /venue.html"
+    "a": "- Moulded studs or screw-in studs: fine\n- Astro trainers: only as a last resort if you have no suitable boots\n- Bladed (chevron) studs and flat-soled trainers: not allowed on the 3G pitch\nShin pads are compulsory (playing rules 1.24 and 1.25). More on the Venue page: /venue.html"
   },
   {
     "q": "How long are the games?",
     "k": "long length duration minutes halves half time each way how long match length game length",
-    "a": "Monday games are 16 minutes each way and Thursday games are 18 minutes each way, with no more than 1 minute at half time (rule 5.2)."
+    "a": "Monday games are 16 minutes each way and Thursday games are 18 minutes each way, with no more than 1 minute at half time (playing rule 1.2)."
   },
   {
     "q": "How many players and substitutes?",
     "k": "players squad size team size how many substitutes subs bench rolling six a side 6-a-side side",
-    "a": "It's six a side, including the goalkeeper, plus up to three substitutes with unlimited rolling substitutions. Your squad can be any size, but every player must be registered (rules 5.1 and 5.19)."
+    "a": "It's six a side, including the goalkeeper, plus up to three substitutes with unlimited rolling substitutions. Your squad can be any size, but every player must be registered (playing rules 1.1 and 1.20)."
   },
   {
     "q": "How old do you have to be?",
     "k": "age old minimum young under 16 18 adult adults kids children junior juniors teenager",
-    "a": "Players must be 16 or over, and the team captain must be 18 or over (rules 1.1 and 1.3)."
+    "a": "Players must be 16 or over, and the team captain must be 18 or over (terms of entry, rules 1.1 and 1.3)."
   },
   {
     "q": "Can I play if I don't have a team?",
@@ -47,52 +47,52 @@
   {
     "q": "How do we add new players?",
     "k": "add player new player register player registration sign player mid season change squad name address date of birth",
-    "a": "New players can join at any time in the season. Email their full name, home address and date of birth to Super6s@HerefordshireFA.com, or give them to the Event Manager, before they play (rule 1.3)."
+    "a": "New players can join at any time in the season. Email their full name, home address and date of birth to Super6s@HerefordshireFA.com, or give them to the Event Manager, before they play (terms of entry, rule 1.3)."
   },
   {
     "q": "Can I play for two teams?",
     "k": "two teams second team another team both teams play for more than one team move transfer switch change team",
-    "a": "Yes: a player can play for up to two teams on the same night, as long as they're in different divisions. To move teams, you leave your current team and register with the new one (rules 1.5 and 1.6)."
+    "a": "Yes: a player can play for up to two teams on the same night, as long as they're in different divisions. To move teams, you leave your current team and register with the new one (terms of entry, rules 1.5 and 1.6)."
   },
   {
     "q": "What if we can't make a game?",
     "k": "can't make cant make cannot absence absent miss missing away holiday skip week unavailable postpone call off notice",
-    "a": "Each team can give notice of one absence per season. The captain must email Super6s@HerefordshireFA.com before 12 noon on match day and pay the match fee less a £10 discount. Without notice, the other team is awarded a 5–0 walkover (rule 4.1)."
+    "a": "Each team can give notice of one absence per season. The captain must email Super6s@HerefordshireFA.com before 12 noon on match day and pay the match fee less a £10 discount. Without notice, the other team is awarded a 5–0 walkover (terms of entry, rule 4.1)."
   },
   {
     "q": "What if we're late or short of players?",
     "k": "late running late delayed short players not enough players missing players borrow player forfeit only enough four five 4 5",
-    "a": "A team more than 5 minutes late, or without enough players, forfeits the match and still pays the match fee (rule 4.4). If you're short, you can borrow a player registered to another team, with the agreement of the Event Manager and the other team (rule 1.7)."
+    "a": "A team more than 5 minutes late, or without enough players, forfeits the match and still pays the match fee (terms of entry, rule 4.4). If you're short, you can borrow a player registered to another team, with the agreement of the Event Manager and the other team (terms of entry, rule 1.7)."
   },
   {
     "q": "When does the fee have to be paid?",
-    "k": "deadline pay by when pay late payment unpaid not paid owe owed debt walkover noon forget forgot",
-    "a": "Pay at least 24 hours before each match night. If the full fee hasn't arrived by 12 noon on match day, the match may be awarded to the other team as a 5–0 walkover (rules 2.2 and 2.4)."
+    "k": "deadline pay by when how to pay online review xero link pay late payment unpaid not paid owe owed debt walkover noon forget forgot",
+    "a": "Pay each weekly invoice in full on or before the day of your fixture, online using the “Review & Pay” button on the invoice. It's no pay, no play: if the fee hasn't been paid, the match may be awarded to the other team as a 5–0 walkover (terms of entry, rules 2.3 and 2.4)."
   },
   {
     "q": "How do we leave the league?",
     "k": "leave leaving quit stop withdraw pull out finish end notice refund credit",
-    "a": "Give at least two weeks' notice by email to Super6s@HerefordshireFA.com, play your next two fixtures and clear anything owed. Teams that leave this way are refunded any credit. Leaving without notice means a £60 fine (rules 8.2, 8.4 and 2.7)."
+    "a": "Give at least two weeks' notice by email to Super6s@HerefordshireFA.com. During those two weeks, either play your remaining fixtures or pay for them in full, and clear anything else owed. Teams that leave this way are refunded any credit. Leaving without notice means a £60 fine (terms of entry, rules 6.2, 6.4 and 2.7)."
   },
   {
     "q": "How long is a season?",
     "k": "season seasons weeks how long next season new season start date break summer",
-    "a": "Seasons run for 10 weeks. The next season starts the week after one ends, and teams are entered automatically unless the captain gives notice (rules 3.1, 3.6 and 8.1)."
+    "a": "Seasons run for 10 weeks. The next season starts the week after one ends, and teams are entered automatically unless the captain gives notice (terms of entry, rules 3.1, 3.6 and 6.1)."
   },
   {
     "q": "How do points and promotion work?",
     "k": "points promotion promoted relegation relegated table league table divisions division goal difference",
-    "a": "Win 3 points, draw 1, lose 0. Teams level on points are split by goal difference, then goals scored. At the end of each season the top two in each division go up and the bottom two go down (rules 3.2 and 3.3). Tables are on /league.html"
+    "a": "Win 3 points, draw 1, lose 0. Teams level on points are split by goal difference, then goals scored. At the end of each season the top two in each division go up and the bottom two go down (terms of entry, rules 3.2 and 3.3). Tables are on /league.html"
   },
   {
     "q": "Are there prizes?",
     "k": "prize prizes trophy trophies win winners winning champions reward medal",
-    "a": "Yes: every division winner gets a trophy to keep (rule 3.4)."
+    "a": "Yes: every division winner gets a trophy to keep (terms of entry, rule 3.4)."
   },
   {
     "q": "Who referees the games?",
     "k": "referee referees ref refs official officials qualified",
-    "a": "Games are refereed by FA-qualified referees wherever possible. If a qualified referee can't be appointed, another person may officiate (rule 7.5)."
+    "a": "Games are refereed by FA-qualified referees wherever possible. If a qualified referee can't be appointed, another person may officiate (terms of entry, rule 5.5)."
   },
   {
     "q": "What are the main playing rules?",
@@ -107,27 +107,27 @@
   {
     "q": "What happens with yellow and red cards?",
     "k": "yellow red card cards sin bin sinbin sent off sending off ban banned suspension suspended discipline booking",
-    "a": "A yellow card means 5 minutes in the sin bin; two yellows make a red. A red card means no further part in the match and a suspension of at least one league match (rules 6.2 and 6.3)."
+    "a": "A yellow card means 5 minutes in the sin bin; two yellows make a red. A red card means no further part in the match and a suspension of at least one league match (playing rules 2.2 and 2.3)."
   },
   {
     "q": "What kit do we need?",
     "k": "kit shirts shirt tops colours colour bibs bib matching shin pads uniform clothing away clash same colour",
-    "a": "Teams wear matching coloured tops, and shin pads are compulsory. If both teams' tops are the same colour, the away team wears bibs (rules 5.25, 5.23 and 5.5)."
+    "a": "Teams wear matching coloured tops, and shin pads are compulsory. If both teams' tops are the same colour, the away team wears bibs (playing rules 1.26, 1.24 and 1.5)."
   },
   {
     "q": "Are we insured?",
     "k": "insurance insured injury injured cover covered accident",
-    "a": "The league doesn't provide personal injury or player-to-player insurance, so teams and players are advised to arrange their own. Herefordshire County FA (01432 342179) can advise on providers (rule 8.6)."
+    "a": "The league doesn't provide personal injury or player-to-player insurance, so teams and players are advised to arrange their own. Herefordshire County FA (01432 342179) can advise on providers (terms of entry, rule 6.6)."
   },
   {
     "q": "Where are the fixtures, results and tables?",
     "k": "fixtures fixture results result tables table scores score standings who are we playing next game opponents",
-    "a": "Everything is on the League page: /league.html. Use \"Find your team\" to see your own fixtures and results. Fixtures are published at least 48 hours before the first match of the season (rule 3.5)."
+    "a": "Everything is on the League page: /league.html. Use \"Find your team\" to see your own fixtures and results. Fixtures are published at least 48 hours before the first match of the season (terms of entry, rule 3.5)."
   },
   {
     "q": "Who runs the league and how do I contact them?",
     "k": "contact manager league manager organiser organizer phone number call ring email who runs speak person",
-    "a": "The league manager is Martin Oliver: 07940 241587. You can also email Super6s@HerefordshireFA.com"
+    "a": "The league manager is Martin Oliver: 07940 241587. You can also email Super6s@HerefordshireFA.com, or ask the Event Manager on the night."
   },
   {
     "q": "Is there support if I'm struggling?",

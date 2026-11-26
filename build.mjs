@@ -23,22 +23,24 @@ const partnerLine = P ? ` in partnership with ${P.url ? `<a href="${esc(P.url)}"
 const sponsorBlock = P ? `<a class="sponsor" href="${esc(P.url||"#")}" target="_blank" rel="noopener"${P.url?"":" aria-disabled=\"true\""}>
   ${P.logo && fs.existsSync(path.join(countyDir,"assets",P.logo)) ? `<img src="/img/${esc(P.logo)}" alt="${esc(P.shortName||P.name)}" width="88" height="88" loading="lazy">` : ""}
   <span><small>${esc(P.label||"League partner")}</small><b>${esc(P.shortName||P.name)}</b>${P.url?`<em>Visit website</em>`:""}</span></a>` : "";
-// League rules: county/rules.json rendered as two tabs (playing rules, terms of entry)
+// League rules: county/rules.json rendered as two tabs (playing rules, terms of entry).
+// Numbering follows the page: each tab's sections count from 1, and each section's rules run 1, 2, 3...
 const R = fs.existsSync(path.join(countyDir,"rules.json")) ? JSON.parse(fs.readFileSync(path.join(countyDir,"rules.json"),"utf8")) : null;
 function rulesHTML(part){
   if(!R) return "";
   const fmt = t => esc(t).replace(/^(Fines tariff|Yellow card|Red card|Insurance):/,"<b>$1:</b>")
     .replace("The FA – Laws and Rules",'<a href="https://www.thefa.com/football-rules-governance/lawsandrules" target="_blank" rel="noopener">The FA – Laws and Rules</a>');
-  return R[part].map(n=>{ const sec=R.sections[n];
-    const groups=sec.groups.map(g=>{ const items=g.items.map((t,i)=>{ const k=(g.nums&&g.nums[i])||i+1; return `<li value="${k}"><span class="rn">${n}.${k}</span><span class="rt">${fmt(t)}</span></li>`}).join("");
+  const pre=part==="playing"?"p":"t";
+  return R[part].map((sec,si)=>{ const n=si+1; let k=0;
+    const groups=sec.groups.map(g=>{ const items=g.items.map(t=>{ k++; return `<li value="${k}"><span class="rn">${n}.${k}</span><span class="rt">${fmt(t)}</span></li>`}).join("");
       return `${g.h?`<h3>${esc(g.h)}</h3>`:""}<ol class="rl">${items}</ol>`; }).join("");
     let body=groups;
     if(sec.table){ const t=sec.table, tbl=`<div class="rtable"><table><thead><tr>${t.head.map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map((c,i)=>`<td data-label="${esc(t.head[i])}">${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
       body=body.replace(/(<li value="3">[\s\S]*?<\/li>)/,`$1</ol>${tbl}<ol class="rl" start="4">`); }
-    return `<section class="rsec" id="r${n}"><h2><span>${n}</span><span class="rh">${esc(sec.title)}</span></h2>${sec.intro?`<p class="rintro">${esc(sec.intro)}</p>`:""}${body}</section>`; }).join("")
+    return `<section class="rsec" id="${pre}${n}"><h2><span>${n}</span><span class="rh">${esc(sec.title)}</span></h2>${sec.intro?`<p class="rintro">${esc(sec.intro)}</p>`:""}${body}</section>`; }).join("")
     + (part==="terms"&&R.disclaimer?`<section class="rsec" id="rdisc"><h2>Disclaimer</h2><p>${esc(R.disclaimer)}</p><p class="rver">${esc(R.version)}</p></section>`:"");
 }
-const rulesToc = part => R ? R[part].map(n=>`<a href="#r${n}">${n}. ${esc(R.sections[n].title)}</a>`).join("")+(part==="terms"?'<a href="#rdisc">Disclaimer</a>':"") : "";
+const rulesToc = part => R ? R[part].map((sec,i)=>`<a href="#${part==="playing"?"p":"t"}${i+1}">${i+1}. ${esc(sec.title)}</a>`).join("")+(part==="terms"?'<a href="#rdisc">Disclaimer</a>':"") : "";
 
 const ctx = {
   site: C,
