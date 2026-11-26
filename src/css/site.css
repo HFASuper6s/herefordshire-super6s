@@ -219,7 +219,7 @@ h3.group:first-child{margin-top:0}
 .seg{display:inline-flex;gap:4px;margin:var(--s3) 0 var(--s3);background:rgba(255,255,255,.1);padding:4px;border-radius:12px}
 .seg button{font:700 1rem var(--body);color:#fff;background:transparent;border:0;padding:10px 22px;border-radius:9px;cursor:pointer}
 .seg button[aria-selected="true"]{background:#fff;color:var(--brand)}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:var(--s3) 0 var(--s1);scrollbar-width:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:var(--s3) 0 var(--s1)}
 .chips::-webkit-scrollbar{display:none}
 .chips button{font:600 .95rem var(--body);background:var(--card);color:var(--ink);border:1.5px solid var(--line-2);border-radius:999px;padding:9px 18px;cursor:pointer;white-space:nowrap}
 .chips button:hover{border-color:var(--brand)}
@@ -701,7 +701,7 @@ img.fit-contain{background:#1b2a1b}
 .tk-sw button{min-height:40px}
 .crumb a{display:inline-block;padding:10px 0}
 @media (min-width:561px) and (max-width:860px){.venue-top img{max-width:300px;height:220px}}
-.chips button{min-height:44px}
+.chips button{min-height:44px;padding:8px 14px}
 .follow{min-height:44px;padding:8px 16px}
 @media (max-width:860px){.gallery{max-width:600px;width:100%;justify-self:center}}
 .mosaic img{height:auto;aspect-ratio:1/1;object-position:50% 50%}
@@ -773,6 +773,7 @@ body:has(#nl-badge-frame){padding-bottom:64px}
 .sg-links{margin:0;padding-left:20px;display:grid;gap:6px}
 .sg-links a{display:inline-block;padding:4px 0;font-weight:600;color:var(--brand)}
 @media (prefers-color-scheme:dark){.sg-links a{color:#B9C6FF}}
+.sg-help .sg-tel{margin-left:8px;color:var(--ink-2);font-weight:600}.sg-help .sg-tel a{color:inherit;font-weight:700;padding:0}
 .sg-more{padding-bottom:var(--s4)}
 /* Phone menu bar: keep every label on one line now there can be five buttons */
 .tabbar a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -791,3 +792,4 @@ body:has(#nl-badge-frame){padding-bottom:64px}
 .h-splash span{display:block;max-width:85%;text-align:right;font:900 clamp(2.4rem,5.2vw,4.6rem)/.9 var(--display);font-stretch:68%;text-transform:uppercase;color:#fff;letter-spacing:-.01em;text-shadow:0 3px 18px rgba(0,0,0,.65),0 1px 3px rgba(0,0,0,.6);transform:rotate(-4deg)}
 .h-splash span::after{content:"";display:block;height:6px;width:60%;margin:10px 0 0 auto;background:var(--accent);border-radius:3px}
 @media (max-width:860px){.h-splash{bottom:auto;height:240px;width:100%;padding:0 6% 26px}.h-splash span{font-size:clamp(2rem,9vw,2.8rem)}.h-splash span::after{height:5px;margin-top:8px}}
+.nf{padding:var(--s5) 0 var(--s6)}.nf-links{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:var(--s3)}.nf .muted a{color:var(--brand);font-weight:600}

@@ -1,25 +1,24 @@
 {
-  "intro": "These rules apply to every team and player in the Herefordshire FA Super 6s leagues. By entering a team, the captain accepts these rules on the team's behalf. Every player accepts them when registered to a team. The captain is the league's main contact for the team.",
-  "disclaimer": "All participants take part at their own risk. The organisers, their staff and agents accept no liability for personal injury or for loss of or damage to property, however caused. These rules are binding on all teams and players.",
+  "intro": "These rules apply to every team and player in the Herefordshire FA Super 6s leagues. By entering a team, the captain accepts them on the team's behalf, and every player accepts them when registered to a team. Where these rules say \"email the league\", use Super6s@HerefordshireFA.com.",
+  "disclaimer": "All participants take part at their own risk. The organisers, their staff and agents accept no liability for personal injury or for loss of or damage to property, however caused.",
   "version": "Current version: November 2026.",
   "playing": [
     {
       "title": "Playing rules",
-      "intro": "Matches follow The FA's Laws of Small-Sided Football, with the league rules below.",
+      "intro": "Matches follow The FA's Laws of Small-Sided Football, with the league rules below. The full laws are at [The FA – Laws and Rules](https://www.thefa.com/football-rules-governance/lawsandrules).",
       "groups": [
         {
           "h": "Squad and match length",
           "items": [
-            "Six players a side, including the goalkeeper, plus up to three substitutes. Squad size is unlimited, but all players must be registered.",
+            "Six players a side, including the goalkeeper, plus up to three substitutes named at the start. Squad size is unlimited, but every player must be registered.",
             "Matches are two halves: 16 minutes each way on Mondays and 18 minutes each way on Thursdays. Half time is no more than 1 minute.",
-            "If a team falls two or more players short through injury or dismissal, the match is abandoned and awarded to the opposition."
+            "A team needs at least 4 players to start a match. If red cards leave a team with fewer than 4 players, the match is abandoned and the opposition is awarded a walkover. If injuries leave a team with fewer than 4 players, the match is abandoned and the league decides the result, taking into account the score and how much of the match had been played."
           ]
         },
         {
           "h": "Restarts",
           "items": [
-            "The referee decides ends and which team kicks off. After a goal, the conceding team kicks off.",
-            "If both teams' shirts are the same colour, the away team wears bibs.",
+            "The referee decides ends and which team kicks off. After a goal, the team that conceded kicks off.",
             "After any other stoppage, play restarts with a dropped ball where play stopped.",
             "When the ball crosses the sideline, the opposition takes a kick-in: side-foot, below knee height. A kick-in that is high or not side-footed goes to the other team. A goal cannot be scored direct from a kick-in.",
             "Corners are taken as normal. When the attacking team puts the ball over the goal line, it is a goal kick.",
@@ -30,27 +29,26 @@
           "h": "Fouls, penalties and goals",
           "items": [
             "There is no offside.",
-            "Penalties are taken from the penalty mark or the edge of the area in line with the centre of the goal. No player may enter the area until the penalty is taken.",
-            "A goal counts when the whole ball crosses the goal line between the posts and under the bar. A goal cannot be scored direct from a kick-in or an indirect free kick.",
+            "Sliding and charging tackles are not allowed and are penalised with a free kick. Repeated offences earn a yellow card.",
+            "Penalties are taken from the penalty mark, or the edge of the area in line with the centre of the goal. No player may enter the area until the penalty is taken.",
             "Any player may enter the goal area.",
-            "Sliding and charging tackles are not allowed and are penalised with a free kick. Repeated offences earn a yellow card."
+            "A goal counts when the whole ball crosses the goal line between the posts and under the bar. A goal cannot be scored direct from an indirect free kick."
           ]
         },
         {
           "h": "Goalkeepers",
           "items": [
-            "The goalkeeper may leave the area but is then treated as an outfield player.",
-            "A goalkeeper throw must be underarm, below knee height and level or downward.",
+            "The goalkeeper may leave the area, but is then treated as an outfield player.",
+            "Goalkeeper throws must be underarm, below knee height, and level or downward.",
             "Goal kicks are kicked from anywhere on the goal line, never thrown.",
             "After the goalkeeper passes to a teammate, another player must touch the ball before it returns to the goalkeeper's hands.",
-            "A breach of rule 1.17 or 1.18 gives the opposition a free kick 5 yards back from where it happened."
+            "Breaking the goal kick or back-pass rule gives the opposition a free kick 5 yards back from where it happened."
           ]
         },
         {
           "h": "Substitutes",
           "items": [
-            "Up to three substitutes, named at the start and drawn from registered players. Rolling substitutions are unlimited.",
-            "Tell the referee first. Players leave and enter from their own goal line during a break in play, and the new player enters only after the other has left.",
+            "Rolling substitutions are unlimited. Tell the referee first. Players leave and enter from their own goal line during a break in play, and the new player enters only after the other has left.",
             "Any player may swap with the goalkeeper during a stoppage, after telling the referee.",
             "An unsporting substitution to gain an advantage may lead to a penalty and a caution or sending-off."
           ]
@@ -58,9 +56,10 @@
         {
           "h": "Kit",
           "items": [
+            "Teams must wear matching coloured tops. If both teams' tops are the same colour, the away team wears bibs.",
             "Shin pads are compulsory.",
-            "Boots must have moulded or permitted football studs. Bladed (chevron) studs and flat-soled trainers are not allowed on the 3G pitch.",
-            "Teams must wear matching coloured tops.",
+            "Boots must have moulded or permitted football studs. Bladed (chevron) studs and flat-soled trainers are not allowed on the 4G pitch. See the [footwear guidance](/venue.html).",
+            "No jewellery may be worn, including watches and fitness trackers. Taping over jewellery is not allowed.",
             "Players without the correct kit may be stopped from playing."
           ]
         }
@@ -71,140 +70,126 @@
       "groups": [
         {
           "items": [
-            "Referees issue yellow and red cards under standard FA rules.",
-            "Yellow card: 5 minutes in the sin bin behind the player's own goal. The referee times it and tells the player when to return. Two yellows in a match means a red.",
-            "Red card: the player takes no further part in the match and is suspended for at least one league match.",
+            "Referees issue yellow and red cards under FA rules.",
+            "Yellow card: 5 minutes in the sin bin behind the player's own goal. The referee times it and tells the player when to return. Two yellow cards in a match make a red.",
+            "Red card: the player takes no further part in the match and is suspended as shown below.",
             "League suspensions apply to Super 6s only. Herefordshire FA suspensions apply to all football, including Super 6s, and may run alongside league suspensions. Fines may also be imposed under FA rules.",
-            "Where a team's or player's conduct brings the league into disrepute, such as violent conduct, the league may report them to Herefordshire FA and bar them from Super 6s competitions.",
-            "Full Laws of the Game: The FA – Laws and Rules."
+            "Where a team's or player's conduct brings the league into disrepute, such as violent conduct, the league may report them to Herefordshire FA and bar them from Super 6s competitions."
           ]
         }
       ],
       "table": {
-        "head": [
-          "Offence",
-          "Dealt with by",
-          "Suspension"
-        ],
+        "head": ["Offence", "Dealt with by", "Suspension"],
         "rows": [
-          [
-            "Second yellow card",
-            "Super 6s league",
-            "1 match"
-          ],
-          [
-            "Denying an obvious goal-scoring opportunity (foul or handball)",
-            "Super 6s league",
-            "1 match"
-          ],
-          [
-            "Offensive, insulting or abusive language or gestures (not at a match official)",
-            "Super 6s league",
-            "3 matches"
-          ],
-          [
-            "All other red card offences",
-            "Super 6s league and Herefordshire FA",
-            "As decided"
-          ]
+          ["Second yellow card", "Super 6s league", "1 match"],
+          ["Denying an obvious goal-scoring opportunity (foul or handball)", "Super 6s league", "1 match"],
+          ["Offensive, insulting or abusive language or gestures (not at a match official)", "Super 6s league", "3 matches"],
+          ["All other red card offences", "Super 6s league and Herefordshire FA", "As decided"]
         ]
       }
     }
   ],
   "terms": [
     {
-      "title": "Teams and players",
+      "title": "The league",
       "groups": [
         {
           "items": [
-            "New teams register using the online Team Registration Form. The captain must be 18 or over, give their full name, home address, date of birth, email and mobile number, and sign it to confirm the team will follow these rules and meet its financial obligations.",
-            "The captain must make sure every player's registration details are accurate and complete.",
-            "Every player must be 16 or over and registered to the team before they play, giving their full name, home address and date of birth. New players can join at any time in the season by emailing their details to Super6s@HerefordshireFA.com or giving them to the Event Manager.",
-            "Each team must have at least 6 registered players, including its captain, before its first fixture.",
-            "A player may play for up to two teams on the same league night, provided the teams are in different divisions.",
-            "To move to another team, a player must leave their current team and register with the new one.",
-            "A team short of players may borrow a player registered to another team in the league, with the agreement of the Event Manager and the opposing team. If a team fields an unregistered or suspended player, or a borrowed player without that agreement, the match is awarded to the opposition."
+            "Each league plays on one set night each week and has one or more divisions. There are no games on bank holidays.",
+            "Each season runs for 10 weeks, and teams play each other once or twice. A new season starts the week after the last one ends, unless a break is announced in advance.",
+            "Points: win 3, draw 1, defeat 0. Teams level on points are separated by goal difference, then goals scored. A walkover counts as a 5–0 win.",
+            "At the end of each season, the top two teams in each division are promoted and the bottom two relegated. The numbers may vary so a new team can be placed in the right division.",
+            "Each division winner receives a trophy to keep. Trophies may be withheld from a team that owes money.",
+            "Fixtures are set by the league and published on this website at least 48 hours before the first match of the season. Results and tables are published after each league night. Fixtures are only rearranged if the league decides it is necessary.",
+            "If a league night is called off, for example because of bad weather or the venue closing, no match fee is charged: that week's invoices are cancelled and the fixtures are added to the end of the season.",
+            "The league may change the match night, times, venue, format or divisions where this benefits the league."
           ]
         }
       ]
     },
     {
-      "title": "Fees and payment",
+      "title": "Your team and players",
+      "groups": [
+        {
+          "items": [
+            "To enter a team, the captain completes the online Team Registration Form. The captain must be 18 or over, give their full name, home address, date of birth, email and mobile number, and confirm that the team will follow these rules and pay what it owes.",
+            "The captain is the league's main contact for the team. Invoices, fines and other notices are emailed to the captain's registered email address and count as received on the day they are sent. Tell the league straight away if your contact details change.",
+            "Every player must be 16 or over and registered to your team before they play, with their full name, home address and date of birth. You can add players at any time in the season by emailing the league or giving their details to the Event Manager. The captain must make sure all players' details are accurate and complete.",
+            "Your team must have at least 6 registered players, including the captain, before its first fixture.",
+            "A player may play for up to two teams on the same night, as long as the teams are in different divisions. To move to another team, a player must leave their current team and register with the new one.",
+            "If you are short of players, you may borrow a player registered to another team in the league, with the agreement of the Event Manager and your opponents. If a team fields an unregistered or suspended player, or a borrowed player without that agreement, the opposition is awarded a walkover."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Paying",
       "groups": [
         {
           "items": [
             "Match fees are set by the league and may change from time to time.",
             "Match fees are invoiced weekly. Each invoice is emailed to the captain the day before the league night.",
-            "Each invoice must be paid in full, on or before the day of the fixture, online using the secure “Review & Pay” button on the invoice. Please don't pay by bank transfer, as these payments have to be matched to invoices by hand. Cash is not accepted, and the Event Manager cannot take payment on the night.",
-            "No pay, no play: if a team's match fee has not been paid in full, the match may be awarded to the opposition as a 5–0 walkover.",
-            "Non-payment is a breach of the league rules, and the league may remove the team from the competition.",
-            "The captain is responsible for paying all money the team owes. A team that leaves or is removed must pay everything it owes, including any fine, within 14 days. If it is not paid, the amount is split equally among the players registered to the team when it left, and each player must pay their share within 21 days. Any share still unpaid is pursued by a written, dated Formal Request and then a claim to Herefordshire FA under The FA's Football Debt Recovery Regulations, with Herefordshire FA's £25 claim fee added. This can lead to suspension from all football until it is paid.",
-            "Fines tariff: leaving without notice, or leaving or being removed with money owed: £60 (two match fees), recovered with any money owed under rule 2.6.",
-            "Invoices, fines and Formal Requests are emailed to the captain's registered email address and count as received on the day they are sent. The captain must tell the league straight away of any change to their contact details.",
-            "Trophies may be withheld from any team with money owing."
+            "Pay each invoice in full before kick-off, online using the secure \"Review & Pay\" button on the invoice, so you can show proof of payment to the Event Manager if asked. Please don't pay by bank transfer, as these payments have to be matched to invoices by hand. Cash is not accepted, and the Event Manager cannot take payment on the night.",
+            "No pay, no play: if your match fee has not been paid in full before kick-off, the opposition may be awarded a walkover. The fee is still owed, and a team that does not pay may be removed from the league.",
+            "The match fee is payable for every fixture, whether or not your team plays. The only exceptions are a notified absence (rule 4.1) and a league night that is called off (rule 1.7)."
           ]
         }
       ]
     },
     {
-      "title": "League format and fixtures",
+      "title": "Match nights",
       "groups": [
         {
           "items": [
-            "Each league has one or more divisions and plays on one set night each week. Each season runs for 10 weeks, and teams play each other once or twice per season.",
-            "Points: win 3, draw 1, loss 0. Teams level on points are separated by goal difference, then goals scored.",
-            "At the end of each season the top two teams in each division are promoted and the bottom two relegated. The numbers may vary to place a new team in the right division.",
-            "Each division winner receives a trophy to keep.",
-            "Fixtures are set by the league and published at least 48 hours before the first match of the season. Fixtures will not be rearranged unless the league decides it is needed.",
-            "A new season starts the week after the last one ends, with no break unless announced in advance.",
-            "Fixtures, results and tables are published on this website.",
-            "The league may change the match night, times, venue, format or division structure where this benefits the league."
+            "Your team may give notice of one absence per season. The captain must email the league before 12 noon on match day. A £10 credit note is then applied to your team account, reducing that week's match fee by £10.",
+            "If your team is absent without notice, the opposition is awarded a walkover and the full match fee is payable. A second absence in the same season counts as an absence without notice. A team absent without notice may be removed from the league.",
+            "To be awarded a walkover when your opponents are absent, your team must be present, ready to play and have paid its match fee.",
+            "If your team is more than 5 minutes late, or has fewer than 4 players at kick-off, the opposition is awarded a walkover.",
+            "If a match is abandoned because of a team's conduct, the opposition is awarded a walkover and up to 3 points may be deducted from the team at fault. If a match is abandoned for any other reason, each team receives 1 point, unless the league decides the score at the time should stand.",
+            "Matches are refereed by FA-qualified referees wherever possible. If a qualified referee cannot be appointed, another person may officiate.",
+            "Captains are responsible for the behaviour of their players and supporters. Everyone must treat referees, the Event Manager, opponents and venue staff with respect, and follow the venue's [site rules](/venue.html)."
           ]
         }
       ]
     },
     {
-      "title": "Absences, walkovers and abandoned games",
+      "title": "Leaving the league",
       "groups": [
         {
           "items": [
-            "Each team may give notice of one absence per season. To do so, the captain must email Super6s@HerefordshireFA.com before 12 noon on match day and pay the match fee less a £10 discount. Without this notice, the opposition is awarded a 5–0 walkover. A second absence in the same season counts as an absence without notice, and the full match fee is still payable.",
-            "A team absent without notice may be removed from the league. Any fees owed remain payable.",
-            "To claim the points when the opposition is absent, a team must be present, ready to play and have paid its match fee.",
-            "A team more than 5 minutes late, or without enough players, forfeits the match. The match fee is still payable.",
-            "If a match is abandoned because of a team's conduct, the match is awarded to the opposition and up to 3 points may be deducted from the team at fault.",
-            "If a match is abandoned for any other reason, each team receives 1 point, unless the league decides the score at the time should stand."
+            "Teams commit to the full 10-week season.",
+            "To leave during the season, the captain must email the league at least two weeks before leaving. During those two weeks your team must either play its remaining fixtures or pay for them in full, and must have nothing else owed. Notice given verbally at an event during the season is not accepted.",
+            "Teams are entered automatically into the next season. On the last night of each season, the Event Manager checks with every captain that their team is continuing. If your team does not want to continue, tell the Event Manager or email the league no later than the last night of the season, and pay any outstanding match fees. Otherwise your team is entered and invoiced for the new season.",
+            "A team that leaves without following rule 5.2 or 5.3, or leaves or is removed with money owed, is fined £60 (two match fees). The fine and any money owed are recovered under section 6.",
+            "Teams that leave correctly are refunded any credit by bank transfer to the registered captain."
           ]
         }
       ]
     },
     {
-      "title": "Governance and appeals",
+      "title": "Unpaid money",
       "groups": [
         {
           "items": [
-            "The competition is the Herefordshire FA Super 6s League, organised by Herefordshire FA Super 6s, c/o Herefordshire County FA, Widemarsh Common, Hereford, HR4 9NA.",
-            "The league year runs from 1 April to 31 March, excluding bank holidays.",
-            "The league is sanctioned by and run under the rules of The FA and Herefordshire County FA. All teams and players are affiliated to Herefordshire County FA through the FA Whole Game system.",
-            "Captains' and players' registration details are shared with Herefordshire County FA for affiliation, disciplinary and debt recovery purposes only.",
-            "Where a qualified referee cannot be appointed, another person may officiate.",
-            "The league may amend these rules with seven days' notice to captains by email or letter.",
-            "Appeals against league decisions must be made in writing to Super6s@HerefordshireFA.com and are reviewed with Herefordshire County FA."
+            "The captain is responsible for paying all money the team owes.",
+            "A team that leaves or is removed must pay everything it owes, including any fine, within 14 days.",
+            "If it is not paid, the amount is split equally among the players registered to the team when it left, and each player must pay their share within 21 days.",
+            "Any share still unpaid is pursued by a written, dated Formal Request, and then by a claim to Herefordshire FA under The FA's Football Debt Recovery Regulations, with Herefordshire FA's £25 claim fee added. This can lead to suspension from all football until it is paid.",
+            "Until all of a team's debts are cleared, its players stay registered to it and cannot register for another Super 6s team."
           ]
         }
       ]
     },
     {
-      "title": "Joining, leaving and insurance",
+      "title": "General",
       "groups": [
         {
           "items": [
-            "Teams commit to a full 10-week season and are entered automatically into the next season unless the captain gives notice.",
-            "A team may leave at any time by giving at least two weeks' notice. The captain must email Super6s@HerefordshireFA.com. During the two weeks the team must either play its remaining fixtures or pay for them in full, and must have nothing else owed. Notice given verbally at an event is not accepted.",
-            "A team that leaves without following rule 6.2 is removed from the league and fined under rule 2.7. Any money owed is recovered under rule 2.6.",
-            "Teams that leave correctly are refunded any credit by bank transfer to the registered captain.",
-            "Players stay registered to their team, and cannot register for another Super 6s team, until all the team's debts are cleared.",
-            "Insurance: the league does not provide personal injury or player-to-player insurance. Teams and players are advised to arrange their own; Herefordshire County FA (01432 342179) can advise on providers."
+            "The competition is the Herefordshire FA Super 6s League, organised by Herefordshire FA Super 6s, c/o Herefordshire County FA, Widemarsh Common, Hereford, HR4 9NA. It is sanctioned by and run under the rules of The FA and Herefordshire County FA, and all teams and players are affiliated to Herefordshire County FA through the FA Whole Game system.",
+            "Captains' and players' registration details are shared with Herefordshire County FA for affiliation, disciplinary and debt recovery purposes only. See Herefordshire FA's [privacy policy](https://www.herefordshirefa.com/public/privacy-policy).",
+            "Insurance: the league does not provide personal injury or player-to-player insurance. Teams and players are advised to arrange their own; Herefordshire County FA (01432 342179) can advise on providers.",
+            "The league may change these rules with seven days' notice to captains by email.",
+            "Appeals against league decisions must be made in writing to the league by email, and are reviewed with Herefordshire County FA."
           ]
         }
       ]

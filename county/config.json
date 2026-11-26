@@ -14,7 +14,7 @@
   },
   "headline": "Your midweek football fix",
   "heroSplash": "Under the lights",
-  "intro": "Competitive 6-a-side football with a great atmosphere, every Monday and Thursday night at The Hereford Academy 3G. Open to players aged 16 and over, with FA-qualified referees and two up, two down promotion and relegation every season.",
+  "intro": "Competitive 6-a-side football with a great atmosphere, every Monday and Thursday night at The Hereford Academy 4G. Open to players aged 16 and over, with FA-qualified referees and two up, two down promotion and relegation every season.",
   "contactEmail": "Super6s@HerefordshireFA.com",
   "registrationForm": "https://app.smartsheet.com/b/form/c2f97733b14a4c63acacd08e1eee5bc7",
   "colors": {
@@ -262,7 +262,7 @@
       "note": "New time, same place",
       "summary": "Turn up and play. No team needed.",
       "when": "Sundays, 7pm – 8pm",
-      "where": "The Herefordshire FA (3G pitch)",
+      "where": "The Herefordshire FA (4G pitch)",
       "price": "£4"
     },
     {
@@ -371,7 +371,7 @@
       "imagePos": "50% 50%",
       "date": "2026-11-24",
       "title": "Drop In & Play: new time, same place",
-      "body": "Sunday drop-in football at The Herefordshire FA 3G pitch now runs from 7pm to 8pm. £4, no team needed.",
+      "body": "Sunday drop-in football at The Herefordshire FA 4G pitch now runs from 7pm to 8pm. £4, no team needed.",
       "link": "/get-involved.html",
       "linkLabel": "Get involved"
     },
@@ -392,14 +392,47 @@
     "intro": "Players aged 16 and 17 can play in our leagues. Everyone involved shares the job of keeping them safe, under The FA's Safeguarding Policy and Procedures.",
     "players": {
       "h": "If you're 16 or 17",
+      "intro": "You have the same right as everyone else to enjoy football safely. In football, as everywhere, you have the right:",
+      "rights": [
+        "to feel safe, on and offline",
+        "to healthy relationships, where people respect proper boundaries",
+        "not to be bullied, harassed or intimidated",
+        "not to be made to feel uncomfortable or unsafe",
+        "not to be discriminated against because of your age, sex, gender reassignment, ethnicity, sexual orientation, marital status or civil partnership, faith, ability or disability, or pregnancy and maternity"
+      ],
+      "actionsH": "If something worries you",
       "points": [
-        "You have the right to enjoy football in a safe, friendly environment.",
-        "If anything worries you, on or off the pitch, talk to someone you trust or contact the Designated Safeguarding Officer below.",
-        "Find out more about your rights in football from The FA."
+        "Tell an adult you trust: at home, at school or college, or at football.",
+        "Contact Herefordshire FA's Designated Safeguarding Officer (details above), or email The FA at safeguarding@TheFA.com.",
+        "If someone is in immediate danger, call 999.",
+        "Keep your social media accounts private, and report anyone who makes you feel uncomfortable online to CEOP."
+      ],
+      "helpH": "Free, confidential help",
+      "help": [
+        {
+          "name": "NSPCC",
+          "phone": "0808 800 5000",
+          "url": "https://www.nspcc.org.uk/keeping-children-safe/reporting-abuse/"
+        },
+        {
+          "name": "Childline",
+          "phone": "0800 1111",
+          "url": "https://www.childline.org.uk"
+        },
+        {
+          "name": "CEOP (report online abuse)",
+          "url": "https://www.ceop.police.uk/ceop-reporting/"
+        },
+        {
+          "name": "YoungMinds",
+          "url": "https://www.youngminds.org.uk"
+        }
       ],
       "links": [
-        { "label": "Understanding your rights in football (The FA)", "url": "https://www.thefa.com/-/media/cfa/gloucestershirefa/files/about/safeguarding/7-1---understanding-your-rights-in-football.ashx?la=en" },
-        { "label": "The FA's guidance for under-18s", "url": "https://www.thefa.com/football-rules-governance/safeguarding/section-7-children-and-young-people-under-18s" }
+        {
+          "label": "The FA's guidance for under-18s",
+          "url": "https://www.thefa.com/football-rules-governance/safeguarding/section-7-children-and-young-people-under-18s"
+        }
       ]
     },
     "teams": {
@@ -414,9 +447,18 @@
         "Ask your team officials to complete The FA's free Safeguarding For All online course."
       ],
       "links": [
-        { "label": "DBS checks and safer recruitment (The FA)", "url": "https://www.thefa.com/football-rules-governance/safeguarding/section-3-safer-recruitment-and-dbs-checks" },
-        { "label": "Safeguarding courses, including the free Safeguarding For All (Herefordshire FA)", "url": "https://www.herefordshirefa.com/safeguarding-and-inclusion/safeguarding-courses" },
-        { "label": "The FA's Safeguarding Policy and Procedures", "url": "https://www.thefa.com/football-rules-governance/safeguarding/section-1-footballs-safeguarding-framework" }
+        {
+          "label": "DBS checks and safer recruitment (The FA)",
+          "url": "https://www.thefa.com/football-rules-governance/safeguarding/section-3-safer-recruitment-and-dbs-checks"
+        },
+        {
+          "label": "Safeguarding courses, including the free Safeguarding For All (Herefordshire FA)",
+          "url": "https://www.herefordshirefa.com/safeguarding-and-inclusion/safeguarding-courses"
+        },
+        {
+          "label": "The FA's Safeguarding Policy and Procedures",
+          "url": "https://www.thefa.com/football-rules-governance/safeguarding/section-1-footballs-safeguarding-framework"
+        }
       ]
     },
     "contact": {
@@ -427,9 +469,18 @@
       "emergency": "If a young person is in immediate danger, call 999."
     },
     "more": [
-      { "label": "Herefordshire FA: safeguarding U18s in open-age football", "url": "https://www.herefordshirefa.com/safeguarding-and-inclusion/safeguarding-u18-in-open-age-football" },
-      { "label": "The FA's safeguarding hub", "url": "https://www.thefa.com/football-rules-governance/safeguarding" },
-      { "label": "The FA's complete safeguarding downloads", "url": "https://www.thefa.com/football-rules-governance/safeguarding/section-11-the-complete-downloads-directory" }
+      {
+        "label": "Herefordshire FA: safeguarding U18s in open-age football",
+        "url": "https://www.herefordshirefa.com/safeguarding-and-inclusion/safeguarding-u18-in-open-age-football"
+      },
+      {
+        "label": "The FA's safeguarding hub",
+        "url": "https://www.thefa.com/football-rules-governance/safeguarding"
+      },
+      {
+        "label": "The FA's complete safeguarding downloads",
+        "url": "https://www.thefa.com/football-rules-governance/safeguarding/section-11-the-complete-downloads-directory"
+      }
     ]
   },
   "wellbeing": {
@@ -516,7 +567,7 @@
     },
     {
       "k": "Venue",
-      "v": "Hereford Academy 3G",
+      "v": "Hereford Academy 4G",
       "s": "Marlbrook Road, HR2 7NG · Directions & footwear",
       "href": "/venue.html"
     }
@@ -544,7 +595,8 @@
   ],
   "venue": {
     "name": "The Hereford Church of England Academy",
-    "short": "Hereford Academy 3G",
+    "short": "Hereford Academy 4G",
+    "pitch": "4G pitch",
     "address": [
       "Marlbrook Road",
       "Hereford",
@@ -552,6 +604,10 @@
     ],
     "map": "https://www.google.com/maps?ll=52.037472,-2.727611&z=14&t=m&hl=en&gl=GB&mapclient=embed&cid=13556200943706621325",
     "rules": [
+      {
+        "h": "Parking",
+        "t": "Park in the school's main car park, next to the 4G pitch."
+      },
       {
         "h": "Speed limit",
         "t": "The speed limit on The Academy site is 10mph."
@@ -567,7 +623,7 @@
     ],
     "photo": "venue-pitch.jpg",
     "footwear": {
-      "intro": "Guidance from The Hereford Academy for everyone playing on the 3G pitch. Captains: please pass this on to your players before your first fixture.",
+      "intro": "Guidance from The Hereford Academy for everyone playing on the 4G pitch. Captains: please pass this on to your players before your first fixture.",
       "ok": [
         {
           "h": "Moulded studs",

@@ -1,4 +1,4 @@
-<!--page {"title":"Venue and footwear | {{site.siteName}}","desc":"Getting to The Hereford Academy 3G, site rules and footwear guidance.","id":"venue"}-->
+<!--page {"title":"Venue and footwear | {{site.siteName}}","desc":"Getting to {{site.venue.short}}: parking, site rules and footwear guidance.","id":"venue"}-->
 <!doctype html>
 <html lang="en-GB">
 <head>
@@ -21,8 +21,8 @@
 <script>
 (function(){
   const {S,esc}=S6, V=S.venue||{}, F=V.footwear||{}, $=id=>document.getElementById(id);
-  $("vtop").innerHTML=`${V.photo?`<img src="/img/${esc(V.photo)}" alt="The 3G pitch at ${esc(V.name||"")}">`:""}<div><h2>${esc(V.name||"")}</h2><address class="venue">${(V.address||[]).map(esc).join("<br>")}</address>
-    <p class="muted small">Monday and Thursday evenings on the floodlit 3G pitch.</p><a class="btn btn-accent" href="${esc(V.map||"#")}" target="_blank" rel="noopener">Directions</a></div>`;
+  $("vtop").innerHTML=`${V.photo?`<img src="/img/${esc(V.photo)}" alt="The ${esc(V.pitch||"pitch")} at ${esc(V.name||"")}">`:""}<div><h2>${esc(V.name||"")}</h2><address class="venue">${(V.address||[]).map(esc).join("<br>")}</address>
+    <p class="muted small">Monday and Thursday evenings on the floodlit ${esc(V.pitch||"pitch")}.</p><a class="btn btn-accent" href="${esc(V.map||"#")}" target="_blank" rel="noopener">Directions</a></div>`;
   $("vrules").innerHTML=(V.rules||[]).map(r=>`<li><b>${esc(r.h)}</b> ${esc(r.t)}</li>`).join("");
   $("fw-intro").textContent=F.intro||"";
   // Simple sole drawings (our own artwork) for each footwear type

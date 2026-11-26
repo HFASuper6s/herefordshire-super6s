@@ -34,7 +34,13 @@
     ${C.phone?`<p>Or call <a href="tel:${esc(C.phone.replace(/\(.*\)/,"").replace(/\s/g,""))}">${esc(C.phone)}</a></p>`:""}
     ${C.emergency?`<p class="sg-urgent">${esc(C.emergency).replace("call 999",'<a href="tel:999">call 999</a>')}</p>`:""}`;
   const P=G.players||{};
-  $("sg-players").innerHTML=`<h2>${esc(P.h||"")}</h2><ul class="sg-points">${(P.points||[]).map(t=>`<li>${esc(t)}</li>`).join("")}</ul>${links(P.links,"Read more")}`;
+  // Players' card: your rights, what to do if something worries you, and free helplines
+  const tel=p=>`<a href="tel:${esc(p.replace(/\s/g,""))}">${esc(p)}</a>`;
+  const help=(P.help||[]).map(h=>`<li><a href="${esc(h.url)}" target="_blank" rel="noopener">${esc(h.name)}</a>${h.phone?`<span class="sg-tel">${tel(h.phone)}</span>`:""}</li>`).join("");
+  $("sg-players").innerHTML=`<h2>${esc(P.h||"")}</h2>${P.intro?`<p>${esc(P.intro)}</p>`:""}
+    ${(P.rights||[]).length?`<ul class="sg-points">${P.rights.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>`:""}
+    ${P.actionsH?`<h3>${esc(P.actionsH)}</h3>`:""}<ul class="sg-points">${(P.points||[]).map(t=>`<li>${esc(t).replace("call 999",'<a href="tel:999">call 999</a>')}</li>`).join("")}</ul>
+    ${help?`<h3>${esc(P.helpH||"Helplines")}</h3><ul class="sg-links sg-help">${help}</ul>`:""}${links(P.links,"Read more")}`;
   const T=G.teams||{};
   $("sg-teams").innerHTML=`<h2>${esc(T.h||"")}</h2>${T.intro?`<p>${esc(T.intro)}</p>`:""}<ol class="sg-steps">${(T.steps||[]).map(t=>`<li><span>${esc(t)}</span></li>`).join("")}</ol>${links(T.links,"Useful links")}`;
   $("sg-more").innerHTML=G.more&&G.more.length?`<h2 class="sec sm">More from The FA and ${esc(S.countyFA)}</h2>${links(G.more)}`:"";

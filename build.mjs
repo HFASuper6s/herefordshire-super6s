@@ -28,8 +28,9 @@ const sponsorBlock = P ? `<a class="sponsor" href="${esc(P.url||"#")}" target="_
 const R = fs.existsSync(path.join(countyDir,"rules.json")) ? JSON.parse(fs.readFileSync(path.join(countyDir,"rules.json"),"utf8")) : null;
 function rulesHTML(part){
   if(!R) return "";
-  const fmt = t => esc(t).replace(/^(Fines tariff|Yellow card|Red card|Insurance):/,"<b>$1:</b>")
-    .replace("The FA – Laws and Rules",'<a href="https://www.thefa.com/football-rules-governance/lawsandrules" target="_blank" rel="noopener">The FA – Laws and Rules</a>');
+  // Rule text: a leading label is bold, and [words](link) becomes a link (outside sites open in a new tab)
+  const fmt = t => esc(t).replace(/^(Fines tariff|Yellow card|Red card|Insurance|Points|No pay, no play):/,"<b>$1:</b>")
+    .replace(/\[([^\]]+)\]\(((?:https?:\/\/|\/)[^)\s]+)\)/g,(m,label,url)=>`<a href="${url}"${/^https?:/.test(url)?' target="_blank" rel="noopener"':""}>${label}</a>`);
   const pre=part==="playing"?"p":"t";
   return R[part].map((sec,si)=>{ const n=si+1; let k=0;
     const groups=sec.groups.map(g=>{ const items=g.items.map(t=>{ k++; return `<li value="${k}"><span class="rn">${n}.${k}</span><span class="rt">${fmt(t)}</span></li>`}).join("");
@@ -37,7 +38,7 @@ function rulesHTML(part){
     let body=groups;
     if(sec.table){ const t=sec.table, tbl=`<div class="rtable"><table><thead><tr>${t.head.map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map((c,i)=>`<td data-label="${esc(t.head[i])}">${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
       body=body.replace(/(<li value="3">[\s\S]*?<\/li>)/,`$1</ol>${tbl}<ol class="rl" start="4">`); }
-    return `<section class="rsec" id="${pre}${n}"><h2><span>${n}</span><span class="rh">${esc(sec.title)}</span></h2>${sec.intro?`<p class="rintro">${esc(sec.intro)}</p>`:""}${body}</section>`; }).join("")
+    return `<section class="rsec" id="${pre}${n}"><h2><span>${n}</span><span class="rh">${esc(sec.title)}</span></h2>${sec.intro?`<p class="rintro">${fmt(sec.intro)}</p>`:""}${body}</section>`; }).join("")
     + (part==="terms"&&R.disclaimer?`<section class="rsec" id="rdisc"><h2>Disclaimer</h2><p>${esc(R.disclaimer)}</p><p class="rver">${esc(R.version)}</p></section>`:"");
 }
 const rulesToc = part => R ? R[part].map((sec,i)=>`<a href="#${part==="playing"?"p":"t"}${i+1}">${i+1}. ${esc(sec.title)}</a>`).join("")+(part==="terms"?'<a href="#rdisc">Disclaimer</a>':"") : "";
@@ -110,7 +111,7 @@ for (const p of pages) {
   page.title = render(page.title || C.siteName, page); page.desc = render(page.desc || C.intro, page);
   const rel = path.relative(SRC, p).split(path.sep).join("/");
   page.url = (C.siteUrl||"").replace(/\/$/,"") + "/" + (rel==="index.html" ? "" : rel);
-  page.noindex = /^admin\//.test(rel) || /redirect/.test(page.id||"");
+  page.noindex = /^admin\//.test(rel) || /redirect|notfound/.test(page.id||"");
   if (!page.noindex && rel!=="team.html") (globalThis.__sitemap ||= []).push(page.url);
   const out = path.join(OUT, path.relative(SRC, p)); fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, render(t, page));
