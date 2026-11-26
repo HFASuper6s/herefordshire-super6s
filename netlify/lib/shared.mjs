@@ -6,6 +6,8 @@ export function adminError(user) {
   if (!(user.app_metadata?.roles || []).includes("admin")) return json(403, { error: "This login has not been given event manager access." });
   return null;
 }
+// Public responses never include who saved something (event managers' email addresses stay private)
+export const withoutBy = o => { if (!o || typeof o !== "object") return o; const { by, ...rest } = o; return rest; };
 // Strong consistency where the platform offers it, so a save shows straight away
 export function openStore(name) {
   const plain = getStore(name);

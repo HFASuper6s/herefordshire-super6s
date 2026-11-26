@@ -2,7 +2,7 @@
 // GET ?l=thursday -> { fixtures:[...], updated }   (public)
 // POST { league, fixtures:[...] }                  (event manager only)
 import { connectLambda } from "@netlify/blobs";
-import { json, adminError, openStore, isLeague } from "../lib/shared.mjs";
+import { json, adminError, openStore, isLeague, withoutBy } from "../lib/shared.mjs";
 
 const str = (v, n) => String(v ?? "").replace(/\s+/g, " ").trim().slice(0, n);
 const score = v => (Number.isInteger(v) && v >= 0 && v < 100 ? v : null);
@@ -19,7 +19,7 @@ export async function handle({ method, query, body, user, store }) {
   if (method === "GET") {
     const l = query?.l; if (!isLeague(l)) return json(400, { error: "Unknown league." });
     const data = await store.get("league/" + l, { type: "json" });
-    return json(200, data || { fixtures: [] }, { "cache-control": "public, max-age=60" });
+    return json(200, withoutBy(data) || { fixtures: [] }, { "cache-control": "public, max-age=60" });
   }
   const err = adminError(user); if (err) return err;
   if (method === "POST") {

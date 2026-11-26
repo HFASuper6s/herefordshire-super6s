@@ -3,7 +3,7 @@
 // POST { id?, title, date, body, link, linkLabel, image? (data:image/jpeg;base64) } -> saves one post (event manager only)
 // DELETE ?id=... -> removes a post and its picture (event manager only)
 import { connectLambda } from "@netlify/blobs";
-import { json, adminError, openStore, cleanSlug } from "../lib/shared.mjs";
+import { json, adminError, openStore, cleanSlug, withoutBy } from "../lib/shared.mjs";
 const str = (v, n) => String(v ?? "").trim().slice(0, n);
 export async function handle({ method, query, body, user, store }) {
   if (method === "GET") {
@@ -13,7 +13,7 @@ export async function handle({ method, query, body, user, store }) {
       return { statusCode: 200, isBase64Encoded: true, headers: { "content-type": "image/jpeg", "cache-control": "public, max-age=300" }, body: Buffer.from(data).toString("base64") };
     }
     const { blobs } = await store.list({ prefix: "post/" });
-    const posts = (await Promise.all(blobs.map(b => store.get(b.key, { type: "json" })))).filter(Boolean).sort((a, b) => b.date.localeCompare(a.date));
+    const posts = (await Promise.all(blobs.map(b => store.get(b.key, { type: "json" })))).filter(Boolean).map(withoutBy).sort((a, b) => b.date.localeCompare(a.date));
     return json(200, { posts }, { "cache-control": "public, max-age=60" });
   }
   const err = adminError(user); if (err) return err;
