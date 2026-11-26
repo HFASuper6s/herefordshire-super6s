@@ -30,7 +30,7 @@ function rulesHTML(part){
   if(!R) return "";
   // Rule text: a leading label is bold, and [words](link) becomes a link (outside sites open in a new tab)
   const fmt = t => esc(t).replace(/^(Fines tariff|Yellow card|Red card|Insurance|Points|No pay, no play):/,"<b>$1:</b>")
-    .replace(/\[([^\]]+)\]\(((?:https?:\/\/|\/)[^)\s]+)\)/g,(m,label,url)=>`<a href="${url}"${/^https?:/.test(url)?' target="_blank" rel="noopener"':""}>${label}</a>`);
+    .replace(/\[([^\]]+)\]\(((?:https?:\/\/|\/|mailto:)[^)\s]+)\)/g,(m,label,url)=>`<a href="${url}"${/^https?:/.test(url)?' target="_blank" rel="noopener"':""}>${label}</a>`);
   const pre=part==="playing"?"p":"t";
   return R[part].map((sec,si)=>{ const n=si+1; let k=0;
     const groups=sec.groups.map(g=>{ const items=g.items.map(t=>{ k++; return `<li value="${k}"><span class="rn">${n}.${k}</span><span class="rt">${fmt(t)}</span></li>`}).join("");

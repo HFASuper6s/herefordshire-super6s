@@ -1,5 +1,5 @@
 {
-  "intro": "These rules apply to every team and player in the Herefordshire FA Super 6s leagues. By entering a team, the captain accepts them on the team's behalf, and every player accepts them when registered to a team. Where these rules say \"email the league\", use Super6s@HerefordshireFA.com.",
+  "intro": "These rules apply to every team and player in the Herefordshire FA Super 6s leagues. By entering a team, the captain accepts them on the team's behalf, and every player accepts them when registered to a team.",
   "disclaimer": "All participants take part at their own risk. The organisers, their staff and agents accept no liability for personal injury or for loss of or damage to property, however caused.",
   "version": "Current version: November 2026.",
   "playing": [
@@ -114,7 +114,7 @@
           "items": [
             "To enter a team, the captain completes the online Team Registration Form. The captain must be 18 or over, give their full name, home address, date of birth, email and mobile number, and confirm that the team will follow these rules and pay what it owes.",
             "The captain is the league's main contact for the team. Invoices, fines and other notices are emailed to the captain's registered email address and count as received on the day they are sent. Tell the league straight away if your contact details change.",
-            "Every player must be 16 or over and registered to your team before they play, with their full name, home address and date of birth. You can add players at any time in the season by emailing the league or giving their details to the Event Manager. The captain must make sure all players' details are accurate and complete.",
+            "Every player must be 16 or over and registered to your team before they play, with their full name, home address and date of birth. You can add players at any time in the season by emailing [Super6s@HerefordshireFA.com](mailto:Super6s@HerefordshireFA.com) or giving their details to the Event Manager. The captain must make sure all players' details are accurate and complete.",
             "Your team must have at least 6 registered players, including the captain, before its first fixture.",
             "A player may play for up to two teams on the same night, as long as the teams are in different divisions. To move to another team, a player must leave their current team and register with the new one.",
             "If you are short of players, you may borrow a player registered to another team in the league, with the agreement of the Event Manager and your opponents. If a team fields an unregistered or suspended player, or a borrowed player without that agreement, the opposition is awarded a walkover."
@@ -141,7 +141,7 @@
       "groups": [
         {
           "items": [
-            "Your team may give notice of one absence per season. The captain must email the league before 12 noon on match day. A £10 credit note is then applied to your team account, reducing that week's match fee by £10.",
+            "Your team may give notice of one absence per season. The captain must email [Super6s@HerefordshireFA.com](mailto:Super6s@HerefordshireFA.com) before 12 noon on match day. A £10 credit note is then applied to your team account, reducing that week's match fee by £10.",
             "If your team is absent without notice, the opposition is awarded a walkover and the full match fee is payable. A second absence in the same season counts as an absence without notice. A team absent without notice may be removed from the league.",
             "To be awarded a walkover when your opponents are absent, your team must be present, ready to play and have paid its match fee.",
             "If your team is more than 5 minutes late, or has fewer than 4 players at kick-off, the opposition is awarded a walkover.",
@@ -158,8 +158,8 @@
         {
           "items": [
             "Teams commit to the full 10-week season.",
-            "To leave during the season, the captain must email the league at least two weeks before leaving. During those two weeks your team must either play its remaining fixtures or pay for them in full, and must have nothing else owed. Notice given verbally at an event during the season is not accepted.",
-            "Teams are entered automatically into the next season. On the last night of each season, the Event Manager checks with every captain that their team is continuing. If your team does not want to continue, tell the Event Manager or email the league no later than the last night of the season, and pay any outstanding match fees. Otherwise your team is entered and invoiced for the new season.",
+            "To leave during the season, the captain must email [Super6s@HerefordshireFA.com](mailto:Super6s@HerefordshireFA.com) at least two weeks before leaving. During those two weeks your team must either play its remaining fixtures or pay for them in full, and must have nothing else owed. Notice given verbally at an event during the season is not accepted.",
+            "Teams are entered automatically into the next season. On the last night of each season, the Event Manager checks with every captain that their team is continuing. If your team does not want to continue, tell the Event Manager or email [Super6s@HerefordshireFA.com](mailto:Super6s@HerefordshireFA.com) no later than the last night of the season, and pay any outstanding match fees. Otherwise your team is entered and invoiced for the new season.",
             "A team that leaves without following rule 5.2 or 5.3, or leaves or is removed with money owed, is fined £60 (two match fees). The fine and any money owed are recovered under section 6.",
             "Teams that leave correctly are refunded any credit by bank transfer to the registered captain."
           ]
@@ -189,7 +189,7 @@
             "Captains' and players' registration details are shared with Herefordshire County FA for affiliation, disciplinary and debt recovery purposes only. See Herefordshire FA's [privacy policy](https://www.herefordshirefa.com/public/privacy-policy).",
             "Insurance: the league does not provide personal injury or player-to-player insurance. Teams and players are advised to arrange their own; Herefordshire County FA (01432 342179) can advise on providers.",
             "The league may change these rules with seven days' notice to captains by email.",
-            "Appeals against league decisions must be made in writing to the league by email, and are reviewed with Herefordshire County FA."
+            "Appeals against league decisions must be made in writing by email to [Super6s@HerefordshireFA.com](mailto:Super6s@HerefordshireFA.com), and are reviewed with Herefordshire County FA."
           ]
         }
       ]
