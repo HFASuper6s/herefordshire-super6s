@@ -97,12 +97,12 @@
   {
     "q": "What are the main playing rules?",
     "k": "rules rule laws offside slide sliding tackle tackles kick in kick-ins corner penalty penalties goal area playing",
-    "a": "A few that catch people out:\n- No offside (5.9)\n- No sliding or charging tackles (5.13)\n- Kick-ins instead of throw-ins: side-foot, below knee height (5.7)\n- Opponents 5 yards back at kick-ins, corners and free kicks (5.9)\nThe full rules are here: /rules.html"
+    "a": "A few that catch people out:\n- No offside (playing rule 1.10)\n- No sliding or charging tackles (playing rule 1.14)\n- Kick-ins instead of throw-ins: side-foot, below knee height (playing rule 1.7)\n- Opponents 5 yards back at kick-ins, corners and free kicks (playing rule 1.9)\nThe full rules are here: /rules.html"
   },
   {
     "q": "What are the goalkeeper rules?",
     "k": "goalkeeper keeper goalie gk throw throws back pass goal kick hands",
-    "a": "- The keeper may leave the area but is then an outfield player (5.14)\n- Throws must be underarm, below knee height (5.15)\n- Goal kicks are kicked, never thrown (5.16)\n- After passing to a teammate, another player must touch the ball before it goes back to the keeper's hands (5.17)"
+    "a": "- The keeper may leave the area but is then an outfield player (playing rule 1.15)\n- Throws must be underarm, below knee height (playing rule 1.16)\n- Goal kicks are kicked, never thrown (playing rule 1.17)\n- After passing to a teammate, another player must touch the ball before it goes back to the keeper's hands (playing rule 1.18)"
   },
   {
     "q": "What happens with yellow and red cards?",

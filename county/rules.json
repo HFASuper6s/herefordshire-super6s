@@ -1,7 +1,7 @@
 {
   "intro": "These rules apply to every team and player in the Herefordshire FA Super 6s leagues. By entering a team, the captain accepts these rules on the team's behalf. Every player accepts them when registered to a team. The captain is the league's main contact for the team.",
   "disclaimer": "All participants take part at their own risk. The organisers, their staff and agents accept no liability for personal injury or for loss of or damage to property, however caused. These rules are binding on all teams and players.",
-  "version": "Version 3 – November 2026. Replaces Version 2 (7 August 2020).",
+  "version": "Current version: November 2026.",
   "playing": [
     {
       "title": "Playing rules",
@@ -21,7 +21,7 @@
             "The referee decides ends and which team kicks off. After a goal, the conceding team kicks off.",
             "If both teams' shirts are the same colour, the away team wears bibs.",
             "After any other stoppage, play restarts with a dropped ball where play stopped.",
-            "When the ball crosses the sideline, the opposition takes a kick-in: side-foot, below knee height. A high or non side-foot kick-in goes to the other team. A goal cannot be scored direct from a kick-in.",
+            "When the ball crosses the sideline, the opposition takes a kick-in: side-foot, below knee height. A kick-in that is high or not side-footed goes to the other team. A goal cannot be scored direct from a kick-in.",
             "Corners are taken as normal. When the attacking team puts the ball over the goal line, it is a goal kick.",
             "Opponents must be at least 5 yards away at kick-ins, corners and free kicks until the ball is played."
           ]
@@ -43,7 +43,7 @@
             "A goalkeeper throw must be underarm, below knee height and level or downward.",
             "Goal kicks are kicked from anywhere on the goal line, never thrown.",
             "After the goalkeeper passes to a teammate, another player must touch the ball before it returns to the goalkeeper's hands.",
-            "A breach of 17 or 18 gives the opposition a free kick 5 yards back from where it happened."
+            "A breach of rule 1.17 or 1.18 gives the opposition a free kick 5 yards back from where it happened."
           ]
         },
         {
@@ -123,7 +123,7 @@
             "Each team must have at least 6 registered players, including its captain, before its first fixture.",
             "A player may play for up to two teams on the same league night, provided the teams are in different divisions.",
             "To move to another team, a player must leave their current team and register with the new one.",
-            "A team short of players may borrow a player registered to another team in the league, with the agreement of the Event Manager and the opposing team. If an unregistered, unagreed or suspended player plays, the match is awarded to the opposition."
+            "A team short of players may borrow a player registered to another team in the league, with the agreement of the Event Manager and the opposing team. If a team fields an unregistered or suspended player, or a borrowed player without that agreement, the match is awarded to the opposition."
           ]
         }
       ]
@@ -200,7 +200,7 @@
         {
           "items": [
             "Teams commit to a full 10-week season and are entered automatically into the next season unless the captain gives notice.",
-            "A team may leave at any time by giving at least two weeks' notice. The captain must email Super6s@HerefordshireFA.com, During the two weeks the team must either play its remaining fixtures or pay for them in full, and must have nothing else owed. Notice given verbally at an event is not accepted.",
+            "A team may leave at any time by giving at least two weeks' notice. The captain must email Super6s@HerefordshireFA.com. During the two weeks the team must either play its remaining fixtures or pay for them in full, and must have nothing else owed. Notice given verbally at an event is not accepted.",
             "A team that leaves without following rule 6.2 is removed from the league and fined under rule 2.7. Any money owed is recovered under rule 2.6.",
             "Teams that leave correctly are refunded any credit by bank transfer to the registered captain.",
             "Players stay registered to their team, and cannot register for another Super 6s team, until all the team's debts are cleared.",
